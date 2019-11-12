@@ -1,0 +1,175 @@
+fileFormatVersion: 2
+guid: f5da65d9302178a40834e6d3561afb9f
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: condo_row_000
+    100002: condo_row_001
+    100004: condo_row_002
+    100006: condo_row_003
+    100008: condo_row_004
+    100010: condo_row_005
+    100012: condo_row_006
+    100014: condo_row_007
+    100016: condo_row_008
+    100018: condo_row_009
+    100020: condo_row_010
+    100022: condo_row_011
+    100024: condo_row_012
+    100026: //RootNode
+    400000: condo_row_000
+    400002: condo_row_001
+    400004: condo_row_002
+    400006: condo_row_003
+    400008: condo_row_004
+    400010: condo_row_005
+    400012: condo_row_006
+    400014: condo_row_007
+    400016: condo_row_008
+    400018: condo_row_009
+    400020: condo_row_010
+    400022: condo_row_011
+    400024: condo_row_012
+    400026: //RootNode
+    2100000: CityEngineMaterial2
+    2300000: condo_row_000
+    2300002: condo_row_001
+    2300004: condo_row_002
+    2300006: condo_row_003
+    2300008: condo_row_004
+    2300010: condo_row_005
+    2300012: condo_row_006
+    2300014: condo_row_007
+    2300016: condo_row_008
+    2300018: condo_row_009
+    2300020: condo_row_010
+    2300022: condo_row_011
+    2300024: condo_row_012
+    3300000: condo_row_000
+    3300002: condo_row_001
+    3300004: condo_row_002
+    3300006: condo_row_003
+    3300008: condo_row_004
+    3300010: condo_row_005
+    3300012: condo_row_006
+    3300014: condo_row_007
+    3300016: condo_row_008
+    3300018: condo_row_009
+    3300020: condo_row_010
+    3300022: condo_row_011
+    3300024: condo_row_012
+    4300000: condo_row_012
+    4300002: condo_row_011
+    4300004: condo_row_010
+    4300006: condo_row_009
+    4300008: condo_row_008
+    4300010: condo_row_007
+    4300012: condo_row_006
+    4300014: condo_row_005
+    4300016: condo_row_004
+    4300018: condo_row_003
+    4300020: condo_row_002
+    4300022: condo_row_001
+    4300024: condo_row_000
+    6400000: condo_row_000
+    6400002: condo_row_001
+    6400004: condo_row_002
+    6400006: condo_row_003
+    6400008: condo_row_004
+    6400010: condo_row_005
+    6400012: condo_row_006
+    6400014: condo_row_007
+    6400016: condo_row_008
+    6400018: condo_row_009
+    6400020: condo_row_010
+    6400022: condo_row_011
+    6400024: condo_row_012
+    7400000: Default Take
+    9500000: //RootNode
+    2186277476908879412: ImportLogs
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 3
+    meshCompression: 0
+    addColliders: 1
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 0
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 3
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

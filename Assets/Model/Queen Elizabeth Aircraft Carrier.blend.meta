@@ -1,0 +1,186 @@
+fileFormatVersion: 2
+guid: 9137a7b4617e1a847b60204f78eae745
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: BackIsland
+    100002: Cube
+    100004: Cube_001
+    100006: FrontIsland
+    100008: Hull
+    100010: Plane
+    100012: Plane_002
+    100014: Plane_004
+    100016: Plane_005
+    100018: //RootNode
+    100020: Runway
+    100022: Runway_001
+    100024: Runway_002
+    100026: aft_elevator
+    100028: deck
+    100030: forward_elevator
+    400000: BackIsland
+    400002: Cube
+    400004: Cube_001
+    400006: FrontIsland
+    400008: Hull
+    400010: Plane
+    400012: Plane_002
+    400014: Plane_004
+    400016: Plane_005
+    400018: //RootNode
+    400020: Runway
+    400022: Runway_001
+    400024: Runway_002
+    400026: aft_elevator
+    400028: deck
+    400030: forward_elevator
+    2100000: unnamed
+    2300000: BackIsland
+    2300002: Cube
+    2300004: Cube_001
+    2300006: FrontIsland
+    2300008: Hull
+    2300010: Plane
+    2300012: Plane_002
+    2300014: Plane_004
+    2300016: Plane_005
+    2300018: Runway
+    2300020: Runway_001
+    2300022: Runway_002
+    2300024: aft_elevator
+    2300026: deck
+    2300028: forward_elevator
+    3300000: BackIsland
+    3300002: Cube
+    3300004: Cube_001
+    3300006: FrontIsland
+    3300008: Hull
+    3300010: Plane
+    3300012: Plane_002
+    3300014: Plane_004
+    3300016: Plane_005
+    3300018: Runway
+    3300020: Runway_001
+    3300022: Runway_002
+    3300024: aft_elevator
+    3300026: deck
+    3300028: forward_elevator
+    4300000: Cube_001
+    4300002: Runway_002
+    4300004: Runway_001
+    4300006: Cube
+    4300008: Plane
+    4300010: Runway
+    4300012: BackIsland
+    4300014: FrontIsland
+    4300016: Hull
+    4300018: Plane_002
+    4300020: Plane_004
+    4300022: Plane_005
+    4300024: forward_elevator
+    4300026: aft_elevator
+    4300028: deck
+    6400000: BackIsland
+    6400002: Cube
+    6400004: Cube_001
+    6400006: FrontIsland
+    6400008: Hull
+    6400010: Plane
+    6400012: Plane_002
+    6400014: Plane_004
+    6400016: Plane_005
+    6400018: Runway
+    6400020: Runway_001
+    6400022: Runway_002
+    6400024: aft_elevator
+    6400026: deck
+    6400028: forward_elevator
+    7400000: Default Take
+    9500000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 30
+    meshCompression: 0
+    addColliders: 1
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 0
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 30
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

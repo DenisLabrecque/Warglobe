@@ -1,0 +1,149 @@
+fileFormatVersion: 2
+guid: 3b3e674a88430a844bbeddfd7e9c7d63
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: base
+    100004: roof1
+    100006: roof2
+    100008: roof3
+    100010: roof4
+    100012: tower1
+    100014: tower2
+    100016: tower3
+    100018: tower4
+    100020: tower5
+    400000: //RootNode
+    400002: base
+    400004: roof1
+    400006: roof2
+    400008: roof3
+    400010: roof4
+    400012: tower1
+    400014: tower2
+    400016: tower3
+    400018: tower4
+    400020: tower5
+    2100000: CityEngineMaterial2
+    2300000: //RootNode
+    2300002: base
+    2300004: roof1
+    2300006: roof2
+    2300008: roof3
+    2300010: roof4
+    2300012: tower1
+    2300014: tower2
+    2300016: tower3
+    2300018: tower4
+    2300020: tower5
+    3300000: //RootNode
+    3300002: base
+    3300004: roof1
+    3300006: roof2
+    3300008: roof3
+    3300010: roof4
+    3300012: tower1
+    3300014: tower2
+    3300016: tower3
+    3300018: tower4
+    3300020: tower5
+    4300000: Skyscraper_TallEmpire
+    4300002: roof4
+    4300004: roof3
+    4300006: roof2
+    4300008: roof1
+    4300010: tower5
+    4300012: tower4
+    4300014: tower1
+    4300016: tower2
+    4300018: tower3
+    4300020: base
+    7400000: Default Take
+    9500000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 3
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 5
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

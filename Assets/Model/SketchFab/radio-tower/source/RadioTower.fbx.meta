@@ -1,0 +1,190 @@
+fileFormatVersion: 2
+guid: 2bf713839e1ee6f44b671ca95398359b
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Base
+    100002: Energy
+    100004: Floor
+    100006: //RootNode
+    100008: Sectorial
+    100010: Sectorial.001
+    100012: Sectorial.002
+    100014: Stairs
+    100016: Stairs.001
+    100018: Stairs.002
+    100020: Stairs.003
+    100022: Stairs.004
+    100024: Stairs.005
+    100026: Tower
+    100028: Tower.001
+    100030: Tower.002
+    100032: Tower.003
+    100034: Tower.004
+    100036: Tower.005
+    400000: Base
+    400002: Energy
+    400004: Floor
+    400006: //RootNode
+    400008: Sectorial
+    400010: Sectorial.001
+    400012: Sectorial.002
+    400014: Stairs
+    400016: Stairs.001
+    400018: Stairs.002
+    400020: Stairs.003
+    400022: Stairs.004
+    400024: Stairs.005
+    400026: Tower
+    400028: Tower.001
+    400030: Tower.002
+    400032: Tower.003
+    400034: Tower.004
+    400036: Tower.005
+    2100000: Energy
+    2100002: Tower_color02
+    2100004: Stairs
+    2100006: Tower_color01
+    2100008: Sectorial
+    2100010: No Name
+    2100012: Base
+    2300000: Base
+    2300002: Energy
+    2300004: Floor
+    2300006: Sectorial
+    2300008: Sectorial.001
+    2300010: Sectorial.002
+    2300012: Stairs
+    2300014: Stairs.001
+    2300016: Stairs.002
+    2300018: Stairs.003
+    2300020: Stairs.004
+    2300022: Stairs.005
+    2300024: Tower
+    2300026: Tower.001
+    2300028: Tower.002
+    2300030: Tower.003
+    2300032: Tower.004
+    2300034: Tower.005
+    3300000: Base
+    3300002: Energy
+    3300004: Floor
+    3300006: Sectorial
+    3300008: Sectorial.001
+    3300010: Sectorial.002
+    3300012: Stairs
+    3300014: Stairs.001
+    3300016: Stairs.002
+    3300018: Stairs.003
+    3300020: Stairs.004
+    3300022: Stairs.005
+    3300024: Tower
+    3300026: Tower.001
+    3300028: Tower.002
+    3300030: Tower.003
+    3300032: Tower.004
+    3300034: Tower.005
+    4300000: Energy
+    4300002: Tower.005
+    4300004: Stairs.005
+    4300006: Stairs.004
+    4300008: Tower.004
+    4300010: Tower.003
+    4300012: Stairs.003
+    4300014: Stairs.002
+    4300016: Tower.002
+    4300018: Tower.001
+    4300020: Stairs.001
+    4300022: Stairs
+    4300024: Sectorial.002
+    4300026: Sectorial.001
+    4300028: Sectorial
+    4300030: Floor
+    4300032: Tower
+    4300034: Base
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
