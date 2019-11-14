@@ -107,3 +107,5 @@ This game is a work in progress. Certain elements noted below do not work yet; i
 - Include waypoint and city tags
 - Aircraft carriers have elevators and hangars
 - Give the game a goal (or levels)
+
+<img src="WarGlobe-logo.svg" />
