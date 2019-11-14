@@ -9,7 +9,7 @@ My vision for this project is slow growth over a decade or so until a complete g
 - Radar and line-of-sight system
 - Automatic level flight
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/7oSqnHO_2E0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[![](http://img.youtube.com/vi/7oSqnHO_2E0/0.jpg)](http://www.youtube.com/watch?v=7oSqnHO_2E0 "Game Example")
 
 ## Features Being Worked On
 - Flotation
@@ -17,4 +17,4 @@ My vision for this project is slow growth over a decade or so until a complete g
 - User interface
 - Gameplay
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/yPUPlVAfM2c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[![](http://img.youtube.com/vi/yPUPlVAfM2c/0.jpg)](http://www.youtube.com/watch?v=yPUPlVAfM2c "Flotation")
