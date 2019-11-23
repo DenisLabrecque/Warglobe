@@ -47,7 +47,7 @@ public class ControlSurface : MonoBehaviour
    private Vector3 m_TurnAxis;
    private AudioSource m_AudioSource;
 
-	private float m_DeflectionInput = 0.0f;
+   private float m_DeflectionInput = 0.0f;
    private float m_CurrentAngle = 0.0f; // Angle, in degrees, off the original angle
    private float m_PreviousAngle = 0.0f;
    private Direction m_PreviousDirection = Direction.neutral;

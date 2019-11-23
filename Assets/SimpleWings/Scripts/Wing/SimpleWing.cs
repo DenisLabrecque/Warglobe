@@ -26,6 +26,9 @@ public class SimpleWing : MonoBehaviour
    private float m_PreviousLiftForce = 0.0f;
    private float m_PreviousDragForce = 0.0f;
 
+   private Vector3 appliedforce;
+   private Vector3 appliedPosition;
+
    /// <summary>
    /// Set the lift multiplier (default of 1)
    /// </summary>
@@ -49,7 +52,7 @@ public class SimpleWing : MonoBehaviour
    public float DragForce { get { return m_DragForce; } }
 
    public float AngleOfAttack
-	{
+   {
 		get
 		{
 			if (m_Rigidbody != null)
@@ -110,8 +113,8 @@ public class SimpleWing : MonoBehaviour
 		// Show editor gizmos
 		if (m_Rigidbody != null)
 		{
-			Debug.DrawRay(transform.position, transform.up * m_LiftForce * 0.0001f, Color.blue);
-			Debug.DrawRay(transform.position, -m_Rigidbody.velocity.normalized * m_DragForce * 0.0001f, Color.red);
+			Debug.DrawRay(transform.position, transform.up * m_LiftForce, Color.blue);
+			Debug.DrawRay(transform.position, -m_Rigidbody.velocity.normalized * m_DragForce, Color.red);
 		}
 	}
 
@@ -121,46 +124,38 @@ public class SimpleWing : MonoBehaviour
       {
          Vector3 forceApplyPos = (m_ForcesToCenter) ? m_Rigidbody.transform.TransformPoint(m_Rigidbody.centerOfMass) : transform.position;
 
-         if (Planet.Singleton.IsInWater(gameObject))
-         {
-            Debug.Log("Rudder under water.");
-            m_Rigidbody.AddForceAtPosition(new Vector3(0, 100000, 0), forceApplyPos, ForceMode.Force);
-         }
-         else
-         {
-            Vector3 localVelocity = transform.InverseTransformDirection(m_Rigidbody.GetPointVelocity(transform.position));
-            localVelocity.x = 0.0f;
+         Vector3 localVelocity = transform.InverseTransformDirection(m_Rigidbody.GetPointVelocity(transform.position));
+         localVelocity.x = 0.0f;
 
-            // Angle of attack is used as the look up for the lift and drag curves.
-            m_AngleOfAttack = Vector3.Angle(Vector3.forward, localVelocity);
-            m_LiftCoefficient = m_WingCurve.GetLiftAtAaoA(m_AngleOfAttack);
-            m_DragCoefficient = m_WingCurve.GetDragAtAaoA(m_AngleOfAttack);
+         // Angle of attack is used as the look up for the lift and drag curves.
+         m_AngleOfAttack = Vector3.Angle(Vector3.forward, localVelocity);
+         m_LiftCoefficient = m_WingCurve.GetLiftAtAaoA(m_AngleOfAttack);
+         m_DragCoefficient = m_WingCurve.GetDragAtAaoA(m_AngleOfAttack);
 
-            // Calculate lift/drag.
-            float airDensity = Planet.Singleton.AirDensity(gameObject);
-            m_LiftForce = localVelocity.sqrMagnitude * m_LiftCoefficient * WingArea * m_LiftMultiplier * airDensity;
-            m_DragForce = localVelocity.sqrMagnitude * m_DragCoefficient * WingArea * m_DragMultiplier * airDensity;
+         // Calculate lift/drag.
+         float airDensity = Planet.Singleton.AirDensity(gameObject);
+         m_LiftForce = localVelocity.sqrMagnitude * m_LiftCoefficient * WingArea * m_LiftMultiplier * airDensity;
+         m_DragForce = localVelocity.sqrMagnitude * m_DragCoefficient * WingArea * m_DragMultiplier * airDensity;
 
-            // Vector3.Angle always returns a positive value, so add the sign back in.
-            m_LiftForce *= -Mathf.Sign(localVelocity.y);
+         // Vector3.Angle always returns a positive value, so add the sign back in.
+         m_LiftForce *= -Mathf.Sign(localVelocity.y);
 
-            // Smooth lift and drag
-            // Prevent rapid sign inversion
-            if ((m_LiftForce > 0 && m_PreviousLiftForce < 0) || m_LiftForce < 0 && m_PreviousLiftForce > 0)
-               m_LiftForce = 0;
-            if ((m_DragForce > 0 && m_PreviousDragForce < 0) || m_DragForce < 0 && m_PreviousDragForce > 0)
-               m_DragForce = 0;
+         // Smooth lift and drag
+         // Prevent rapid sign inversion
+         if ((m_LiftForce > 0 && m_PreviousLiftForce < 0) || m_LiftForce < 0 && m_PreviousLiftForce > 0)
+            m_LiftForce = 0;
+         if ((m_DragForce > 0 && m_PreviousDragForce < 0) || m_DragForce < 0 && m_PreviousDragForce > 0)
+            m_DragForce = 0;
 
-            // Lift is always perpendicular to air flow.
-            Vector3 liftDirection = Vector3.Cross(m_Rigidbody.velocity, transform.right).normalized;
-            m_Rigidbody.AddForceAtPosition(liftDirection * m_LiftForce, forceApplyPos, ForceMode.Force);
+         // Lift is always perpendicular to air flow.
+         Vector3 liftDirection = Vector3.Cross(m_Rigidbody.velocity, transform.right).normalized;
+         m_Rigidbody.AddForceAtPosition(liftDirection * m_LiftForce, forceApplyPos, ForceMode.Force);
 
-            // Drag is always opposite of the velocity.
-            m_Rigidbody.AddForceAtPosition(-m_Rigidbody.velocity.normalized * m_DragForce, forceApplyPos, ForceMode.Force);
+         // Drag is always opposite of the velocity.
+         m_Rigidbody.AddForceAtPosition(-m_Rigidbody.velocity.normalized * m_DragForce, forceApplyPos, ForceMode.Force);
 
-            m_PreviousLiftForce = m_LiftForce;
-            m_PreviousDragForce = m_DragForce;
-         }
+         m_PreviousLiftForce = m_LiftForce;
+         m_PreviousDragForce = m_DragForce;
       }
    }
 

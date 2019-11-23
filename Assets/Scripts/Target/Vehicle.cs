@@ -12,7 +12,7 @@ public abstract class Vehicle : Target {
 
    public const float AIR_DRAG = 0.25f; // Minimum drag in air
    public const float SUPERSONIC_DRAG = 7.0f; // Maximum rotational drag in air
-   public const float WATER_DRAG = 4.5f;
+   public const float WATER_DRAG = 5f;
    public const float SUPERSONIC_SPEED = 1000f; // Speed of sound, at which supersonic drag applies
 
    #endregion
