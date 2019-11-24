@@ -19,12 +19,13 @@ public class SimpleWing : MonoBehaviour
 
 	private float m_LiftCoefficient = 0.0f;
 	private float m_DragCoefficient = 0.0f;
-	private float m_LiftForce = 0.0f;
-	private float m_DragForce = 0.0f;
+	private float m_Lift = 0.0f;
+	private float m_Drag = 0.0f;
 	private float m_AngleOfAttack = 0.0f;
 
    private float m_PreviousLiftForce = 0.0f;
    private float m_PreviousDragForce = 0.0f;
+   private float m_MaxPercentChange = 0.2f;
 
    private Vector3 appliedforce;
    private Vector3 appliedPosition;
@@ -47,9 +48,9 @@ public class SimpleWing : MonoBehaviour
       }
    }
    public float LiftCoefficient { get { return m_LiftCoefficient; } }
-   public float LiftForce { get { return m_LiftForce; } }
+   public float LiftForce { get { return m_Lift; } }
    public float DragCoefficient { get { return m_DragCoefficient; } }
-   public float DragForce { get { return m_DragForce; } }
+   public float DragForce { get { return m_Drag; } }
 
    public float AngleOfAttack
    {
@@ -107,8 +108,8 @@ public class SimpleWing : MonoBehaviour
 		// Show editor gizmos
 		if (m_Rigidbody != null)
 		{
-			Debug.DrawRay(transform.position, transform.up * m_LiftForce, Color.blue);
-			Debug.DrawRay(transform.position, -m_Rigidbody.velocity.normalized * m_DragForce, Color.red);
+			Debug.DrawRay(transform.position, transform.up * m_Lift, Color.blue);
+			Debug.DrawRay(transform.position, -m_Rigidbody.velocity.normalized * m_Drag, Color.red);
 		}
 	}
 
@@ -116,9 +117,9 @@ public class SimpleWing : MonoBehaviour
    {
       // Prevent division by zero.
       if (m_Dimensions.x <= 0.0f)
-         m_Dimensions.x = 0.01f;
+         m_Dimensions.x = 0.001f;
       if (m_Dimensions.y <= 0.0f)
-         m_Dimensions.y = 0.01f;
+         m_Dimensions.y = 0.001f;
 
       if (m_Rigidbody != null && m_WingCurve != null)
       {
@@ -134,28 +135,28 @@ public class SimpleWing : MonoBehaviour
 
          // Calculate lift/drag.
          float airDensity = Planet.Singleton.AirDensity(gameObject);
-         m_LiftForce = localVelocity.sqrMagnitude * m_LiftCoefficient * WingArea * m_LiftMultiplier * airDensity;
-         m_DragForce = localVelocity.sqrMagnitude * m_DragCoefficient * WingArea * m_DragMultiplier * airDensity;
+         m_Lift = localVelocity.sqrMagnitude * m_LiftCoefficient * WingArea * m_LiftMultiplier * airDensity * (Time.deltaTime * 2);
+         m_Drag = localVelocity.sqrMagnitude * m_DragCoefficient * WingArea * m_DragMultiplier * airDensity * (Time.deltaTime * 2);
 
          // Vector3.Angle always returns a positive value, so add the sign back in.
-         m_LiftForce *= -Mathf.Sign(localVelocity.y);
+         m_Lift *= -Mathf.Sign(localVelocity.y);
 
          // Smooth lift and drag
          // Prevent rapid sign inversion
-         if ((m_LiftForce > 0 && m_PreviousLiftForce < 0) || m_LiftForce < 0 && m_PreviousLiftForce > 0)
-            m_LiftForce = 0;
-         if ((m_DragForce > 0 && m_PreviousDragForce < 0) || m_DragForce < 0 && m_PreviousDragForce > 0)
-            m_DragForce = 0;
+         //if ((m_Lift > 0 && m_PreviousLiftForce < 0) || m_Lift < 0 && m_PreviousLiftForce > 0)
+         //   m_Lift = 0;
+         //if ((m_Drag > 0 && m_PreviousDragForce < 0) || m_Drag < 0 && m_PreviousDragForce > 0)
+         //   m_Drag = 0;
 
          // Lift is always perpendicular to air flow.
          Vector3 liftDirection = Vector3.Cross(m_Rigidbody.velocity, transform.right).normalized;
-         m_Rigidbody.AddForceAtPosition(liftDirection * m_LiftForce, forceApplyPos, ForceMode.Force);
+         m_Rigidbody.AddForceAtPosition(liftDirection * m_Lift, forceApplyPos, ForceMode.Force);
 
          // Drag is always opposite of the velocity.
-         m_Rigidbody.AddForceAtPosition(-m_Rigidbody.velocity.normalized * m_DragForce, forceApplyPos, ForceMode.Force);
+         m_Rigidbody.AddForceAtPosition(-m_Rigidbody.velocity.normalized * m_Drag, forceApplyPos, ForceMode.Force);
 
-         m_PreviousLiftForce = m_LiftForce;
-         m_PreviousDragForce = m_DragForce;
+         m_PreviousLiftForce = m_Lift;
+         m_PreviousDragForce = m_Drag;
       }
    }
 

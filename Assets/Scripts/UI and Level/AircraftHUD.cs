@@ -69,16 +69,17 @@ public class AircraftHUD : MonoBehaviour {
    /// </summary>
    void Update()
    {
-      PrintVehicleHUDInfo();
-      ShowFPM();
+      //PrintVehicleHUDInfo();
    }
 
    /// <summary>
    /// Update tracker information for sensed targets.
    /// </summary>
-   void FixedUpdate()
+   void LateUpdate()
    {
+      PrintVehicleHUDInfo();
       TrackTargets();
+      ShowFPM();
    }
 
    #endregion

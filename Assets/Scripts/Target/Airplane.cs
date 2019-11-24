@@ -141,8 +141,13 @@ public abstract class Airplane : Vehicle {
 
    void Update()
    {
+
+   }
+
+   void FixedUpdate()
+   {
       // Steer airplane through user input
-      if(UserInput.Player1Vehicle == this || UserInput.Player2Vehicle == this)
+      if (UserInput.Player1Vehicle == this || UserInput.Player2Vehicle == this)
       {
          HumanControl();
       }
@@ -151,10 +156,7 @@ public abstract class Airplane : Vehicle {
       {
          AIControl();
       }
-   }
 
-   void FixedUpdate()
-   {
       Gravity.Gravitate(m_Rigidbody);
       AdjustWingLift();
       AdjustDrag();
@@ -238,15 +240,15 @@ public abstract class Airplane : Vehicle {
    private void HumanControl()
    {
       // Throttle up the engines
-      //if(UserInput.Throttle != 0)
-      //   m_Motor.AdjustThrottle(UserInput.Throttle);
-      SpeedPID.SetPoint = 275f;
-      SpeedPID.ProcessVariable = ForwardSpeed;
-      Debug.Log("PID SPEED: " + (float)SpeedPID.ControlVariable(Time.deltaTime));
-      m_Motor.AdjustThrottle((float)SpeedPID.ControlVariable(Time.deltaTime));
+      if (UserInput.Throttle != 0)
+         m_Motor.AdjustThrottle(UserInput.Throttle);
+      //SpeedPID.SetPoint = 275f;
+      //SpeedPID.ProcessVariable = ForwardSpeed;
+      //Debug.Log("PID SPEED: " + (float)SpeedPID.ControlVariable(Time.deltaTime));
+      //m_Motor.AdjustThrottle((float)SpeedPID.ControlVariable(Time.deltaTime));
 
       // Climb/dive
-      if(UserInput.Player1Vehicle == this)
+      if (UserInput.Player1Vehicle == this)
       {
          m_RElevator.DeflectionPercent = -UserInput.Pitch;
          m_LElevator.DeflectionPercent = -UserInput.Pitch;
