@@ -32,6 +32,7 @@ public abstract class Airplane : Vehicle {
    PIDController AltitudePID; // Whether to increase or decrease pitch
    PIDController PitchAnglePID; // Whether the pitch angle has been exceeded
    PIDController RollPID; // For AI control
+   PIDController SpeedPID;
 
    List<SimpleWing> m_Wings;
 
@@ -110,8 +111,9 @@ public abstract class Airplane : Vehicle {
       m_Wings = GetComponentsInChildren<SimpleWing>().ToList();
 
       AltitudePID = new PIDController(0.008f, 0.001f, 0.01f, 1, -1);
-      PitchAnglePID = new PIDController(0.005f, 0.01f, 0.03, 1, -1);
-      RollPID = new PIDController(0.0005f, 0.0003, 0.0003, 1, -1);
+      PitchAnglePID = new PIDController(0.005f, 0.01f, 0.03f, 1, -1);
+      RollPID = new PIDController(0.0005f, 0.0003f, 0.0003f, 1, -1);
+      SpeedPID = new PIDController(0.05f, 0.03f, 0.03f, 1, -1);
    }
 
    /// <summary>
@@ -140,7 +142,7 @@ public abstract class Airplane : Vehicle {
    void Update()
    {
       // Steer airplane through user input
-      if(UserInput.CurrentVehicle == this)
+      if(UserInput.Player1Vehicle == this || UserInput.Player2Vehicle == this)
       {
          HumanControl();
       }
@@ -190,7 +192,10 @@ public abstract class Airplane : Vehicle {
    private void AIControl()
    {
       // Throttle up the engines
-      m_Motor.AdjustThrottle(0.5f);
+      SpeedPID.SetPoint = 450f;
+      SpeedPID.ProcessVariable = ForwardSpeed;
+      m_Motor.AdjustThrottle((float)SpeedPID.ControlVariable(Time.deltaTime));
+      m_Motor.AdjustThrottle(0.75f);
 
       // Roll
 
@@ -208,7 +213,7 @@ public abstract class Airplane : Vehicle {
       m_RightAileron.DeflectionPercent = rollDeflection;
 
       // Climb/dive
-      AltitudePID.SetPoint = (double)Altitude.General; // Altitude
+      AltitudePID.SetPoint = 200f; // Altitude
       if(m_SensorSystem.Radar != null && m_SensorSystem.Radar.IsOn)
          AltitudePID.ProcessVariable = m_SensorSystem.Radar.Altitude;
       else
@@ -233,16 +238,37 @@ public abstract class Airplane : Vehicle {
    private void HumanControl()
    {
       // Throttle up the engines
-      if(UserInput.Throttle != 0)
-         m_Motor.AdjustThrottle(UserInput.Throttle);
+      //if(UserInput.Throttle != 0)
+      //   m_Motor.AdjustThrottle(UserInput.Throttle);
+      SpeedPID.SetPoint = 275f;
+      SpeedPID.ProcessVariable = ForwardSpeed;
+      Debug.Log("PID SPEED: " + (float)SpeedPID.ControlVariable(Time.deltaTime));
+      m_Motor.AdjustThrottle((float)SpeedPID.ControlVariable(Time.deltaTime));
 
       // Climb/dive
-      m_RElevator.DeflectionPercent = -UserInput.Pitch;
-      m_LElevator.DeflectionPercent = -UserInput.Pitch;
+      if(UserInput.Player1Vehicle == this)
+      {
+         m_RElevator.DeflectionPercent = -UserInput.Pitch;
+         m_LElevator.DeflectionPercent = -UserInput.Pitch;
+      }
+      else
+      {
+         m_RElevator.DeflectionPercent = -UserInput.Pitch2;
+         m_LElevator.DeflectionPercent = -UserInput.Pitch2;
+      }
+
 
       // Roll
-      m_LeftAileron.DeflectionPercent = -UserInput.Roll;
-      m_RightAileron.DeflectionPercent = UserInput.Roll;
+      if (UserInput.Player1Vehicle == this)
+      {
+         m_LeftAileron.DeflectionPercent = -UserInput.Roll;
+         m_RightAileron.DeflectionPercent = UserInput.Roll;
+      }
+      else
+      {
+         m_LeftAileron.DeflectionPercent = -UserInput.Roll2;
+         m_RightAileron.DeflectionPercent = UserInput.Roll2;
+      }
 
       // Yaw
       m_Tail.DeflectionPercent = UserInput.Yaw; // Tail

@@ -89,11 +89,11 @@ public class AircraftHUD : MonoBehaviour {
    private void ShowFPM()
    {
       // Math the vehicle's  AOA
-      Vehicle vehicle = UserInput.CurrentVehicle;
-      m_HeadingMarker.transform.position = Camera.main.WorldToScreenPoint(vehicle.transform.position + (vehicle.NormalizedVelocity * 500f));
+      Vehicle vehicle = UserInput.Player1Vehicle;
+      m_HeadingMarker.transform.position = Camera.main.WorldToScreenPoint(vehicle.transform.position + (vehicle.NormalizedVelocity * 900f));
 
-      // Match the vehicle's header
-      m_HeadingMarker.transform.position = Camera.main.WorldToScreenPoint(vehicle.transform.position + (vehicle.transform.forward.normalized * 500f));
+      // Match the vehicle's heading
+      //m_HeadingMarker.transform.position = Camera.main.WorldToScreenPoint(vehicle.transform.position + (vehicle.transform.forward.normalized * 500f));
 
       // Match the earth's surface rotation
       m_HeadingMarker.transform.eulerAngles = (Vector3.forward * vehicle.RollAngle);
@@ -109,13 +109,13 @@ public class AircraftHUD : MonoBehaviour {
       foreach(HUDTracker tracker in m_HUDTrackers)
       {
          // Only show the player target trackers when his vehicle is actually tracking them
-         if(UserInput.CurrentVehicle.SensorSystem.FusedSensorData.Contains(tracker.Target))
+         if(UserInput.Player1Vehicle.SensorSystem.FusedSensorData.Contains(tracker.Target))
             tracker.IsVisible = true;
          else
             tracker.IsVisible = false;
 
          // Show the player lock-on symbology
-         if(UserInput.CurrentVehicle.WeaponSystem.SensorSystem.TrackingTarget == tracker.Target)
+         if(UserInput.Player1Vehicle.WeaponSystem.SensorSystem.TrackingTarget == tracker.Target)
             tracker.IsLockedOn = true;
          else
             tracker.IsLockedOn = false;
@@ -127,7 +127,7 @@ public class AircraftHUD : MonoBehaviour {
    /// </summary>
    private void PrintVehicleHUDInfo()
    {
-      Airplane currentAirplane = UserInput.CurrentVehicle as Airplane;
+      Airplane currentAirplane = UserInput.Player1Vehicle as Airplane;
 
       // Throttle value
       m_ThrottleSlider.value = currentAirplane.Throttle;
@@ -174,7 +174,7 @@ public class AircraftHUD : MonoBehaviour {
    /// </summary>
    private void TestingSensorList()
    {
-      Airplane currentAirplane = UserInput.CurrentVehicle as Airplane;
+      Airplane currentAirplane = UserInput.Player1Vehicle as Airplane;
       string TargetList = string.Empty;
       if(currentAirplane.SensorSystem != null)
       {

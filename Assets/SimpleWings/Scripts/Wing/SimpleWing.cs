@@ -104,12 +104,6 @@ public class SimpleWing : MonoBehaviour
 
 	private void Update()
 	{
-		// Prevent division by zero.
-		if (m_Dimensions.x <= 0.0f)
-			m_Dimensions.x = 0.01f;
-		if (m_Dimensions.y <= 0.0f)
-			m_Dimensions.y = 0.01f;
-
 		// Show editor gizmos
 		if (m_Rigidbody != null)
 		{
@@ -120,6 +114,12 @@ public class SimpleWing : MonoBehaviour
 
    private void FixedUpdate()
    {
+      // Prevent division by zero.
+      if (m_Dimensions.x <= 0.0f)
+         m_Dimensions.x = 0.01f;
+      if (m_Dimensions.y <= 0.0f)
+         m_Dimensions.y = 0.01f;
+
       if (m_Rigidbody != null && m_WingCurve != null)
       {
          Vector3 forceApplyPos = (m_ForcesToCenter) ? m_Rigidbody.transform.TransformPoint(m_Rigidbody.centerOfMass) : transform.position;

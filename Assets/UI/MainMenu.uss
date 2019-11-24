@@ -1,0 +1,36 @@
+.menu-button {
+    background-color: rgba(0, 0, 0, 0.78);
+    color: rgb(247, 147, 30);
+    -unity-text-align: middle-left;
+    -unity-font: url('/Assets/UI/Font/Lekton-Bold.ttf');
+    border-left-width: 4px;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-left-color: rgb(247, 147, 30);
+    border-right-color: rgb(247, 147, 30);
+    border-top-color: rgb(247, 147, 30);
+    border-bottom-color: rgb(247, 147, 30);
+    max-width: 200px;
+}
+
+.menu-button:hover {
+    border-left-color: rgba(241, 90, 36, 255);
+    border-right-color: rgba(241, 90, 36, 255);
+    border-top-color: rgba(241, 90, 36, 255);
+    border-bottom-color: rgba(241, 90, 36, 255);
+    border-left-width: 10px;
+    color: rgba(241, 90, 36, 255);
+}
+
+.menu-button:active {
+    color: rgb(255, 255, 255);
+    border-left-color: rgba(255, 255, 255, 255);
+    border-right-color: rgba(255, 255, 255, 255);
+    border-top-color: rgba(255, 255, 255, 255);
+    border-bottom-color: rgba(255, 255, 255, 255);
+}

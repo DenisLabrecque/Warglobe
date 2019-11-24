@@ -29,7 +29,7 @@ public abstract class Ship : Vehicle
    void Update()
    {
       // Steer through user input
-      if (UserInput.CurrentVehicle == this)
+      if (UserInput.Player1Vehicle == this)
       {
          HumanControl();
       }

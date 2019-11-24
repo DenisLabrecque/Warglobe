@@ -7,10 +7,37 @@ using UnityEngine;
 /// </summary>
 public class SingleCamera : MonoBehaviour {
       
-   public static Camera GameCam { get; private set; }
+   public static Camera Camera1 { get; private set; }
+   public static Camera Camera2 { get; private set; }
 
-   void Start()
+   void Awake()
    {
-      GameCam = FindObjectOfType<Camera>();
+      Camera1 = FindObjectOfType<Camera>();
+      Camera2 = Instantiate(Camera1);
+      SetCameraLayout(2);
+   }
+
+   /// <summary>
+   /// Set the game cameras according to the number of players.
+   /// </summary>
+   public static void SetCameraLayout(int numberCameras)
+   {
+      Mathf.Clamp(numberCameras, 1, 2);
+      switch (numberCameras)
+      {
+         case 1:
+            Camera1.rect = new Rect(0, 0, 1, 1);
+            Camera2.enabled = false;
+            break;
+         case 2:
+            Camera1.rect = new Rect(0, 0, 0.5f, 1);
+            Camera2.enabled = true;
+            Camera2.rect = new Rect(0.5f, 0, 0.5f, 1);
+            break;
+            //case 3:
+            //   break;
+            //case 4:
+            //   break;
+      }
    }
 }

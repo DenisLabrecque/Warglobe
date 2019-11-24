@@ -23,7 +23,9 @@ public class UserInput : MonoBehaviour {
    const string GEAR = "Gear"; // Move landing gear up/down
    const string BRAKE = "Break"; // Apply resistance
    const string PITCH = "Vertical"; // Point up or down on an airplane, press gas on a vehicle; -1 (less) to 1 (more)
+   const string PITCH2 = "Vertical2";
    const string ROLL = "Horizontal"; // Bank on an airplane, turn on a vehicle; -1 (left) to 1 (right)
+   const string ROLL2 = "Horizontal2";
    const string YAW = "Sideways"; // Turn on an airplane; -1 (left) to 1 (right)
    const string THROTTLE = "Throttle"; // Throttle up on any vehicle -1 (less) to 1 (more)
    const string ROTATE_PLANET = "RotatePlanet"; // Go around the planet
@@ -38,7 +40,8 @@ public class UserInput : MonoBehaviour {
 
    #region Member Variables
 
-   [SerializeField] Vehicle m_PlayerStartVehicle;
+   [SerializeField] Vehicle m_Player1Vehicle;
+   [SerializeField] Vehicle m_Player2Vehicle;
    [SerializeField] UIPanelController m_UIController;
 
    private bool m_MinimapView = false;
@@ -55,7 +58,8 @@ public class UserInput : MonoBehaviour {
    /// <summary>
    /// Get the vehicle the user is currently controlling.
    /// </summary>
-   public static Vehicle CurrentVehicle { get; private set; }
+   public static Vehicle Player1Vehicle { get; private set; }
+   public static Vehicle Player2Vehicle { get; private set; }
 
    /// <summary>
    /// Toggle the minimap view
@@ -194,6 +198,11 @@ public class UserInput : MonoBehaviour {
          return Input.GetAxis(PITCH);
       }
    }
+   public static float Pitch2 {
+      get {
+         return Input.GetAxis(PITCH2);
+      }
+   }
 
    /// <summary>
    /// Return a value from -1 to 1 (yaw)
@@ -210,6 +219,11 @@ public class UserInput : MonoBehaviour {
    public static float Roll {
       get {
          return Input.GetAxis(ROLL);
+      }
+   }
+   public static float Roll2 {
+      get {
+         return Input.GetAxis(ROLL2);
       }
    }
 
@@ -261,17 +275,19 @@ public class UserInput : MonoBehaviour {
    {
       // Find all playable vehicles in the game
       m_PlayableVehicles = FindObjectsOfType<Vehicle>().ToList();
-      m_CurrentVehicleIndex = m_PlayableVehicles.IndexOf(m_PlayerStartVehicle);
+      m_CurrentVehicleIndex = m_PlayableVehicles.IndexOf(m_Player1Vehicle);
 
       // Find the vehicle the player is playing with
-      CurrentVehicle = m_PlayerStartVehicle;
+      Player1Vehicle = m_Player1Vehicle;
+      Player2Vehicle = m_Player2Vehicle;
 
       ms_UIController = m_UIController;
    }
 
    void Start()
    {
-      CurrentVehicle.AttachCamera(SingleCamera.GameCam);
+      Player1Vehicle.AttachCamera(SingleCamera.Camera1);
+      Player2Vehicle.AttachCamera(SingleCamera.Camera2);
    }
 
    /// <summary>
@@ -296,13 +312,13 @@ public class UserInput : MonoBehaviour {
          // Get in vehicle view
          if(m_MinimapView == true)
          {
-            CurrentVehicle.AttachCamera(SingleCamera.GameCam);
+            Player1Vehicle.AttachCamera(SingleCamera.Camera1);
             m_MinimapView = false;
          }
          // Get in minimap view
          else
          {
-            FindObjectOfType<Planet>().GetComponentInChildren<CameraEmplacement>().Attach(SingleCamera.GameCam);
+            FindObjectOfType<Planet>().GetComponentInChildren<CameraEmplacement>().Attach(SingleCamera.Camera1);
             m_MinimapView = true;
          }
       }
@@ -310,7 +326,7 @@ public class UserInput : MonoBehaviour {
       // Cycle camera views
       else if(ChangeCameraView != 0)
       {
-         CurrentVehicle.ChangeCamera(ChangeCameraView, SingleCamera.GameCam);
+         Player1Vehicle.ChangeCamera(ChangeCameraView, SingleCamera.Camera1);
       }
 
       // Cycle playable vehicles
@@ -323,8 +339,8 @@ public class UserInput : MonoBehaviour {
 
          // Change the current player vehicle according to the current index
          Debug.Log("Changing vehicle to no " + m_CurrentVehicleIndex);
-         CurrentVehicle = m_PlayableVehicles[m_CurrentVehicleIndex];
-         CurrentVehicle.AttachCamera(SingleCamera.GameCam);
+         Player1Vehicle = m_PlayableVehicles[m_CurrentVehicleIndex];
+         Player1Vehicle.AttachCamera(SingleCamera.Camera1);
       }
 
       // Rotate the planet (if in planet view)

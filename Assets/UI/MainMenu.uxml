@@ -1,5 +1,11 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
-    <ui:Button text="Two-player Local" name="btnTwoPlayerLocal">
-        <Style path="Assets/UI/MainMenu.uss" />
+    <ui:Button text="Button" class="menu-button">
+        <Style src="MainMenu.uss" />
+    </ui:Button>
+    <ui:Button text="Button" class="menu-button">
+        <Style src="MainMenu.uss" />
+    </ui:Button>
+    <ui:Button text="Button" class="menu-button">
+        <Style src="MainMenu.uss" />
     </ui:Button>
 </ui:UXML>

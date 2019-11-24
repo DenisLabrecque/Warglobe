@@ -28,7 +28,7 @@ public class UIController : MonoBehaviour {
 
    void Update()
    {
-      if(UserInput.CurrentVehicle is Airplane)
+      if(UserInput.Player1Vehicle is Airplane)
       {
          ShowPanel((int)UIPanel.AircraftHUD);
       }

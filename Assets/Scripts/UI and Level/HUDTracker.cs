@@ -80,9 +80,9 @@ public class HUDTracker : MonoBehaviour
       // Follow the target or waypoint onscreen
       Vector3 targetPoint;
       if(m_Target != null)
-         targetPoint = SingleCamera.GameCam.WorldToScreenPoint(m_Target.transform.position);
+         targetPoint = SingleCamera.Camera1.WorldToScreenPoint(m_Target.transform.position);
       else
-         targetPoint = SingleCamera.GameCam.WorldToScreenPoint(m_Waypoint.transform.position);
+         targetPoint = SingleCamera.Camera1.WorldToScreenPoint(m_Waypoint.transform.position);
 
       if(targetPoint.z < 0f || IsVisible == false)
       {
@@ -94,7 +94,7 @@ public class HUDTracker : MonoBehaviour
       {
          targetPoint.z = 1;
          gameObject.transform.position = targetPoint;
-         gameObject.transform.eulerAngles = Vector3.forward * UserInput.CurrentVehicle.RollAngle;
+         gameObject.transform.eulerAngles = Vector3.forward * UserInput.Player1Vehicle.RollAngle;
 
          if(m_Target != null)
             ApplySymbology(m_Target);
@@ -144,7 +144,7 @@ public class HUDTracker : MonoBehaviour
          m_TargetName.text = m_Target.PopularName;
 
          // Print target distance
-         float distance = Vector3.Distance(UserInput.CurrentVehicle.transform.position, m_Target.transform.position);
+         float distance = Vector3.Distance(UserInput.Player1Vehicle.transform.position, m_Target.transform.position);
          m_TargetDistance.text = ((int)distance).ToString();
       }
       else
@@ -177,7 +177,7 @@ public class HUDTracker : MonoBehaviour
    protected void ApplyRelationshipColour()
    {
       // Find the correct colour according to target relationships by country
-      switch(UserInput.CurrentVehicle.Country.Relationship(m_Target.Country))
+      switch(UserInput.Player1Vehicle.Country.Relationship(m_Target.Country))
       {
          case Country.Identification.Neutral:
             ApplyTargetingColour(NEUTRAL);
