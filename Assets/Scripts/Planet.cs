@@ -9,7 +9,7 @@ using UnityEngine;
 [ExecuteAlways]
 public class Planet : MonoBehaviour {
 
-   public const int MAX_ATMOSPHERE = 100000000;
+   public const int MAX_ATMOSPHERE = 10000;
 
    #region Member Variables
 

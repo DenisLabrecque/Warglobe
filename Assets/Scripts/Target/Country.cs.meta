@@ -3,13 +3,7 @@ guid: 2e38178be20cc5a46bc25549a2e1dc43
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - m_RoundelGomer: {fileID: 2100000, guid: 3c16f8fa04235db4383a448db5c86429, type: 2}
-  - m_RoundelScythia: {fileID: 2100000, guid: d65e3b18a05e23942afbe69a38492ac3, type: 2}
-  - m_RoundelMadesh: {fileID: 2100000, guid: eddbb3bc0b5360949bd260caa9ee0c66, type: 2}
-  - m_RoundelJavan: {fileID: 2100000, guid: 862ae59bd9334fe4fbf9cf6bbc5d243b, type: 2}
-  - m_RoundelTobolik: {instanceID: 0}
-  - m_RoundelMeshchera: {instanceID: 0}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
