@@ -54,7 +54,7 @@ public class Planet : MonoBehaviour {
 
    void Start()
    {
-      SeaRadius = gameObject.GetComponentInChildren<SphereCollider>().radius;
+      SeaRadius = gameObject.GetComponentInChildren<SphereCollider>().radius * gameObject.transform.lossyScale.x;
 
       m_AtmosphereHeight = Gravity.GRAVITY_RADIUS - SeaRadius;
    }

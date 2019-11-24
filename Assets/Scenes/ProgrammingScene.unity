@@ -1580,15 +1580,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400018, guid: 9137a7b4617e1a847b60204f78eae745, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6654.1
+      value: -14129
       objectReference: {fileID: 0}
     - target: {fileID: 400018, guid: 9137a7b4617e1a847b60204f78eae745, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 18623.6
+      value: 36976
       objectReference: {fileID: 0}
     - target: {fileID: 400018, guid: 9137a7b4617e1a847b60204f78eae745, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2996
+      value: 5933
       objectReference: {fileID: 0}
     - target: {fileID: 400018, guid: 9137a7b4617e1a847b60204f78eae745, type: 3}
       propertyPath: m_LocalRotation.x
@@ -5174,7 +5174,7 @@ Transform:
   m_GameObject: {fileID: 926654305}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 678345417}
   - {fileID: 1023044312}
@@ -6818,7 +6818,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 4
-  m_firstOverflowCharacterIndex: 707
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -8818,7 +8818,6 @@ GameObject:
   - component: {fileID: 1541402218}
   - component: {fileID: 1541402220}
   - component: {fileID: 1541402219}
-  - component: {fileID: 1541402221}
   m_Layer: 0
   m_Name: GameController
   m_TagString: GameController
@@ -8839,7 +8838,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Player1Vehicle: {fileID: 4055738974422949717}
-  m_Player2Vehicle: {fileID: 2011085508}
+  m_Player2Vehicle: {fileID: 310564102}
   m_UIController: {fileID: 397775540}
 --- !u!4 &1541402217
 Transform:
@@ -8891,19 +8890,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fdcbf4fff91f294a87b5c97ab667902, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1541402221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1541402215}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3ded6a871b26f64aba89adb7d10e4ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RoundelGomer: {fileID: 0}
 --- !u!1 &1552026137
 GameObject:
   m_ObjectHideFlags: 0
@@ -9799,7 +9785,7 @@ PrefabInstance:
     - target: {fileID: 1939958221425260583, guid: bd2cbdf2180fb38468b55906b1e8dc69,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 20225.7
+      value: 44269
       objectReference: {fileID: 0}
     - target: {fileID: 1939958221425260583, guid: bd2cbdf2180fb38468b55906b1e8dc69,
         type: 3}
@@ -9858,18 +9844,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd2cbdf2180fb38468b55906b1e8dc69, type: 3}
---- !u!114 &2011085508 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1939958221968776396, guid: bd2cbdf2180fb38468b55906b1e8dc69,
-    type: 3}
-  m_PrefabInstance: {fileID: 2011085507}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b649f56975bff894693ece0331209c1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2011643680
 GameObject:
   m_ObjectHideFlags: 0
@@ -10323,7 +10297,7 @@ PrefabInstance:
     - target: {fileID: 1939958221425260583, guid: bd2cbdf2180fb38468b55906b1e8dc69,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 20226
+      value: 41210
       objectReference: {fileID: 0}
     - target: {fileID: 1939958221425260583, guid: bd2cbdf2180fb38468b55906b1e8dc69,
         type: 3}

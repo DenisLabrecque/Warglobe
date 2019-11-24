@@ -13,7 +13,7 @@ public static class Gravity {
 
    public const float GRAVITY_PULL = 4.5f;
    public static Vector3 GRAVITY_CENTER = new Vector3(0,0,0);
-   public const int GRAVITY_RADIUS = 80000;
+   public const int GRAVITY_RADIUS = 160000;
 
    /// <summary>
    /// Call this method at every physics tick using FixedUpdate() for an object that must be gravitated towards earth.
