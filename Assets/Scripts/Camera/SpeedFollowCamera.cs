@@ -39,7 +39,7 @@ public class SpeedFollowCamera : CameraEmplacement
       Multilang.Initialize(Language.Francais);
    }
 
-   void FixedUpdate()
+   void LateUpdate()
    {
       transform.localPosition = new Vector3(0, OffsetYAtGForce(m_Vehicle.VerticalSpeed), DistanceZAtSpeed(m_Vehicle.ForwardSpeed));
    }

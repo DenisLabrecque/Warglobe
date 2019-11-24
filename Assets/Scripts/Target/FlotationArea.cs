@@ -202,9 +202,12 @@ public class FlotationArea : MonoBehaviour
       Gizmos.DrawWireCube(Vector3.zero, m_Dimensions);
 
       // Draw rays representing the upwards forces of flotation
-      for(int i = 0; i < m_Corners.Count; i++)
+      if (m_Corners != null) // Maybe happens when the script is deactivated
       {
-         Gizmos.DrawRay(Vector3.zero, Vector3.up);//  .DrawRay(Vector3.zero, transform.position, Color.red);
+         for (int i = 0; i < m_Corners.Count; i++)
+         {
+            Gizmos.DrawRay(Vector3.zero, Vector3.up);//  .DrawRay(Vector3.zero, transform.position, Color.red);
+         }
       }
 
       Gizmos.matrix = oldMatrix;

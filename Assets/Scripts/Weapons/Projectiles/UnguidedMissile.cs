@@ -23,8 +23,8 @@ public class UnguidedMissile : Projectile
    void Update()
    {
       // Fly the missile
-      ComputeLift();
-      FaceMotionVector();
+      //ComputeLift();
+      //FaceMotionVector();
    }
 
    #endregion
