@@ -18,7 +18,7 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
 
    [Header("Target metadata")]
    [Tooltip("Which country this target belongs to")]
-   [SerializeField] Country.CountryName m_CountryName;
+   [SerializeField] public Faction.CountryName m_CountryName;
 
    [Tooltip("A vehicle's marketing name; should be capitalized appropriately. This is the name most people call a vehicle (eg. Raptor, Hornet, Mustang)")]
    [SerializeField] string m_GeneralName = "Target";
@@ -33,7 +33,7 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    protected WeaponSystem m_WeaponSystem;
    protected SensorSystem m_SensorSystem;
    protected float m_CurrentHitpoints;
-   protected Country m_Country;
+   protected Faction m_Country;
 
    #endregion
 
@@ -74,7 +74,7 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    /// <summary>
    /// Target's country
    /// </summary>
-   public Country Country {
+   public Faction Country {
       get {
          return m_Country;
       }
@@ -83,7 +83,7 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    /// <summary>
    /// Target's country name
    /// </summary>
-   public Country.CountryName CountryName {
+   public Faction.CountryName CountryName {
       get {
          return m_CountryName;
       }
@@ -107,7 +107,7 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    {
 
       // Assign the manually selected country to this target
-      m_Country = Country.m_CountryList[m_CountryName];
+      m_Country = Faction.m_CountryList[m_CountryName];
 
       // Weapon system
       if(GetComponentInChildren<WeaponSystem>() != null)
@@ -149,7 +149,7 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    /// </summary>
    /// <param name="target">The target to compare to</param>
    /// <returns>Friend, foe, or neutral identification</returns>
-   public Country.Identification Relationship(Target target)
+   public Faction.Identification Relationship(Target target)
    {
       return m_Country.Relationship(target.Country);
    }

@@ -7,13 +7,14 @@ using UnityEngine.Rendering.HighDefinition;
 [ExecuteAlways]
 public class Roundel : MonoBehaviour
 {
-   Country m_Country;
+   Target m_Target;
+   Faction m_Country;
    DecalProjector m_DecalProjector;
 
    private void Start()
    {
-      Target target = GetComponentInParent<Target>();
-      m_Country = target.Country;
+      m_Target = GetComponentInParent<Target>();
+      m_Country = Faction.m_CountryList[m_Target.m_CountryName];
       m_DecalProjector = GetComponent<DecalProjector>();
       m_DecalProjector.material = m_Country.Roundel;
    }
@@ -22,7 +23,11 @@ public class Roundel : MonoBehaviour
    {
       if(Application.isPlaying == false)
       {
-         m_DecalProjector.material = m_Country.Roundel;
+         //m_Country = Faction.m_CountryList[m_Target.m_CountryName];
+         //Debug.Log("Material: " + m_DecalProjector.material);
+         //Debug.Log("Target country: " + m_Country.name);
+         m_DecalProjector.material = Faction.m_CountryList[Faction.CountryName.Gomer].Roundel;
+         //Debug.Log("Material: " + m_DecalProjector.material);
       }
    }
 }

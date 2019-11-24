@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 [InitializeOnLoad]
 [ExecuteAlways]
-public class Country : ScriptableObject
+public class Faction : ScriptableObject
 {
    #region Enumerations
 
@@ -32,24 +32,30 @@ public class Country : ScriptableObject
 
    #region Member Variables
 
-   public static Dictionary<CountryName, Country> m_CountryList = new Dictionary<CountryName, Country>() {
-      { CountryName.Gomer, new Country(CountryName.Gomer) },
-      { CountryName.Scythia, new Country(CountryName.Scythia) },
-      { CountryName.Madesh, new Country(CountryName.Madesh) },
-      { CountryName.Javan, new Country(CountryName.Javan) },
-      { CountryName.Tobolik, new Country(CountryName.Tobolik) },
-      { CountryName.Meshchera, new Country(CountryName.Meshchera) },
-      { CountryName.Thuras, new Country(CountryName.Thuras) },
-      { CountryName.Cush, new Country(CountryName.Cush) },
-      { CountryName.Mizr, new Country(CountryName.Mizr) },
-      { CountryName.Huttia, new Country(CountryName.Huttia) },
-      { CountryName.Palesti, new Country(CountryName.Palesti) },
-      { CountryName.Elam, new Country(CountryName.Elam) },
-      { CountryName.Asshuria, new Country(CountryName.Asshuria) },
-      { CountryName.Arphaxia, new Country(CountryName.Arphaxia) },
-      { CountryName.Lydda, new Country(CountryName.Lydda) },
-      { CountryName.Aram, new Country(CountryName.Aram) }
+   public static Dictionary<CountryName, Faction> m_CountryList = new Dictionary<CountryName, Faction>() {
+      { CountryName.Gomer, new Faction(CountryName.Gomer, s_RoundelGomer) },
+      { CountryName.Scythia, new Faction(CountryName.Scythia, s_RoundelNone) },
+      { CountryName.Madesh, new Faction(CountryName.Madesh, s_RoundelNone) },
+      { CountryName.Javan, new Faction(CountryName.Javan, s_RoundelNone) },
+      { CountryName.Tobolik, new Faction(CountryName.Tobolik, s_RoundelNone) },
+      { CountryName.Meshchera, new Faction(CountryName.Meshchera, s_RoundelNone) },
+      { CountryName.Thuras, new Faction(CountryName.Thuras, s_RoundelNone) },
+      { CountryName.Cush, new Faction(CountryName.Cush, s_RoundelNone) },
+      { CountryName.Mizr, new Faction(CountryName.Mizr, s_RoundelNone) },
+      { CountryName.Huttia, new Faction(CountryName.Huttia, s_RoundelNone) },
+      { CountryName.Palesti, new Faction(CountryName.Palesti, s_RoundelNone) },
+      { CountryName.Elam, new Faction(CountryName.Elam, s_RoundelNone) },
+      { CountryName.Asshuria, new Faction(CountryName.Asshuria, s_RoundelNone) },
+      { CountryName.Arphaxia, new Faction(CountryName.Arphaxia, s_RoundelNone) },
+      { CountryName.Lydda, new Faction(CountryName.Lydda, s_RoundelNone) },
+      { CountryName.Aram, new Faction(CountryName.Aram, s_RoundelNone) }
    };
+
+   [SerializeField] Material m_RoundelGomer;
+   [SerializeField] Material m_RoundelNone;
+
+   private static Material s_RoundelGomer;
+   private static Material s_RoundelNone;
 
    #endregion
 
@@ -60,7 +66,7 @@ public class Country : ScriptableObject
    public string Capital { get; private set; }
    public CountryName Name { get; private set; }
    public Coalition CountryCoalition { get; private set; }
-   public Material Roundel { get; internal set; }
+   public Material Roundel { get; private set; }
 
    #endregion
 
@@ -69,15 +75,17 @@ public class Country : ScriptableObject
 
    private void OnEnable()
    {
-      Debug.Log("hello!!!");
+      s_RoundelGomer = m_RoundelGomer;
+      s_RoundelNone = m_RoundelNone;
    }
 
    /// <summary>
    /// Create a country with a set name, demonym, capital, and coalition.
    /// </summary>
    /// <param name="country">The country to be created</param>
-   public Country(CountryName country)
+   public Faction(CountryName country, Material roundel)
    {
+      Debug.Log("New faction");
       switch(country)
       {
          case CountryName.Gomer:
@@ -85,6 +93,7 @@ public class Country : ScriptableObject
             Demonym = "Gomerag";
             Capital = "Galic";
             CountryCoalition = Coalition.Allied;
+            Roundel = roundel;
             break;
 
          case CountryName.Scythia:
@@ -92,6 +101,7 @@ public class Country : ScriptableObject
             Demonym = "Scyth";
             Capital = "Ukra";
             CountryCoalition = Coalition.Allied;
+            Roundel = s_RoundelNone;
             break;
 
          case CountryName.Madesh:
@@ -99,6 +109,7 @@ public class Country : ScriptableObject
             Demonym = "Madai";
             Capital = "Madapa";
             CountryCoalition = Coalition.None;
+            Roundel = s_RoundelNone;
             break;
 
          case CountryName.Javan:
@@ -106,6 +117,7 @@ public class Country : ScriptableObject
             Demonym = "Javanite";
             Capital = "Elys";
             CountryCoalition = Coalition.United;
+            Roundel = s_RoundelNone;
             break;
 
          case CountryName.Tobolik:
@@ -113,6 +125,7 @@ public class Country : ScriptableObject
             Demonym = "Tabali";
             Capital = "Tobolsk";
             CountryCoalition = Coalition.United;
+            Roundel = s_RoundelNone;
             break;
 
          case CountryName.Meshchera:
@@ -120,6 +133,7 @@ public class Country : ScriptableObject
             Demonym = "Meshchek";
             Capital = "Meshkva";
             CountryCoalition = Coalition.International;
+            Roundel = s_RoundelNone;
             break;
 
          case CountryName.Thuras:
@@ -127,6 +141,7 @@ public class Country : ScriptableObject
             Demonym = "Thuran";
             Capital = "Thur";
             CountryCoalition = Coalition.International;
+            Roundel = s_RoundelNone;
             break;
 
          case CountryName.Cush:
@@ -134,6 +149,7 @@ public class Country : ScriptableObject
             Demonym = "Cushite";
             Capital = "Ethi";
             CountryCoalition = Coalition.International;
+            Roundel = s_RoundelNone;
             break;
 
          case CountryName.Mizr:
@@ -141,6 +157,7 @@ public class Country : ScriptableObject
             Demonym = "Mizraim";
             Capital = "Mitz";
             CountryCoalition = Coalition.Cosmopolitan;
+            Roundel = m_RoundelNone;
             break;
 
          case CountryName.Huttia:
@@ -148,6 +165,7 @@ public class Country : ScriptableObject
             Demonym = "Huttite";
             Capital = "Hut";
             CountryCoalition = Coalition.Cosmopolitan;
+            Roundel = m_RoundelNone;
             break;
 
          case CountryName.Palesti:
@@ -155,6 +173,7 @@ public class Country : ScriptableObject
             Demonym = "Palesim";
             Capital = "Jebussa";
             CountryCoalition = Coalition.None;
+            Roundel = m_RoundelNone;
             break;
 
          case CountryName.Elam:
@@ -162,6 +181,7 @@ public class Country : ScriptableObject
             Demonym = "Elam";
             Capital = "Eru";
             CountryCoalition = Coalition.Federal;
+            Roundel = m_RoundelNone;
             break;
 
          case CountryName.Asshuria:
@@ -169,6 +189,7 @@ public class Country : ScriptableObject
             Demonym = "Asshur";
             Capital = "Ashkh";
             CountryCoalition = Coalition.Federal;
+            Roundel = m_RoundelNone;
             break;
 
          case CountryName.Arphaxia:
@@ -176,6 +197,7 @@ public class Country : ScriptableObject
             Demonym = "Arip";
             Capital = "Chalda";
             CountryCoalition = Coalition.Federal;
+            Roundel = m_RoundelNone;
             break;
 
          case CountryName.Lydda:
@@ -183,6 +205,7 @@ public class Country : ScriptableObject
             Demonym = "Sardi";
             Capital = "Lydd";
             CountryCoalition = Coalition.Joint;
+            Roundel = m_RoundelNone;
             break;
 
          case CountryName.Aram:
@@ -190,6 +213,7 @@ public class Country : ScriptableObject
             Demonym = "Arami";
             Capital = "Aramecc";
             CountryCoalition = Coalition.Joint;
+            Roundel = m_RoundelNone;
             break;
       }
    }
@@ -205,7 +229,7 @@ public class Country : ScriptableObject
    /// <param name="known">The reference country</param>
    /// <param name="country">The country being compared</param>
    /// <returns></returns>
-   public Identification Relationship(Country country)
+   public Identification Relationship(Faction country)
    {
       // When any or both sides have no coalition, they are enemies
       if(CountryCoalition == Coalition.None || country.CountryCoalition == Coalition.None)

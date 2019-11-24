@@ -179,15 +179,15 @@ public class HUDTracker : MonoBehaviour
       // Find the correct colour according to target relationships by country
       switch(UserInput.Player1Vehicle.Country.Relationship(m_Target.Country))
       {
-         case Country.Identification.Neutral:
+         case Faction.Identification.Neutral:
             ApplyTargetingColour(NEUTRAL);
             break;
 
-         case Country.Identification.Friend:
+         case Faction.Identification.Friend:
             ApplyTargetingColour(FRIEND);
             break;
 
-         case Country.Identification.Foe:
+         case Faction.Identification.Foe:
             ApplyTargetingColour(FOE);
             break;
 
