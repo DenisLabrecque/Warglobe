@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 /// <summary>
 /// Lists the countries of the game. Countries are by default enemies.
 /// </summary>
+[InitializeOnLoad]
+[ExecuteAlways]
 public class Country : ScriptableObject
 {
    #region Enumerations
@@ -57,11 +60,17 @@ public class Country : ScriptableObject
    public string Capital { get; private set; }
    public CountryName Name { get; private set; }
    public Coalition CountryCoalition { get; private set; }
+   public Material Roundel { get; internal set; }
 
    #endregion
 
 
    #region Constructor
+
+   private void OnEnable()
+   {
+      Debug.Log("hello!!!");
+   }
 
    /// <summary>
    /// Create a country with a set name, demonym, capital, and coalition.
