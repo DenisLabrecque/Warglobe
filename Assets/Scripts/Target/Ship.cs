@@ -56,7 +56,7 @@ public abstract class Ship : Vehicle
 
    private void AIControl()
    {
-      throw new NotImplementedException();
+      //throw new NotImplementedException();
    }
 
    private void HumanControl()

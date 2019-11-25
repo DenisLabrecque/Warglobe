@@ -14,6 +14,7 @@ public class SingleCamera : MonoBehaviour {
    {
       Camera1 = FindObjectOfType<Camera>();
       Camera2 = Instantiate(Camera1);
+      Camera2.GetComponent<AudioListener>().enabled = false; // Prevent having two audio listeners
       SetCameraLayout(2);
    }
 

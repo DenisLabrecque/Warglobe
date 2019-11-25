@@ -99,9 +99,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 5992.4727
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -188,8 +188,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_IsEnabled: 1
   m_ThrustDirection: {x: 0, y: 0, z: 1}
-  m_MaxPower: 680000
-  m_MaxBatteryCharge: 2500
+  m_ThrustToWeightRatio: 1
+  m_BatteryDurationMinutes: 11.5
   m_ThrottleInput: 0.674
   m_RotationAxis: {x: 0, y: 1, z: 0}
   m_RPM: 4252
@@ -1013,13 +1013,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1939958220920369844}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 8.7}
+  m_LocalRotation: {x: -0.043619405, y: 0, z: 0, w: 0.9990483}
+  m_LocalPosition: {x: 0, y: 0.21, z: 12.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1939958220806223477}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -5, y: 0, z: 0}
 --- !u!114 &1939958220920369834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1032,8 +1032,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0682376e198e254baa203ad9293f11b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Dimensions: {x: 2, y: 20}
-  m_ForcesToCenter: 1
+  m_Dimensions: {x: 10, y: 5}
+  m_ForcesToCenter: 0
   m_WingCurve: {fileID: 11400000, guid: 58f9c07cc5fb60b419af20276ffb7c59, type: 2}
   m_LiftMultiplier: 1
   m_DragMultiplier: 1
@@ -1324,7 +1324,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Dimensions: {x: 20, y: 10}
   m_ForcesToCenter: 1
-  m_WingCurve: {fileID: 11400000, guid: b5b1b1ce1ad5a884db0c0dd67034d8ff, type: 2}
+  m_WingCurve: {fileID: 11400000, guid: 59686f4b815483544a40b794156a99b8, type: 2}
   m_LiftMultiplier: 1
   m_DragMultiplier: 1
 --- !u!1 &1939958221484555896
@@ -5077,7 +5077,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Version: 1
-  m_Material: {fileID: 2100000, guid: e6fd56db5e1d8364eb8aabcc0d6a9345, type: 2}
+  m_Material: {fileID: 2100000, guid: 9d288aeef34e70441b01f3c8f2777649, type: 2}
   m_DrawDistance: 2000
   m_FadeScale: 0.9
   m_UVScale: {x: 1, y: 1}

@@ -49,6 +49,7 @@ public abstract class Motor : MonoBehaviour {
    // Set at start
    protected Rigidbody m_Rigidbody = null;
    AudioSource m_AudioSource;
+   private float m_1_60th = 0.0166667f;
 
    #endregion
 
@@ -138,7 +139,7 @@ public abstract class Motor : MonoBehaviour {
          m_MaxThrust = m_ThrustToWeightRatio * m_Rigidbody.mass * 400f;
 
          // Discharge the battery
-         m_CurrentBattery -= CurrentThrottle * 0.0166667f * Time.deltaTime;
+         m_CurrentBattery -= CurrentThrottle * m_1_60th * Time.deltaTime;
          if(m_CurrentBattery <= 0)
          {
             m_CurrentBattery = 0;

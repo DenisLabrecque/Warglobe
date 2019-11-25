@@ -88,7 +88,6 @@ public class Faction : ScriptableObject
    /// <param name="country">The country to be created</param>
    public Faction(CountryName country)
    {
-      Debug.Log("New faction");
       switch(country)
       {
          case CountryName.Gomer:

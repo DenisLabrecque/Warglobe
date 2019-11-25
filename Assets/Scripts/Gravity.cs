@@ -11,7 +11,7 @@ using UnityEngine;
 /// </summary>
 public static class Gravity {
 
-   public const float GRAVITY_PULL = 0.5f;
+   public const float GRAVITY_PULL = 1.5f;
    public static Vector3 GRAVITY_CENTER = new Vector3(0,0,0);
    public const int GRAVITY_RADIUS = 160000;
 
