@@ -19,6 +19,7 @@ public class FlotationArea : MonoBehaviour
    private List<float> m_flotationForces;
    private float m_TotalVolume;
    private float m_QuadrantVolume; // One fourth of the total submersible volume
+   private const float WATER_DRAG = 2f;
 
    /// <summary>
    /// The average of submerged percentages of all flotation points.
@@ -115,6 +116,8 @@ public class FlotationArea : MonoBehaviour
             // Apply flotation force
             float flotationForce = SubmergedVolume * m_flotationArea.m_DensityInverse;
             m_flotationArea.m_Rigidbody.AddForceAtPosition(Upwards * flotationForce, SubmergedPosition);
+            m_flotationArea.m_Rigidbody.drag = WATER_DRAG;
+            m_flotationArea.m_Rigidbody.angularDrag = WATER_DRAG;
 
             // Show debugging
             float maxForce = m_flotationArea.m_QuadrantVolume * m_flotationArea.m_DensityInverse;

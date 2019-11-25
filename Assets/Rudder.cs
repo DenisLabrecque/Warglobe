@@ -32,6 +32,6 @@ public class Rudder : MonoBehaviour
       //Vector3 liftDirection = Vector3.Cross(m_Rigidbody.velocity, transform.right).normalized;
       //m_Rigidbody.AddForceAtPosition(liftDirection * m_AngleOfAttack * m_Rigidbody.mass * m_Ship.ForwardSpeed, gameObject.transform.position, ForceMode.Force);
 
-      m_Rigidbody.AddTorque(new Vector3(0, 1, 0) * m_AngleOfAttack * m_Rigidbody.mass * m_Ship.Throttle, ForceMode.Force);
+      m_Rigidbody.AddRelativeTorque(new Vector3(0, 1, 0) * m_AngleOfAttack * m_Rigidbody.mass * m_Ship.Throttle * 500f, ForceMode.Force);
    }
 }
