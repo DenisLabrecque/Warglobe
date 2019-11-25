@@ -160,7 +160,7 @@ public class FlotationArea : MonoBehaviour
    /// <summary>
    /// Call at every physics tick to make the flotation area float in water.
    /// </summary>
-   public void Float()
+   private void Float()
    {
       foreach (FlotationPoint point in m_Corners)
       {
