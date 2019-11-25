@@ -134,18 +134,18 @@ public class SimpleWing : MonoBehaviour
 
          // Calculate lift/drag.
          float airDensity = Planet.Singleton.AirDensity(gameObject);
-         m_LiftForce = localVelocity.sqrMagnitude * m_LiftCoefficient * WingArea * m_LiftMultiplier * airDensity;
-         m_DragForce = localVelocity.sqrMagnitude * m_DragCoefficient * WingArea * m_DragMultiplier * airDensity;
+         m_LiftForce = localVelocity.sqrMagnitude * m_LiftCoefficient * WingArea * m_LiftMultiplier * airDensity * Time.deltaTime;
+         m_DragForce = localVelocity.sqrMagnitude * m_DragCoefficient * WingArea * m_DragMultiplier * airDensity * Time.deltaTime;
 
          // Vector3.Angle always returns a positive value, so add the sign back in.
          m_LiftForce *= -Mathf.Sign(localVelocity.y);
 
          // Smooth lift and drag
          // Prevent rapid sign inversion
-         if ((m_LiftForce > 0 && m_PreviousLiftForce < 0) || m_LiftForce < 0 && m_PreviousLiftForce > 0)
-            m_LiftForce = 0;
-         if ((m_DragForce > 0 && m_PreviousDragForce < 0) || m_DragForce < 0 && m_PreviousDragForce > 0)
-            m_DragForce = 0;
+         //if ((m_LiftForce > 0 && m_PreviousLiftForce < 0) || m_LiftForce < 0 && m_PreviousLiftForce > 0)
+         //   m_LiftForce = 0;
+         //if ((m_DragForce > 0 && m_PreviousDragForce < 0) || m_DragForce < 0 && m_PreviousDragForce > 0)
+         //   m_DragForce = 0;
 
          // Lift is always perpendicular to air flow.
          Vector3 liftDirection = Vector3.Cross(m_Rigidbody.velocity, transform.right).normalized;
