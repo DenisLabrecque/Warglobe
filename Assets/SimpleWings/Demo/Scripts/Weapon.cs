@@ -7,7 +7,7 @@
 public class SWWeapon : MonoBehaviour
 {
 	public TrailRenderer trail;
-	public Engine engine;
+	//public Engine engine;
 
 	public Rigidbody Rigidbody { get; internal set; }
 
@@ -18,10 +18,10 @@ public class SWWeapon : MonoBehaviour
 
 	private void Start()
 	{
-		if (engine != null)
-		{
-			engine.throttle = 0.0f;
-		}
+		//if (engine != null)
+		//{
+		//	engine.throttle = 0.0f;
+		//}
 		if (Rigidbody != null)
 		{
 			Rigidbody.isKinematic = true;
@@ -34,10 +34,10 @@ public class SWWeapon : MonoBehaviour
 
 	public void Fire(Vector3 velocity)
 	{
-		if (engine != null)
-		{
-			engine.throttle = 1.0f;
-		}
+		//if (engine != null)
+		//{
+		//	engine.throttle = 1.0f;
+		//}
 		if (Rigidbody != null)
 		{
 			Rigidbody.velocity = velocity;

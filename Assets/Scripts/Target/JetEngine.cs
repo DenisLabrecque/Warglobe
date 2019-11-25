@@ -6,8 +6,10 @@ public class JetEngine : Motor
 {
    void FixedUpdate()
    {
-      if(IsEnabled && m_CurrentBattery > 0)
+      if (IsEnabled && m_CurrentBattery > 0)
+      {
          // Apply the throttle behind a vehicle
          m_Rigidbody.AddRelativeForce(m_ThrustDirection * CurrentThrust * Planet.Singleton.AirDensity(gameObject));
+      }
    }
 }

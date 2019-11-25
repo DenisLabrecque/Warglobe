@@ -439,8 +439,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_IsEnabled: 1
   m_ThrustDirection: {x: 1, y: 0, z: 0}
-  m_MaxPower: 9e+9
-  m_MaxBatteryCharge: 9e+28
+  m_ThrustToWeightRatio: 1
+  m_BatteryDurationMinutes: 11.5
   m_ThrottleInput: 0
   m_RotationAxis: {x: 0, y: 0, z: 1}
   m_RPM: 3000
@@ -9842,6 +9842,11 @@ PrefabInstance:
       propertyPath: m_AngularDrag
       value: 0.25
       objectReference: {fileID: 0}
+    - target: {fileID: 5491076730914914123, guid: bd2cbdf2180fb38468b55906b1e8dc69,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: 500e733574922d04ea961553b1b26a63, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd2cbdf2180fb38468b55906b1e8dc69, type: 3}
 --- !u!1 &2011643680
@@ -10344,16 +10349,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1939958221968776396, guid: bd2cbdf2180fb38468b55906b1e8dc69,
-        type: 3}
-      propertyPath: m_PregameSpeed
-      value: 510
-      objectReference: {fileID: 0}
-    - target: {fileID: 2496397869235748823, guid: bd2cbdf2180fb38468b55906b1e8dc69,
-        type: 3}
-      propertyPath: m_Target
-      value: 
-      objectReference: {fileID: 1499280891}
     - target: {fileID: 1939958221425260580, guid: bd2cbdf2180fb38468b55906b1e8dc69,
         type: 3}
       propertyPath: m_Drag
@@ -10364,6 +10359,16 @@ PrefabInstance:
       propertyPath: m_AngularDrag
       value: 0.25
       objectReference: {fileID: 0}
+    - target: {fileID: 1939958221968776396, guid: bd2cbdf2180fb38468b55906b1e8dc69,
+        type: 3}
+      propertyPath: m_PregameSpeed
+      value: 510
+      objectReference: {fileID: 0}
+    - target: {fileID: 2496397869235748823, guid: bd2cbdf2180fb38468b55906b1e8dc69,
+        type: 3}
+      propertyPath: m_Target
+      value: 
+      objectReference: {fileID: 1499280891}
     - target: {fileID: 1939958221425260633, guid: bd2cbdf2180fb38468b55906b1e8dc69,
         type: 3}
       propertyPath: m_Enabled
@@ -10374,7 +10379,33 @@ PrefabInstance:
       propertyPath: m_Density
       value: 0.802
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 1939958219958508594, guid: bd2cbdf2180fb38468b55906b1e8dc69,
+        type: 3}
+      propertyPath: m_PowerMassRatio
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1939958219958508594, guid: bd2cbdf2180fb38468b55906b1e8dc69,
+        type: 3}
+      propertyPath: m_MaxBatteryCharge
+      value: 25000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5491076730914914123, guid: bd2cbdf2180fb38468b55906b1e8dc69,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: 500e733574922d04ea961553b1b26a63, type: 2}
+    - target: {fileID: 1939958219972495798, guid: bd2cbdf2180fb38468b55906b1e8dc69,
+        type: 3}
+      propertyPath: m_ForcesToCenter
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1939958221410240607, guid: bd2cbdf2180fb38468b55906b1e8dc69,
+        type: 3}
+      propertyPath: m_ForcesToCenter
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1939958221425260633, guid: bd2cbdf2180fb38468b55906b1e8dc69, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: bd2cbdf2180fb38468b55906b1e8dc69, type: 3}
 --- !u!114 &4055738974422949717 stripped
 MonoBehaviour:

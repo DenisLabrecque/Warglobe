@@ -14,20 +14,16 @@ public class Roundel : MonoBehaviour
    private void Start()
    {
       m_Target = GetComponentInParent<Target>();
-      m_Country = Faction.m_CountryList[m_Target.m_CountryName];
+      m_Country = m_Target.Country;
       m_DecalProjector = GetComponent<DecalProjector>();
-      m_DecalProjector.material = m_Country.Roundel;
-   }
 
-   private void Update()
-   {
-      if(Application.isPlaying == false)
+      if (Application.isPlaying)
       {
-         //m_Country = Faction.m_CountryList[m_Target.m_CountryName];
-         //Debug.Log("Material: " + m_DecalProjector.material);
-         //Debug.Log("Target country: " + m_Country.name);
-         m_DecalProjector.material = Faction.m_CountryList[Faction.CountryName.Gomer].Roundel;
-         //Debug.Log("Material: " + m_DecalProjector.material);
+         m_DecalProjector.material = m_Country.Roundel;
+      }
+      else
+      {
+         m_DecalProjector.material = Faction.RoundelNone;
       }
    }
 }

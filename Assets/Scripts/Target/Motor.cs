@@ -1,10 +1,10 @@
-﻿using System.Collections;
+﻿using DGL;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
 /// Any type of motor.
-/// Add physics calculations on fixed update.
+/// Physics force calculations to be added to the child script on fixed update.
 /// 
 /// Denis Labrecque
 /// January 2019
@@ -23,10 +23,10 @@ public abstract class Motor : MonoBehaviour {
    [SerializeField] protected Vector3 m_ThrustDirection = new Vector3(0, 0, 1);
 
    [Tooltip("Unitless thrust at maximum throttle")]
-   [SerializeField] float m_MaxPower = 68000f;
+   [SerializeField] protected float m_ThrustToWeightRatio = 1f;
 
    [Tooltip("Battery total charge when full (unitless)")]
-   [SerializeField] float m_MaxBatteryCharge = 2500f;
+   [SerializeField] float m_BatteryDurationMinutes = 11.5f;
 
    [Tooltip("Current throttle (modified in realtime)")]
    [Range(0,1)] [SerializeField] float m_ThrottleInput = 0;
@@ -44,6 +44,7 @@ public abstract class Motor : MonoBehaviour {
    
    float m_Volume;
    protected float m_CurrentBattery;
+   protected float m_MaxThrust;
 
    // Set at start
    protected Rigidbody m_Rigidbody = null;
@@ -66,9 +67,9 @@ public abstract class Motor : MonoBehaviour {
    /// <summary>
    /// Maximum power at 100% throttle.
    /// </summary>
-   public float MaxPower {
+   public float PowerMassRatio {
       get {
-         return m_MaxPower;
+         return m_ThrustToWeightRatio;
       }
    }
 
@@ -77,7 +78,7 @@ public abstract class Motor : MonoBehaviour {
    /// </summary>
    public float CurrentThrust {
       get {
-         return m_MaxPower * m_ThrottleInput;
+         return m_MaxThrust * m_ThrottleInput;
       }
    }
 
@@ -86,12 +87,12 @@ public abstract class Motor : MonoBehaviour {
    /// </summary>
    public float BatteryPercent {
       get {
-         return m_CurrentBattery / m_MaxBatteryCharge;
+         return DGL.Math.Utility.Percent(m_CurrentBattery, m_BatteryDurationMinutes);
       }
    }
 
    /// <summary>
-   /// Battery charge in amperes
+   /// Battery charge in ...minutes left.
    /// </summary>
    public int BatteryAmperage {
       get {
@@ -127,15 +128,17 @@ public abstract class Motor : MonoBehaviour {
       m_AudioSource.rolloffMode = AudioRolloffMode.Logarithmic;
 
       m_Volume = m_AudioSource.volume;
-      m_CurrentBattery = m_MaxBatteryCharge;
+      m_CurrentBattery = m_BatteryDurationMinutes;
    }
 
    void Update()
    {
       if(m_IsEnabled)
       {
+         m_MaxThrust = m_ThrustToWeightRatio * m_Rigidbody.mass * 400f;
+
          // Discharge the battery
-         m_CurrentBattery -= CurrentThrust * CurrentThrust * 0.00000000003f * Time.deltaTime;
+         m_CurrentBattery -= CurrentThrottle * 0.0166667f * Time.deltaTime;
          if(m_CurrentBattery <= 0)
          {
             m_CurrentBattery = 0;

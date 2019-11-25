@@ -1231,7 +1231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b649f56975bff894693ece0331209c1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CountryName: 0
+  m_CountryName: 10
   m_GeneralName: Arrow
   m_Description: A low-observable fighter jet.
   m_RadarCrossSection: 1
@@ -5077,8 +5077,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Version: 1
-  m_Material: {fileID: 0}
-  m_DrawDistance: 1000
+  m_Material: {fileID: 2100000, guid: e6fd56db5e1d8364eb8aabcc0d6a9345, type: 2}
+  m_DrawDistance: 2000
   m_FadeScale: 0.9
   m_UVScale: {x: 1, y: 1}
   m_UVBias: {x: 0, y: 0}
