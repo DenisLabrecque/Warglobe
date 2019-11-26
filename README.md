@@ -108,4 +108,21 @@ This game is a work in progress. Certain elements noted below do not work yet; i
 - Aircraft carriers have elevators and hangars
 - Give the game a goal (or levels)
 
-<img src="WarGlobe-logo.svg" />
+## Factions
+### Cush
+<img src="Assets/Resources/Flags/RoundelCush.png" />
+
+### Gomer
+<img src="Assets/Resources/Flags/RoundelGomer_2.png" />
+
+### Javan
+<img src="Assets/Resources/Flags/RoundelJavan.png" />
+
+### Madesh
+<img src="Assets/Resources/Flags/RoundelMadesh.png" />
+
+### Palesti
+<img src="Assets/Resources/Flags/RoundelPalesti.png" />
+
+### Scythia
+<img src="Assets/Resources/Flags/RoundelScythia.png" />
