@@ -111,25 +111,46 @@ This game is a work in progress. Certain elements noted below do not work yet; i
 ## Intended Aesthetic
 <img src="https://i.pinimg.com/originals/4c/1b/1f/4c1b1fe91776ce3941705da87e1f6e31.jpg" />
 <img src="https://i.pinimg.com/originals/0f/5e/8c/0f5e8c23e2beb6c799514a6b94ca61f0.jpg" />
-<img src="https://i.pinimg.com/originals/8c/cf/05/8ccf05f0d64588b6bd6ae491004610b2.jpg" />
-<img src="https://i.pinimg.com/originals/42/a4/a2/42a4a27c79ddc5da007de54ae21f07db.jpg" />
+<img src="https://i.pinimg.com/originals/8c/cf/05/8ccf05f0d64588b6bd6ae491004610b2.jpg" /><img src="https://i.pinimg.com/originals/42/a4/a2/42a4a27c79ddc5da007de54ae21f07db.jpg" />
 These images are for inspiration only.
 
 ## Factions
-### Cush
-<img src="Assets/Resources/Flags/RoundelCush.png" />
 
-### Gomer
+### Allied Coalition
+#### Gomer
 <img src="Assets/Resources/Flags/RoundelGomer_2.png" />
 
-### Javan
+#### Scythia
+<img src="Assets/Resources/Flags/RoundelScythia.png" />
+
+### United Coalition
+#### Javan
 <img src="Assets/Resources/Flags/RoundelJavan.png" />
 
-### Madesh
+#### Tobolik
+
+### International Coalition
+#### Meshchera
+#### Thuras
+#### Cush
+<img src="Assets/Resources/Flags/RoundelCush.png" />
+
+### Cosmopolitan Coalition
+#### Mizr
+#### Huttia
+
+### Federal Coalition
+#### Elam
+#### Asshuria
+#### Arphaxia
+
+### Joint Coalition
+#### Lydda
+#### Aram
+
+### No Coalition/Rogue
+#### Madesh
 <img src="Assets/Resources/Flags/RoundelMadesh.png" />
 
-### Palesti
+#### Palesti
 <img src="Assets/Resources/Flags/RoundelPalesti.png" />
-
-### Scythia
-<img src="Assets/Resources/Flags/RoundelScythia.png" />
