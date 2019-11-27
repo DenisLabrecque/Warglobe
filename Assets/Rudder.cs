@@ -26,12 +26,17 @@ public class Rudder : MonoBehaviour
       // Angle of attack is used as the look up for the lift and drag curves.
       m_AngleOfAttack = Vector3.Angle(new Vector3(1, 0), localVelocity);
 
-      Debug.Log("AOA: " + m_AngleOfAttack);
+      // Vector3.Angle always returns a positive value, so add the sign back in.
+      m_AngleOfAttack *= -Mathf.Sign(localVelocity.y);
+      Debug.Log("Angle of attack: " + m_AngleOfAttack);
+
+      // Normalize AOA out of 90 degrees
+      m_AngleOfAttack = DGL.Math.Utility.Percent(m_AngleOfAttack, 90f);
 
       //m_Rigidbody.AddTorque(localVelocity * m_AngleOfAttack * 1000);
       //Vector3 liftDirection = Vector3.Cross(m_Rigidbody.velocity, transform.right).normalized;
       //m_Rigidbody.AddForceAtPosition(liftDirection * m_AngleOfAttack * m_Rigidbody.mass * m_Ship.ForwardSpeed, gameObject.transform.position, ForceMode.Force);
 
-      m_Rigidbody.AddRelativeTorque(new Vector3(0, 1, 0) * m_AngleOfAttack * m_Rigidbody.mass * m_Ship.Throttle * 500f, ForceMode.Force);
+      m_Rigidbody.AddRelativeTorque(new Vector3(0, 1, 0) * m_AngleOfAttack * m_Rigidbody.mass * m_Rigidbody.mass * m_Ship.Throttle, ForceMode.Force);
    }
 }
