@@ -172,7 +172,7 @@ public class Faction : ScriptableObject
 
          case CountryName.Palesti:
             Name = CountryName.Palesti;
-            Demonym = "Palesim";
+            Demonym = "Philisim";
             Capital = "Jebussa";
             CountryCoalition = Coalition.None;
             Roundel = m_RoundelPalesti;
@@ -180,7 +180,7 @@ public class Faction : ScriptableObject
 
          case CountryName.Elam:
             Name = CountryName.Elam;
-            Demonym = "Elam";
+            Demonym = "Elami";
             Capital = "Eru";
             CountryCoalition = Coalition.Federal;
             Roundel = m_RoundelNone;
@@ -196,7 +196,7 @@ public class Faction : ScriptableObject
 
          case CountryName.Arphaxia:
             Name = CountryName.Arphaxia;
-            Demonym = "Arip";
+            Demonym = "Arrhip";
             Capital = "Chalda";
             CountryCoalition = Coalition.Federal;
             Roundel = m_RoundelNone;

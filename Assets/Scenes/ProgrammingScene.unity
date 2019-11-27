@@ -9149,7 +9149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94a3e3d612b32d04e827c7a6974c852d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Player1Vehicle: {fileID: 4055738974422949717}
+  m_Player1Vehicle: {fileID: 310564102}
   m_Player2Vehicle: {fileID: 310564102}
   m_UIController: {fileID: 397775540}
 --- !u!4 &1541402217
@@ -11019,18 +11019,6 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 1939958221425260633, guid: bd2cbdf2180fb38468b55906b1e8dc69, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: bd2cbdf2180fb38468b55906b1e8dc69, type: 3}
---- !u!114 &4055738974422949717 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1939958221968776396, guid: bd2cbdf2180fb38468b55906b1e8dc69,
-    type: 3}
-  m_PrefabInstance: {fileID: 2496397868661982105}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b649f56975bff894693ece0331209c1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &7082391604304956083
 PrefabInstance:
   m_ObjectHideFlags: 0
