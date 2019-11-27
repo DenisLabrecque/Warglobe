@@ -67,6 +67,13 @@ public abstract class Ship : Vehicle
 
       // Steer
       m_Rudder.DeflectionPercent = UserInput.Yaw;
+
+      // Fire weapons
+      if(UserInput.Gun)
+      {
+         Debug.Log("Fire projectile called.");
+         WeaponSystem.FireProjectile();
+      }
    }
 
    #endregion

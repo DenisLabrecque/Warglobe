@@ -28,7 +28,6 @@ public class Rudder : MonoBehaviour
 
       // Vector3.Angle always returns a positive value, so add the sign back in.
       m_AngleOfAttack *= -Mathf.Sign(localVelocity.y);
-      Debug.Log("Angle of attack: " + m_AngleOfAttack);
 
       // Normalize AOA out of 90 degrees
       m_AngleOfAttack = DGL.Math.Utility.Percent(m_AngleOfAttack, 90f);

@@ -143,7 +143,10 @@ public class WeaponSystem : MonoBehaviour {
       m_TrackingList.Clear();
 
       // Feed the laser the closest target (this can be null)
-      m_Laser.SetTarget(m_SensorSystem.TrackingTarget);
+      if (m_Laser != null)
+      {
+         m_Laser.SetTarget(m_SensorSystem.TrackingTarget);
+      }
       m_TrackingList.Add(m_SensorSystem.TrackingTarget);
    }
 
