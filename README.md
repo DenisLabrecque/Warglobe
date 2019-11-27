@@ -119,38 +119,76 @@ These images are for inspiration only.
 ### Allied Coalition
 #### Gomer
 <img src="Assets/Resources/Flags/RoundelGomer_2.png" />
+Demonym: Gomerag
+Capital: Galic
 
 #### Scythia
 <img src="Assets/Resources/Flags/RoundelScythia.png" />
+Demonym: Scyth
+Capital: Ukra
 
 ### United Coalition
 #### Javan
 <img src="Assets/Resources/Flags/RoundelJavan.png" />
+Demonym: Javanite
+Capital: Elys
 
 #### Tobolik
+Demonym: Tabali
+Capital: Tobolsk
 
 ### International Coalition
 #### Meshchera
+Demonym: Meschek
+Capital: Meshkva
+
 #### Thuras
+Demonym: Thuran
+Capital: Thur
+
 #### Cush
 <img src="Assets/Resources/Flags/RoundelCush.png" />
+Demonym: Cushite
+Capital: Ethi
 
 ### Cosmopolitan Coalition
 #### Mizr
+Demonym: Mizraim
+Capital: Mitz
+
 #### Huttia
+Demonym: Huttite
+Capital: Hut
 
 ### Federal Coalition
 #### Elam
+Demonym: Elami
+Capital: Eru
+
 #### Asshuria
+Demonym: Asshur
+Capital: Ashkh
+
 #### Arphaxia
+Demonym: Arrhip
+Capital: Chalda
 
 ### Joint Coalition
 #### Lydda
+Demonym: Sardi
+Capital: Lydd
+
 #### Aram
+Demonym: Arami
+Capital: Aramecc
 
 ### No Coalition/Rogue
 #### Madesh
 <img src="Assets/Resources/Flags/RoundelMadesh.png" />
+Demonym: Madai
+Capital: Madapa
 
 #### Palesti
 <img src="Assets/Resources/Flags/RoundelPalesti.png" />
+Demonym: Philisim
+Capital: Jebussa
