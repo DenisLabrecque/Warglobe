@@ -167,6 +167,7 @@ Demonym: Elami
 Capital: Eru
 
 #### Asshuria
+<img src="Assets/Resources/Flags/RoundelAsshuria.png" />
 Demonym: Asshur
 Capital: Ashkh
 
