@@ -127,46 +127,66 @@ public class AircraftHUD : MonoBehaviour {
    /// </summary>
    private void PrintVehicleHUDInfo()
    {
-      Airplane currentAirplane = UserInput.Player1Vehicle as Airplane;
+      Vehicle currentVehicle = UserInput.Player1Vehicle as Vehicle;
 
       // Throttle value
-      m_ThrottleSlider.value = currentAirplane.Throttle;
+      m_ThrottleSlider.value = currentVehicle.Throttle;
 
+      // Battery
+      m_MachText.text = currentVehicle.BatteryAmperage.ToString();
+
+      // Airspeed
+      m_AirspeedText.text = (currentVehicle.ForwardSpeed).ToString("N0", CultureInfo.InvariantCulture).Replace(',', ' ');
+
+
+
+      // Radar on/off
+      m_RadarIOText.text = currentVehicle.SensorSystem.Radar.IsOn ? Multilang.Text["radar_on"] : Multilang.Text["radar_off"];
+
+      // Selected weapon
+      m_SelectedWeaponText.text = currentVehicle.WeaponSystem.CurrentProjectile.Abbreviation + " " + currentVehicle.WeaponSystem.CurrentSlot.NumberLeft;
+
+
+
+      // Testing sensor output
+      TestingSensorList();
+
+      if(currentVehicle is Airplane)
+      {
+         PrintAirplaneHUDInfo(currentVehicle as Airplane);
+      }
+      else if(currentVehicle is Ship)
+      {
+         PrintShipHUDInfo(currentVehicle as Ship);
+      }
+   }
+
+   private void PrintAirplaneHUDInfo(Airplane currentAirplane)
+   {
       // Angle
       m_AlphaText.text = currentAirplane.PitchAngle.ToString("N1");
 
-      // Battery
-      //m_MachText.text = (currentAirplane.ForwardSpeed / 343f).ToString("N1");
-      m_MachText.text = currentAirplane.BatteryAmperage.ToString();
-
-      // Airspeed
-      m_AirspeedText.text = (currentAirplane.ForwardSpeed).ToString("N0", CultureInfo.InvariantCulture).Replace(',', ' ');
-
       // Altitude
       string altitudeString;
-      if(currentAirplane.SensorSystem.Radar.IsOn)
+      if (currentAirplane.SensorSystem.Radar.IsOn)
          altitudeString = currentAirplane.SensorSystem.Radar.Altitude.ToString("N0", CultureInfo.InvariantCulture).Replace(',', ' ');
       else
          altitudeString = currentAirplane.AltitudeAboveSea.ToString("N0", CultureInfo.InvariantCulture).Replace(',', ' ');
       m_AltitudeText.text = altitudeString;
 
-      // Radar on/off
-      m_RadarIOText.text = currentAirplane.SensorSystem.Radar.IsOn ? Multilang.Text["radar_on"] : Multilang.Text["radar_off"];
-
-      // Selected weapon
-      m_SelectedWeaponText.text = currentAirplane.WeaponSystem.CurrentProjectile.Abbreviation + " " + currentAirplane.WeaponSystem.CurrentSlot.NumberLeft;
-
       // Message area
       string action;
-      if(currentAirplane.SensorSystem.TrackingTarget == null)
+      if (currentAirplane.SensorSystem.TrackingTarget == null)
          action = "null";
       else
          action = currentAirplane.SensorSystem.TrackingTarget.PopularName;
       string state = currentAirplane.IsUpright ? "upright" : "upside-down";
       m_MessageText.text = action + "\n" + state;
+   }
 
-      // Testing sensor output
-      TestingSensorList();
+   private void PrintShipHUDInfo(Ship currentShip)
+   {
+      //m_AlphaText.text = currentShip.rudder
    }
 
    /// <summary>

@@ -8,6 +8,9 @@ public class Rudder : MonoBehaviour
    Vehicle m_Ship;
    private float m_AngleOfAttack = 0;
 
+   // A speed that ships generally don't exceed
+   public const float GENERAL_MAX_SPEED = 200f;
+
    // Start is called before the first frame update
    void Awake()
    {
@@ -22,22 +25,19 @@ public class Rudder : MonoBehaviour
 
    private void FixedUpdate()
    {
+      // Find the total direction the ship is going as compared to the rudder
       Vector3 localVelocity = transform.InverseTransformDirection(m_Rigidbody.velocity);
-      // Angle of attack is used as the look up for the lift and drag curves.
       m_AngleOfAttack = Vector3.Angle(new Vector3(0, 0, 1), localVelocity);
-      Debug.Log("Angle: " + m_AngleOfAttack);
+      // Vector3.Angle always returns a positive value, so add the sign back in
+      m_AngleOfAttack *= Mathf.Sign(localVelocity.x);
 
-      // Vector3.Angle always returns a positive value, so add the sign back in.
-      m_AngleOfAttack *= -Mathf.Sign(localVelocity.y);
+      float percentAOA = DGL.Math.Utility.Percent(m_AngleOfAttack, 90f, DGL.Math.PercentMode.ClampNegative1To1);
+      float percentSpeed = DGL.Math.Utility.Percent(m_Ship.ForwardSpeed, GENERAL_MAX_SPEED, DGL.Math.PercentMode.Clamp0To1);
+      float massSquared = m_Rigidbody.mass * m_Rigidbody.mass;
 
-      // Normalize AOA out of 90 degrees
-      m_AngleOfAttack = DGL.Math.Utility.Percent(m_AngleOfAttack, 90f, DGL.Math.PercentMode.Clamp0To1);
-      //Debug.Log("Speed: " + m_Ship.ForwardSpeed);
+      // Debug.Log("Force: " + (speedPercent * m_AngleOfAttack));
 
-      //m_Rigidbody.AddTorque(localVelocity * m_AngleOfAttack * 1000);
-      //Vector3 liftDirection = Vector3.Cross(m_Rigidbody.velocity, transform.right).normalized;
-      //m_Rigidbody.AddForceAtPosition(liftDirection * m_AngleOfAttack * m_Rigidbody.mass * m_Ship.ForwardSpeed, gameObject.transform.position, ForceMode.Force);
-
-      m_Rigidbody.AddRelativeTorque(new Vector3(0, 1, 0) * m_AngleOfAttack * m_Rigidbody.mass * m_Rigidbody.mass * Time.deltaTime, ForceMode.Force);
+      m_Rigidbody.AddRelativeTorque(new Vector3(0, 1, 0) * percentAOA * massSquared * percentSpeed * Time.deltaTime, ForceMode.Force); // The actual turning
+      m_Rigidbody.AddRelativeTorque(new Vector3(0, 0, 1) * percentAOA * m_Rigidbody.mass * percentSpeed * Time.deltaTime, ForceMode.Force); // Turning effect
    }
 }
