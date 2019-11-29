@@ -3337,7 +3337,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MaxAngle: 30
-  m_MoveSpeed: 60
+  m_MoveSpeed: 10
   m_Exponential: 0.149
   m_Axis: 1
   m_Mode: 0
@@ -11188,6 +11188,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1679eaaa25ffd74da32aa60337626aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Effect: 0.05
+  m_ShiftSpeed: 0.5
 --- !u!4 &2010406646 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 659230988668013321, guid: 09ec8f5e58fedd342bdf5aeb19045feb,
