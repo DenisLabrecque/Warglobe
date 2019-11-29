@@ -72,7 +72,8 @@ public abstract class Ship : Vehicle
       if(UserInput.Gun)
       {
          Debug.Log("Fire projectile called.");
-         WeaponSystem.FireProjectile();
+         //WeaponSystem.FireProjectile();
+         WeaponSystem.FireTurret();
       }
    }
 

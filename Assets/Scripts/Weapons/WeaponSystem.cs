@@ -98,6 +98,7 @@ public class WeaponSystem : MonoBehaviour {
 
    public void FireTurret()
    {
+      Debug.Log("Turret " + gameObject.name + " fired");
       foreach(Turret turret in m_Turrets)
       {
          turret.Fire();
@@ -161,7 +162,7 @@ public class WeaponSystem : MonoBehaviour {
       {
          foreach(Turret turret in m_Turrets)
          {
-            if(m_SensorSystem.TrackingTarget.transform.position != null)
+            if(m_SensorSystem.TrackingTarget != null)
                turret.SetAimpoint(m_SensorSystem.TrackingTarget.transform.position);
          }
       }

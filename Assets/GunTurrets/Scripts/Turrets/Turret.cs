@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 /// <summary>
 /// From Brian Hernandez.
@@ -15,6 +17,7 @@ public class Turret : MonoBehaviour, IWeapon
    [SerializeField] Transform m_Base;
    [Tooltip("Transform used to provide the vertical rotation of the barrels. Must be a child of the TurretBase.")]
    public Transform m_Barrels;
+   List<GunMuzzle> m_Muzzles = new List<GunMuzzle>();
 
    [Header("Rotation Limits")]
    [Tooltip("Turn rate of the turret's base and barrels in degrees per second.")]
@@ -59,8 +62,17 @@ public class Turret : MonoBehaviour, IWeapon
 
    float IWeapon.HitProbability => throw new System.NotImplementedException();
 
+   private void Awake()
+   {
+      m_Muzzles = GetComponentsInChildren<GunMuzzle>().ToList();
+   }
+
    private void Start()
    {
+      if(m_Muzzles.Count == 0)
+      {
+         throw new System.Exception("A Turret requires at least one muzzle to fire");
+      }
       if (m_IsAiming == false)
          m_AimPoint = transform.TransformPoint(Vector3.forward * 100.0f);
    }
@@ -251,6 +263,9 @@ public class Turret : MonoBehaviour, IWeapon
 
    public void Fire()
    {
-      throw new System.NotImplementedException();
+      foreach(GunMuzzle muzzle in m_Muzzles)
+      {
+         muzzle.Fire();
+      }
    }
 }
