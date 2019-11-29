@@ -65,7 +65,7 @@ public abstract class Vehicle : Target {
    /// Current throttle percent
    /// </summary>
    public float Throttle {
-      get { return m_Motor.CurrentThrottle; }
+      get { return m_Motor.InputThrottle; }
    }
 
    /// <summary>
@@ -121,7 +121,7 @@ public abstract class Vehicle : Target {
    /// </summary>
    public int BatteryAmperage {
       get {
-         return m_Motor.BatteryAmperage;
+         return m_Motor.BatteryMinutesLeft;
       }
    }
 

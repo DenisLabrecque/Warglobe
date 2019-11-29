@@ -161,7 +161,8 @@ public class WeaponSystem : MonoBehaviour {
       {
          foreach(Turret turret in m_Turrets)
          {
-            turret.SetAimpoint(m_SensorSystem.TrackingTarget.transform.position);
+            if(m_SensorSystem.TrackingTarget.transform.position != null)
+               turret.SetAimpoint(m_SensorSystem.TrackingTarget.transform.position);
          }
       }
       m_TrackingList.Add(m_SensorSystem.TrackingTarget);

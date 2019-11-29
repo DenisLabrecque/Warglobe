@@ -22,14 +22,17 @@ public abstract class Motor : MonoBehaviour {
 
    [SerializeField] protected Vector3 m_ThrustDirection = new Vector3(0, 0, 1);
 
-   [Tooltip("Unitless thrust at maximum throttle")]
+   [Tooltip("Thrust to mass at maximum throttle")]
    [SerializeField] protected float m_ThrustToWeightRatio = 1f;
+
+   [Tooltip("How quickly thrust reacts to inputs")]
+   [SerializeField][Range(0, 1)] protected float m_ThrustChangeSpeed = 0.5f;
 
    [Tooltip("Battery total charge when full (unitless)")]
    [SerializeField] float m_BatteryDurationMinutes = 11.5f;
 
    [Tooltip("Current throttle (modified in realtime)")]
-   [Range(0,1)] [SerializeField] float m_ThrottleInput = 0;
+   [Range(0,1)] [SerializeField] float m_ThrottleInput = 0; // The throttle setting that has been ordered
 
    [Header("Visible Fan Properties")]
 
@@ -43,6 +46,7 @@ public abstract class Motor : MonoBehaviour {
    [SerializeField] float m_MaxPitch = 2.2f;
    
    float m_Volume;
+   protected float m_ActualThrottle; // The throttle setting the engine has had time to reach
    protected float m_CurrentBattery;
    protected float m_MaxThrust;
 
@@ -57,9 +61,18 @@ public abstract class Motor : MonoBehaviour {
    #region Properties
 
    /// <summary>
-   /// Percent throttle
+   /// Percent throttle that the motor has gotten to.
    /// </summary>
-   public float CurrentThrottle {
+   public float ActualThrottle {
+      get {
+         return m_ActualThrottle;
+      }
+   }
+
+   /// <summary>
+   /// Percent throttle that the motor was ordered to get to.
+   /// </summary>
+   public float InputThrottle {
       get {
          return m_ThrottleInput;
       }
@@ -79,7 +92,7 @@ public abstract class Motor : MonoBehaviour {
    /// </summary>
    public float CurrentThrust {
       get {
-         return m_MaxThrust * m_ThrottleInput;
+         return m_ActualThrottle * m_MaxThrust;
       }
    }
 
@@ -93,9 +106,9 @@ public abstract class Motor : MonoBehaviour {
    }
 
    /// <summary>
-   /// Battery charge in ...minutes left.
+   /// Battery charge in number of minutes left.
    /// </summary>
-   public int BatteryAmperage {
+   public int BatteryMinutesLeft {
       get {
          return (int)m_CurrentBattery;
       }
@@ -126,8 +139,9 @@ public abstract class Motor : MonoBehaviour {
       m_AudioSource = GetComponent<AudioSource>();
       m_AudioSource.loop = true;
       m_AudioSource.spatialBlend = 1;
-      m_AudioSource.rolloffMode = AudioRolloffMode.Logarithmic;
+      m_AudioSource.rolloffMode = AudioRolloffMode.Linear;
 
+      m_ActualThrottle = m_ThrottleInput;
       m_Volume = m_AudioSource.volume;
       m_CurrentBattery = m_BatteryDurationMinutes;
    }
@@ -136,10 +150,14 @@ public abstract class Motor : MonoBehaviour {
    {
       if(m_IsEnabled)
       {
+         // Move thrust to desired throttle
+         m_ActualThrottle = Mathf.Lerp(m_ActualThrottle, m_ThrottleInput, m_ThrustChangeSpeed * Time.deltaTime);
+
+         // Mass can change
          m_MaxThrust = m_ThrustToWeightRatio * m_Rigidbody.mass * 400f;
 
          // Discharge the battery
-         m_CurrentBattery -= CurrentThrottle * m_1_60th * Time.deltaTime;
+         m_CurrentBattery -= m_ActualThrottle * m_1_60th * Time.deltaTime;
          if(m_CurrentBattery <= 0)
          {
             m_CurrentBattery = 0;
@@ -149,7 +167,7 @@ public abstract class Motor : MonoBehaviour {
          else
          {
             // Sound volume
-            if(m_ThrottleInput == 0f)
+            if(m_ActualThrottle == 0f)
             {
                m_AudioSource.volume = 0;
             }
@@ -159,12 +177,12 @@ public abstract class Motor : MonoBehaviour {
             }
 
             // Sound pitch
-            m_AudioSource.pitch = m_ThrottleInput * m_MaxPitch;
+            m_AudioSource.pitch = m_ActualThrottle * m_MaxPitch;
 
             // Make each fan turn
             foreach(GameObject part in m_Fans)
             {
-               part.transform.Rotate(m_RotationAxis, CurrentThrottle * m_RPM * Time.deltaTime);
+               part.transform.Rotate(m_RotationAxis, m_ActualThrottle * m_RPM * Time.deltaTime);
             }
          }
       }
