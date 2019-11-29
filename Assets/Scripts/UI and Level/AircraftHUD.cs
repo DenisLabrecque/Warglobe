@@ -194,11 +194,11 @@ public class AircraftHUD : MonoBehaviour {
    /// </summary>
    private void TestingSensorList()
    {
-      Airplane currentAirplane = UserInput.Player1Vehicle as Airplane;
+      Vehicle currentVehicle = UserInput.Player1Vehicle as Vehicle;
       string TargetList = string.Empty;
-      if(currentAirplane.SensorSystem != null)
+      if(currentVehicle.SensorSystem != null)
       {
-         foreach(Target target in currentAirplane.SensorSystem.FusedSensorData)
+         foreach(Target target in currentVehicle.SensorSystem.FusedSensorData)
          {
             TargetList += target + "\n";
          }

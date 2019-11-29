@@ -3,7 +3,7 @@ using UnityEditor;
 
 namespace Turrets
 {
-   [CustomEditor(typeof(TurretRotation))]
+   [CustomEditor(typeof(Turret))]
    [CanEditMultipleObjects]
    public class TurretEditor : Editor
    {
@@ -11,7 +11,7 @@ namespace Turrets
 
       public override void OnInspectorGUI()
       {
-         TurretRotation turret = (TurretRotation)target;
+         Turret turret = (Turret)target;
 
          DrawDefaultInspector();
 
@@ -32,45 +32,45 @@ namespace Turrets
 
       private void OnSceneGUI()
       {
-         TurretRotation turret = (TurretRotation)target;
+         Turret turret = (Turret)target;
          Transform transform = turret.transform;
 
          // Don't show turret arcs when playing, because they won't be correct.
-         if (turret.showArcs && !Application.isPlaying)
+         if (turret.m_ShowArcs && !Application.isPlaying)
          {
-            if (turret.turretBarrels != null)
+            if (turret.m_Barrels != null)
             {
                // Traverse
                Handles.color = new Color(1.0f, 0.5f, 0.5f, 0.1f);
-               if (turret.limitTraverse)
+               if (turret.m_LimitTraverse)
                {
-                  Handles.DrawSolidArc(turret.turretBarrels.position, turret.turretBarrels.up, turret.turretBarrels.forward, turret.rightTraverse, ArcSize);
-                  Handles.DrawSolidArc(turret.turretBarrels.position, turret.turretBarrels.up, turret.turretBarrels.forward, -turret.leftTraverse, ArcSize);
+                  Handles.DrawSolidArc(turret.m_Barrels.position, turret.m_Barrels.up, turret.m_Barrels.forward, turret.m_RightTraverse, ArcSize);
+                  Handles.DrawSolidArc(turret.m_Barrels.position, turret.m_Barrels.up, turret.m_Barrels.forward, -turret.m_LeftTraverse, ArcSize);
                }
                else
                {
-                  Handles.DrawSolidArc(turret.turretBarrels.position, turret.turretBarrels.up, turret.turretBarrels.forward, 360.0f, ArcSize);
+                  Handles.DrawSolidArc(turret.m_Barrels.position, turret.m_Barrels.up, turret.m_Barrels.forward, 360.0f, ArcSize);
                }
 
                // Elevation
                Handles.color = new Color(0.5f, 1.0f, 0.5f, 0.1f);
-               Handles.DrawSolidArc(turret.turretBarrels.position, turret.turretBarrels.right, turret.turretBarrels.forward, -turret.elevation, ArcSize);
+               Handles.DrawSolidArc(turret.m_Barrels.position, turret.m_Barrels.right, turret.m_Barrels.forward, -turret.m_MaxElevation, ArcSize);
 
                // Depression
                Handles.color = new Color(0.5f, 0.5f, 1.0f, 0.1f);
-               Handles.DrawSolidArc(turret.turretBarrels.position, turret.turretBarrels.right, turret.turretBarrels.forward, turret.depression, ArcSize);
+               Handles.DrawSolidArc(turret.m_Barrels.position, turret.m_Barrels.right, turret.m_Barrels.forward, turret.m_MaxDepression, ArcSize);
             }
             else
             {
                Handles.color = new Color(1.0f, 0.5f, 0.5f, 0.1f);
-               Handles.DrawSolidArc(transform.position, transform.up, transform.forward, turret.leftTraverse, ArcSize);
-               Handles.DrawSolidArc(transform.position, transform.up, transform.forward, -turret.leftTraverse, ArcSize);
+               Handles.DrawSolidArc(transform.position, transform.up, transform.forward, turret.m_LeftTraverse, ArcSize);
+               Handles.DrawSolidArc(transform.position, transform.up, transform.forward, -turret.m_LeftTraverse, ArcSize);
 
                Handles.color = new Color(0.5f, 1.0f, 0.5f, 0.1f);
-               Handles.DrawSolidArc(transform.position, transform.right, transform.forward, -turret.elevation, ArcSize);
+               Handles.DrawSolidArc(transform.position, transform.right, transform.forward, -turret.m_MaxElevation, ArcSize);
 
                Handles.color = new Color(0.5f, 0.5f, 1.0f, 0.1f);
-               Handles.DrawSolidArc(transform.position, transform.right, transform.forward, turret.depression, ArcSize);
+               Handles.DrawSolidArc(transform.position, transform.right, transform.forward, turret.m_MaxDepression, ArcSize);
             }
          }
       }

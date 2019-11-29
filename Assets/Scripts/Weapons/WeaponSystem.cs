@@ -21,6 +21,7 @@ public class WeaponSystem : MonoBehaviour {
    SortedSet<Target> m_TrackingList = new SortedSet<Target>();
    SensorSystem m_SensorSystem;
    Laser m_Laser;
+   List<Turret> m_Turrets = new List<Turret>();
    int m_CurrentProjectileIndex = 0;
    Dictionary<Type, ProjectileSlot> m_WeaponSlots = new Dictionary<Type, ProjectileSlot>();
    List<Type> m_ProjectileTypes = new List<Type>();
@@ -59,6 +60,7 @@ public class WeaponSystem : MonoBehaviour {
    void Awake()
    {
       m_Laser = GetComponentInChildren<Laser>();
+      m_Turrets = GetComponentsInChildren<Turret>().ToList();
       m_SensorSystem = transform.parent.GetComponentInChildren<SensorSystem>();
 
       if(m_SensorSystem == null)
@@ -87,11 +89,19 @@ public class WeaponSystem : MonoBehaviour {
    }
 
    /// <summary>
-   /// Fire the selected weapon
+   /// Fire the selected missile or bomb.
    /// </summary>
    public void FireProjectile()
    {
       m_WeaponSlots[m_ProjectileTypes[m_CurrentProjectileIndex]].Fire();
+   }
+
+   public void FireTurret()
+   {
+      foreach(Turret turret in m_Turrets)
+      {
+         turret.Fire();
+      }
    }
 
    /// <summary>
@@ -146,6 +156,13 @@ public class WeaponSystem : MonoBehaviour {
       if (m_Laser != null)
       {
          m_Laser.SetTarget(m_SensorSystem.TrackingTarget);
+      }
+      if(m_Turrets != null)
+      {
+         foreach(Turret turret in m_Turrets)
+         {
+            turret.SetAimpoint(m_SensorSystem.TrackingTarget.transform.position);
+         }
       }
       m_TrackingList.Add(m_SensorSystem.TrackingTarget);
    }

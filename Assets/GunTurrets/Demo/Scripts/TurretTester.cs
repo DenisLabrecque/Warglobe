@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
-using Turrets;
 
 namespace TurretDemo
 {
    public class TurretTester : MonoBehaviour
    {
-      public TurretRotation[] turret;
+      public Turret[] turret;
       public Vector3 targetPos;
       public Transform targetTransform;
 
@@ -21,7 +20,7 @@ namespace TurretDemo
          // When a transform is assigned, pass that to the turret. If not,
          // just pass in whatever this is looking at.
          targetPos = transform.TransformPoint(Vector3.forward * 200.0f);
-         foreach (TurretRotation tur in turret)
+         foreach (Turret tur in turret)
          {
             if (targetTransform == null)
                tur.SetAimpoint(targetPos);
