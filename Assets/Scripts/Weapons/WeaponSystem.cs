@@ -98,7 +98,6 @@ public class WeaponSystem : MonoBehaviour {
 
    public void FireTurret()
    {
-      Debug.Log("Turret " + gameObject.name + " fired");
       foreach(Turret turret in m_Turrets)
       {
          turret.Fire();

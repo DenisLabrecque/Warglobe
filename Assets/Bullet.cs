@@ -25,6 +25,12 @@ public class Bullet : MonoBehaviour
 
    private void FixedUpdate()
    {
-      
+      Gravity.Gravitate(m_Rigidbody);
+   }
+
+   private void LateUpdate()
+   {
+      // Rotate bullet to face where it is heading
+      gameObject.transform.rotation = Quaternion.LookRotation(m_Rigidbody.velocity, new Vector3(0, 1));
    }
 }

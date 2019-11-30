@@ -282,7 +282,6 @@ public class Turret : MonoBehaviour, IWeapon
             muzzle.Fire();
          }
 
-         m_Audio.Stop();
          m_Audio.Play();
       }
    }
