@@ -123,15 +123,15 @@ public class GuidedMissile : Projectile
    {
       base.Awake();
 
-      m_Motor = GetComponent<Motor>();
+      m_Motor = GetComponentInChildren<Motor>();
       m_Motor.IsEnabled = false;
    }
 
-   void Update()
-   {
-      if(!m_Motor.IsEnabled && IsDropDelayPassed)
-         m_Motor.StartMotor(m_Rigidbody);
-   }
+   //void Update()
+   //{
+   //   if(!m_Motor.IsEnabled && IsDropDelayPassed)
+   //      m_Motor.StartMotor(m_Rigidbody);
+   //}
 
    #endregion
 
@@ -140,10 +140,13 @@ public class GuidedMissile : Projectile
 
    /// <summary>
    /// Fire the guided missile towards the target if it has launch authorization and a target is acquired.
+   /// TODO this is for testing. Firing should be at a target.
    /// </summary>
    public override void Fire()
    {
       base.Fire();
+
+      m_Motor.StartMotor(m_Rigidbody);
    }
 
    /// <summary>

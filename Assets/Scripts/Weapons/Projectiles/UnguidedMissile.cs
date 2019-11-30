@@ -16,7 +16,7 @@ public class UnguidedMissile : Projectile
    {
       base.Awake();
 
-      m_Motor = GetComponent<Motor>();
+      m_Motor = GetComponentInChildren<Motor>();
       m_Motor.IsEnabled = false;
    }
 

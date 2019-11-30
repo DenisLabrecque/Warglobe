@@ -68,6 +68,11 @@ public abstract class Projectile : MonoBehaviour, IWeapon
    {
       m_Rigidbody = GetComponentInParent<Rigidbody>(); // The vehicle's rigidbody
 
+      if(m_Rigidbody == null)
+      {
+         Debug.Log("Haha, " + gameObject + " is null rigid");
+      }
+
       m_Fins = GetComponentsInChildren<SimpleWing>(true).ToList<SimpleWing>();
       foreach(SimpleWing fin in m_Fins)
       {
