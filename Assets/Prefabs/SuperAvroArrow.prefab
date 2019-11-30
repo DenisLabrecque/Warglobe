@@ -90,7 +90,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: fa42a978b8351d44faf05cbb4ed08195, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.638
+  m_Volume: 0.048
   m_Pitch: 0.16
   Loop: 1
   Mute: 0
@@ -99,9 +99,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 5992.4727
+  MaxDistance: 30000
   Pan2D: 0
-  rolloffMode: 1
+  rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -189,6 +189,7 @@ MonoBehaviour:
   m_IsEnabled: 1
   m_ThrustDirection: {x: 0, y: 0, z: 1}
   m_ThrustToWeightRatio: 1
+  m_ThrustChangeSpeed: 0.5
   m_BatteryDurationMinutes: 11.5
   m_ThrottleInput: 0.674
   m_RotationAxis: {x: 0, y: 1, z: 0}
@@ -1699,6 +1700,7 @@ MonoBehaviour:
   m_CollisionDetection: 2
   m_Target: {fileID: 0}
   m_GuidanceType: 0
+  m_TurnRate: 2
   m_SeekerCone: 45
   m_SeekerRange: 5000
 --- !u!114 &1939958221015177615
@@ -5453,6 +5455,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: UnguidedMissile
       objectReference: {fileID: 0}
+    - target: {fileID: 6282209091103224861, guid: 8dce2d36c521fdd4b938c210cb1d1187,
+        type: 3}
+      propertyPath: m_ProjectileWeight
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3760103080185765383, guid: 8dce2d36c521fdd4b938c210cb1d1187,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6220317548687236783, guid: 8dce2d36c521fdd4b938c210cb1d1187,
         type: 3}
       propertyPath: m_IsEnabled
@@ -5461,16 +5473,6 @@ PrefabInstance:
     - target: {fileID: 6220317548687236783, guid: 8dce2d36c521fdd4b938c210cb1d1187,
         type: 3}
       propertyPath: m_MaxPower
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3760103080185765383, guid: 8dce2d36c521fdd4b938c210cb1d1187,
-        type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6282209091103224861, guid: 8dce2d36c521fdd4b938c210cb1d1187,
-        type: 3}
-      propertyPath: m_ProjectileWeight
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3648202880730834637, guid: 8dce2d36c521fdd4b938c210cb1d1187,
@@ -5756,6 +5758,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3760103080185765383, guid: 8dce2d36c521fdd4b938c210cb1d1187,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6220317548687236783, guid: 8dce2d36c521fdd4b938c210cb1d1187,
         type: 3}
       propertyPath: m_IsEnabled
@@ -5765,11 +5772,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_MaxPower
       value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3760103080185765383, guid: 8dce2d36c521fdd4b938c210cb1d1187,
-        type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3648202880730834637, guid: 8dce2d36c521fdd4b938c210cb1d1187,
         type: 3}
@@ -5965,6 +5967,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: UnguidedMissile
       objectReference: {fileID: 0}
+    - target: {fileID: 3760103080185765383, guid: 8dce2d36c521fdd4b938c210cb1d1187,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6220317548687236783, guid: 8dce2d36c521fdd4b938c210cb1d1187,
         type: 3}
       propertyPath: m_IsEnabled
@@ -5974,11 +5981,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_MaxPower
       value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3760103080185765383, guid: 8dce2d36c521fdd4b938c210cb1d1187,
-        type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 484486820761765390, guid: 8dce2d36c521fdd4b938c210cb1d1187,
         type: 3}

@@ -18,6 +18,9 @@ public class GuidedMissile : Projectile
    [Tooltip("Pursuit flies directly towards the target. Lead will fly ahead to intercept, making it significantly more difficult to dodge.")]
    public GuidanceType m_GuidanceType = GuidanceType.Pursuit;
 
+   [Tooltip("How tightly the missile can turn in radians per second. More is faster")]
+   [SerializeField] float m_TurnRate = 2f;
+
    [Tooltip("How far off boresight the missile can see the target. Also restricts how far the missile can lead.")]
    public float m_SeekerCone = 45.0f;
 
@@ -125,6 +128,33 @@ public class GuidedMissile : Projectile
 
       m_Motor = GetComponentInChildren<Motor>();
       m_Motor.IsEnabled = false;
+   }
+
+   private void FixedUpdate()
+   {
+      // Gravitate
+      base.FixedUpdate();
+
+      // Turn towards target
+      if (m_Motor.IsEnabled)
+      {
+         //MissileGuidance();
+         //transform.LookAt(m_Target.transform);
+         //m_Rigidbody.AddRelativeTorque()
+         //transform.rotation = Quaternion.RotateTowards(transform.rotation, m_GuidedRotation, m_TurnRate * Time.deltaTime);
+
+         // The step size is equal to speed times frame time.
+         float singleStep = m_TurnRate * Time.deltaTime;
+
+         // Rotate the forward vector towards the target direction by one step
+         Vector3 newDirection = Vector3.RotateTowards(transform.right, VectorToTarget, singleStep, 0.0f);
+
+         // Draw a ray pointing at our target in
+         Debug.DrawRay(transform.position, newDirection, Color.red);
+
+         // Calculate a rotation a step closer to the target and applies rotation to this object
+         transform.rotation = Quaternion.LookRotation(newDirection);
+      }
    }
 
    //void Update()
