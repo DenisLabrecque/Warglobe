@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public enum ProjectileWeight { Light = 10, Heavy = 20, testheavy = 300 }
+public enum ProjectileWeight { Light = 10, Heavy = 20, ExtremelyHeavy = 300 }
 
 public class Hardpoint : MonoBehaviour
 {
