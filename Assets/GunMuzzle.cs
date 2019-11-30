@@ -21,6 +21,6 @@ public class GunMuzzle : MonoBehaviour
 
    public void Fire()
    {
-      Instantiate(m_ShellPrefab, gameObject.transform);
+      GameObject bullet = Instantiate(m_ShellPrefab, gameObject.transform.position, gameObject.transform.rotation);
    }
 }

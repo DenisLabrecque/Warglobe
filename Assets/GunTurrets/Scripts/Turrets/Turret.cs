@@ -7,6 +7,7 @@ using UnityEngine;
 /// Adapted November 2019 by Denis Labrecque.
 /// Emplements anything that can rotate a gun.
 /// </summary>
+[RequireComponent(typeof(AudioSource))]
 public class Turret : MonoBehaviour, IWeapon
 {
    [Tooltip("Should turret rotate in the FixedUpdate rather than Update?")]
@@ -17,7 +18,6 @@ public class Turret : MonoBehaviour, IWeapon
    [SerializeField] Transform m_Base;
    [Tooltip("Transform used to provide the vertical rotation of the barrels. Must be a child of the TurretBase.")]
    public Transform m_Barrels;
-   List<GunMuzzle> m_Muzzles = new List<GunMuzzle>();
 
    [Header("Rotation Limits")]
    [Tooltip("Turn rate of the turret's base and barrels in degrees per second.")]
@@ -37,14 +37,20 @@ public class Turret : MonoBehaviour, IWeapon
    [Range(0.0f, 90.0f)]
    [SerializeField] public float m_MaxDepression = 5.0f;
 
+   [Header("Bullets")]
+   [Tooltip("How long before each canon in the turret can refire")]
+   [SerializeField] float m_ReloadTime = 2f;
+
    [Header("Utilities")]
    [Tooltip("Show the arcs that the turret can aim through.\n\nRed: Left/Right Traverse\nGreen: Elevation\nBlue: Depression")]
    [SerializeField] public bool m_ShowArcs = false;
    [Tooltip("When game is running in editor, draws a debug ray to show where the turret is aiming.")]
    [SerializeField] bool m_ShowDebugRay = true;
 
+   List<GunMuzzle> m_Muzzles = new List<GunMuzzle>();
    private Vector3 m_AimPoint;
-
+   private AudioSource m_Audio;
+   private float m_ReloadTimer = 0f;
    private bool m_IsAiming = false;
    private bool m_IsAtRest = false;
 
@@ -65,6 +71,8 @@ public class Turret : MonoBehaviour, IWeapon
    private void Awake()
    {
       m_Muzzles = GetComponentsInChildren<GunMuzzle>().ToList();
+      m_Audio = GetComponent<AudioSource>();
+      m_Audio.playOnAwake = false;
    }
 
    private void Start()
@@ -79,6 +87,8 @@ public class Turret : MonoBehaviour, IWeapon
 
    private void Update()
    {
+      m_ReloadTimer += Time.deltaTime;
+
       if (!m_RunInFixed)
       {
          RotateTurret();
@@ -263,9 +273,17 @@ public class Turret : MonoBehaviour, IWeapon
 
    public void Fire()
    {
-      foreach(GunMuzzle muzzle in m_Muzzles)
+      if (m_ReloadTimer >= m_ReloadTime)
       {
-         muzzle.Fire();
+         m_ReloadTimer = 0f;
+
+         foreach (GunMuzzle muzzle in m_Muzzles)
+         {
+            muzzle.Fire();
+         }
+
+         m_Audio.Stop();
+         m_Audio.Play();
       }
    }
 }
