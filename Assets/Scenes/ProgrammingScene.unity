@@ -908,7 +908,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d19f66845804d24e917f1ddfcc50576, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IndicatorBall: {fileID: 0}
   m_ProjectionDistance: 500
 --- !u!1 &171033975
 GameObject:
@@ -8096,7 +8095,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 4
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 715
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -8125,7 +8124,7 @@ MonoBehaviour:
     spaceCount: 117
     wordCount: 113
     linkCount: 0
-    lineCount: 22
+    lineCount: 23
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -9510,7 +9509,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08d1cbf2b06063f4f91bbc9f51b541e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Counter: 1
+  m_Counter: 3
 --- !u!1 &1396169155
 GameObject:
   m_ObjectHideFlags: 0
@@ -11590,10 +11589,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1947295115}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 683275d92293dfe43bf6af484cdebc5b, type: 3}
+  m_Script: {fileID: 11500000, guid: 374d5c3a1b43e9641854e7ab84d5762f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FieldOfView: 90
+  m_FieldOfView: 80
+  m_MaxNearDistance: 20
+  m_MaxFarDistance: 300
+  m_MaxHeight: 75
 --- !u!1 &1958491981
 GameObject:
   m_ObjectHideFlags: 0
@@ -12065,7 +12067,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_IsEnabled: 0
   m_ThrustDirection: {x: 0, y: 1, z: 0}
-  m_ThrustToWeightRatio: 1.5
+  m_ThrustToWeightRatio: 0.3
   m_ThrustChangeSpeed: 0.043
   m_BatteryDurationMinutes: 1
   m_ThrottleInput: 0.953

@@ -36,7 +36,7 @@ public class SpeedFollowCamera : CameraEmplacement
       // Start at the right place depending on speed
       transform.localPosition = new Vector3(0, OffsetYAtGForce(m_Vehicle.VerticalSpeed), DistanceZAtSpeed(m_Vehicle.ForwardSpeed));
 
-      Multilang.Initialize(Language.Francais);
+      //Multilang.Initialize(Language.Francais); // the heck was there doing here?
    }
 
    void LateUpdate()
