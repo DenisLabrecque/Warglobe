@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 059b5a2dd60a461429baf6bab0996960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Impulse: 1000
+  m_Impulse: 1200
   m_Lifespan: 20
 --- !u!198 &7315522988457026402
 ParticleSystem:
