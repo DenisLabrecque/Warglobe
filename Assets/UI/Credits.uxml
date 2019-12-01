@@ -1,9 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<engine:UXML
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:engine="UnityEngine.UIElements"
-    xmlns:editor="UnityEditor.UIElements"
-    xsi:noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
->
-    
-</engine:UXML>
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:ScrollView>
+        <Style src="/Assets/Credits.uss" />
+        <ui:Label text="Credits" class="h1" />
+        <ui:VisualElement>
+            <ui:Label text="Programming" class="h2" />
+            <ui:Label text="brihernandez" class="author" />
+            <ui:Label text="SimpleWings" class="work" />
+            <ui:Label text="GunTurrets" class="work" />
+        </ui:VisualElement>
+        <ui:VisualElement>
+            <ui:Label text="Models" class="h2" />
+            <ui:Label text="Denis Labrecque" class="author" />
+            <ui:Label text="ICBM Missile" class="work" />
+        </ui:VisualElement>
+        <ui:VisualElement>
+            <ui:Label text="Sounds" class="h2" />
+            <ui:Label text="shukran" class="author" />
+            <ui:Label text="beep.wav (Freesound)" class="work" />
+            <ui:Label text="Jason Labrecque" class="author" />
+            <ui:Label text="EDF motor sound" class="work" />
+            <ui:Label text="servo sounds" class="work" />
+            <ui:Label text="Isaac200000" class="author" />
+            <ui:Label text="Cannon5.wav (Freesound)" class="work" />
+        </ui:VisualElement>
+    </ui:ScrollView>
+</ui:UXML>

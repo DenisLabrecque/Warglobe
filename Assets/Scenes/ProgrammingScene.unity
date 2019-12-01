@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 4543820}
   - component: {fileID: 4543819}
   m_Layer: 0
-  m_Name: GameObject (1)
+  m_Name: Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -872,6 +872,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 142623919}
+  - component: {fileID: 142623920}
   m_Layer: 0
   m_Name: Turrets
   m_TagString: Untagged
@@ -895,6 +896,20 @@ Transform:
   m_Father: {fileID: 1509373100}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &142623920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142623918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d19f66845804d24e917f1ddfcc50576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IndicatorBall: {fileID: 0}
+  m_ProjectionDistance: 500
 --- !u!1 &171033975
 GameObject:
   m_ObjectHideFlags: 0
@@ -4452,7 +4467,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &711508570
 Transform:
   m_ObjectHideFlags: 0
@@ -4480,7 +4495,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uxml: {fileID: 9197481963319205126, guid: 0d8898f1402a1cd419240e2582eb6af7, type: 3}
-  unityStyleSheet: {fileID: 7433441132597879392, guid: b131c91a07e755e4fb60d03004c44a8c,
+  unityStyleSheet: {fileID: 7433441132597879392, guid: 306f34c0e92ee9d4c82c5b0c6b583171,
     type: 3}
   stylesheets: []
   targetTexture: {fileID: 0}
@@ -8081,7 +8096,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 4
-  m_firstOverflowCharacterIndex: 715
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0

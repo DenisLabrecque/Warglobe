@@ -25,6 +25,7 @@ public class WeaponSystem : MonoBehaviour {
    int m_CurrentProjectileIndex = 0;
    Dictionary<Type, ProjectileSlot> m_WeaponSlots = new Dictionary<Type, ProjectileSlot>();
    List<Type> m_ProjectileTypes = new List<Type>();
+   TurretAimingSystem m_TurretAiming;
 
    #endregion
 
@@ -62,6 +63,7 @@ public class WeaponSystem : MonoBehaviour {
       m_Laser = GetComponentInChildren<Laser>();
       m_Turrets = GetComponentsInChildren<Turret>().ToList();
       m_SensorSystem = transform.parent.GetComponentInChildren<SensorSystem>();
+      m_TurretAiming = GetComponentInChildren<TurretAimingSystem>();
 
       if(m_SensorSystem == null)
          Debug.LogError("A weapon system requires a sensor system to function properly on " + transform.parent);
@@ -161,8 +163,17 @@ public class WeaponSystem : MonoBehaviour {
       {
          foreach(Turret turret in m_Turrets)
          {
-            if(m_SensorSystem.TrackingTarget != null)
-               turret.SetAimpoint(m_SensorSystem.TrackingTarget.transform.position);
+            if(m_TurretAiming == null)
+            {
+               // Automatic cheapo turret aim
+               if (m_SensorSystem.TrackingTarget != null)
+                  turret.SetAimpoint(m_SensorSystem.TrackingTarget.transform.position);
+            }
+            else
+            {
+               // By hand turret aim
+               turret.SetAimpoint(m_TurretAiming.AimPoint);
+            }
          }
       }
       m_TrackingList.Add(m_SensorSystem.TrackingTarget);
