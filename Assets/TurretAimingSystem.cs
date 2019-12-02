@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TurretAimingSystem : MonoBehaviour
 {
-   [SerializeField] float m_ProjectionDistance = 500f;
+   [SerializeField] float m_AimDistance = 5000f;
 
    Camera m_Camera;
 
@@ -26,7 +26,7 @@ public class TurretAimingSystem : MonoBehaviour
       mousePos.y = Input.mousePosition.y;
 
       //point = m_Camera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, m_Camera.farClipPlane));
-      point = m_Camera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, m_ProjectionDistance));
+      point = m_Camera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, m_AimDistance));
 
       //m_IndicatorBall.transform.position = point;
       AimPoint = point;

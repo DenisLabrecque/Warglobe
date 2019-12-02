@@ -195,7 +195,7 @@ public abstract class Airplane : Vehicle {
       SpeedPID.SetPoint = 450f;
       SpeedPID.ProcessVariable = ForwardSpeed;
       m_Motor.AdjustThrottle((float)SpeedPID.ControlVariable(Time.deltaTime));
-      m_Motor.AdjustThrottle(0.75f);
+      //m_Motor.AdjustThrottle(0.75f);
 
       // Roll
 

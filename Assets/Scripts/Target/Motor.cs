@@ -20,16 +20,20 @@ public abstract class Motor : MonoBehaviour {
    [Tooltip("Whether the engine starts on awake. When the start method is called, the rigidbody is assigned. That way, rockets propel their own rigidbody.")]
    [SerializeField] protected bool m_IsEnabled = true;
 
+   [Tooltip("Battery total charge when full (unitless)")]
+   [SerializeField] float m_BatteryDurationMinutes = 11.5f;
+
+   [Header("Power")]
    [SerializeField] protected Vector3 m_ThrustDirection = new Vector3(0, 0, 1);
 
    [Tooltip("Thrust to mass at maximum throttle")]
    [SerializeField] protected float m_ThrustToWeightRatio = 1f;
 
+   [Tooltip("Percent of total thrust forward thrust that can be applied going backwards")]
+   [SerializeField] [Range(0, 1)] protected float m_BackwardsPercentPower = 0.5f;
+
    [Tooltip("How quickly thrust reacts to inputs")]
    [SerializeField][Range(0, 1)] protected float m_ThrustChangeSpeed = 0.5f;
-
-   [Tooltip("Battery total charge when full (unitless)")]
-   [SerializeField] float m_BatteryDurationMinutes = 11.5f;
 
    [Tooltip("Current throttle (modified in realtime)")]
    [Range(0,1)] [SerializeField] float m_ThrottleInput = 0; // The throttle setting that has been ordered
@@ -201,11 +205,13 @@ public abstract class Motor : MonoBehaviour {
    /// Change the throttle according to the percent throttle wanted.
    /// Throttle change speed is controlled by the input manager, not in code.
    /// </summary>
-   /// <param name="percentChangeWanted">A value from 0 to 1?</param>
+   /// <param name="percentChangeWanted">A value from -1 to 1</param>
    public void AdjustThrottle(float percentChangeWanted)
    {
+      Debug.Log("Throttle input: " + percentChangeWanted);
+
       // Avoid input error
-      m_ThrottleInput = Mathf.Clamp(percentChangeWanted, 0, 1f);
+      m_ThrottleInput = Mathf.Clamp(percentChangeWanted, -1f, 1f);
    }
 
    /// <summary>
