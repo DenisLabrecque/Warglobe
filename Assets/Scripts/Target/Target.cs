@@ -142,8 +142,23 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    public virtual void Damage(float subtract)
    {
       m_CurrentHitpoints -= subtract;
-      if(m_CurrentHitpoints < 0)
+      if (m_CurrentHitpoints <= 0)
+      {
          m_CurrentHitpoints = 0;
+         Kill();
+         Debug.Log("Hitpoints : " + m_CurrentHitpoints);
+      }
+   }
+
+   /// <summary>
+   /// Do whatever it takes to kill this target.
+   /// </summary>
+   protected virtual void Kill()
+   {
+      if (m_WeaponSystem != null)
+         m_WeaponSystem.enabled = false;
+      if (m_SensorSystem != null)
+         m_SensorSystem.enabled = false;
    }
 
    /// <summary>

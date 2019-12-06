@@ -156,6 +156,7 @@ MonoBehaviour:
   m_GeneralName: Target
   m_Description: A generic target.
   m_RadarCrossSection: 1
+  m_Hitpoints: 0
 --- !u!54 &4543820
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -947,6 +948,7 @@ MonoBehaviour:
   m_GeneralName: Bravo
   m_Description: A generic target.
   m_RadarCrossSection: 1
+  m_Hitpoints: 0
 --- !u!54 &171033977
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2058,6 +2060,7 @@ MonoBehaviour:
   m_GeneralName: Queen Elisabeth
   m_Description: A generic target.
   m_RadarCrossSection: 1
+  m_Hitpoints: 0
   m_DollarValue: 166497984
   m_MaxHitpoints: 1500
   m_PercentDensity: 0.656
@@ -3086,6 +3089,7 @@ MonoBehaviour:
   m_GeneralName: Charlie
   m_Description: A generic target.
   m_RadarCrossSection: 0.027
+  m_Hitpoints: 0
 --- !u!54 &499655066
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5889,6 +5893,7 @@ MonoBehaviour:
   m_GeneralName: Target
   m_Description: A generic target.
   m_RadarCrossSection: 1
+  m_Hitpoints: 0
 --- !u!54 &926935301
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7000,6 +7005,7 @@ MonoBehaviour:
   m_GeneralName: Target
   m_Description: A generic target.
   m_RadarCrossSection: 1
+  m_Hitpoints: 0
 --- !u!54 &1047884655
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8534,6 +8540,7 @@ MonoBehaviour:
   m_GeneralName: Cubetest
   m_Description: A generic target.
   m_RadarCrossSection: 1
+  m_Hitpoints: 0
 --- !u!54 &1271276410
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9502,6 +9509,7 @@ MonoBehaviour:
   m_GeneralName: Launchpad
   m_Description: An ICBM launch location.
   m_RadarCrossSection: 1
+  m_Hitpoints: 0
 --- !u!54 &1388006234
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9652,6 +9660,7 @@ MonoBehaviour:
   m_GeneralName: Radar
   m_Description: Radar tracking site.
   m_RadarCrossSection: 1
+  m_Hitpoints: 0
 --- !u!54 &1401224678
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10139,6 +10148,7 @@ MonoBehaviour:
   m_GeneralName: Alpha
   m_Description: A generic target.
   m_RadarCrossSection: 1
+  m_Hitpoints: 0
 --- !u!54 &1499280892
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10468,7 +10478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Player1Vehicle: {fileID: 1244263804}
-  m_Player2Vehicle: {fileID: 310564102}
+  m_Player2Vehicle: {fileID: 0}
   m_UIController: {fileID: 397775540}
 --- !u!4 &1541402217
 Transform:
@@ -10600,6 +10610,7 @@ MonoBehaviour:
   m_GeneralName: Target
   m_Description: A generic target.
   m_RadarCrossSection: 1
+  m_Hitpoints: 0
 --- !u!54 &1546440606
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -12121,6 +12132,7 @@ MonoBehaviour:
   m_GeneralName: Target
   m_Description: A generic target.
   m_RadarCrossSection: 1
+  m_Hitpoints: 0
 --- !u!54 &2090661180
 Rigidbody:
   m_ObjectHideFlags: 0

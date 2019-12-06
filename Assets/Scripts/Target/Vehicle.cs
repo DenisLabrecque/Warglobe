@@ -35,7 +35,7 @@ public abstract class Vehicle : Target {
    [SerializeField][Range(0,1500)] int m_PregameSpeed = 0;
 
    List<CameraEmplacement> m_CameraEmplacements;
-   FlotationArea m_FlotationArea = null;
+   protected FlotationArea m_FlotationArea = null;
    protected Rigidbody m_Rigidbody;
    protected Motor m_Motor;
    private int m_CurrentCameraIndex = 0;
@@ -265,6 +265,13 @@ public abstract class Vehicle : Target {
          m_Rigidbody.drag = waterDrag + airDrag;
          m_Rigidbody.angularDrag = waterDrag + airRotationalDrag;
       }
+   }
+
+   protected override void Kill()
+   {
+      base.Kill();
+      Debug.Log("Kill called! Flotation area sinking.");
+      m_FlotationArea.Sink();
    }
 
    #endregion

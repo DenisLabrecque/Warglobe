@@ -1536,6 +1536,7 @@ MonoBehaviour:
   m_GeneralName: Target
   m_Description: A generic target.
   m_RadarCrossSection: 1
+  m_Hitpoints: 50
   m_DollarValue: 32000
   m_MaxHitpoints: 1500
   m_PercentDensity: 0.4

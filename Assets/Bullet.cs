@@ -106,14 +106,22 @@ public class Bullet : MonoBehaviour
    public void Explode(Target target)
    {
       target.Damage(m_Damage);
+      Explode();
    }
 
    /// <summary>
-   /// The bullet explodes without damaging a target.
+   /// The bullet explodes; does not damage the target, but should be called to complete the explosion.
+   /// Instantiates an AudioSource where the bullet hit.
    /// </summary>
    public void Explode()
    {
-      m_Audio.Play();
+      GameObject empty = new GameObject();
+      AudioSource audio = empty.AddComponent<AudioSource>();
+      audio = m_Audio;
+      Instantiate(empty, gameObject.transform.position, gameObject.transform.rotation, null);
+      audio.Play();
+      //AudioSource audio = Instantiate(m_Audio, gameObject.transform.position, gameObject.transform.rotation, null);
+      //audio.Play();
       Destroy(gameObject);
    }
 }

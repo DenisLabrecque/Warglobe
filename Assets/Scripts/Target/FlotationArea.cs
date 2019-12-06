@@ -1,4 +1,5 @@
 ﻿using DGL.Math;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -42,6 +43,14 @@ public class FlotationArea : MonoBehaviour
       }
    }
 
+   internal void Sink()
+   {
+      foreach(FlotationPoint corner in m_Corners)
+      {
+         corner.Sink(1f);
+      }
+   }
+
    /// <summary>
    /// Manages a flotation area.
    /// </summary>
@@ -49,6 +58,7 @@ public class FlotationArea : MonoBehaviour
    {
       Vector3 m_position;
       FlotationArea m_flotationArea;
+      float m_flotationFactor = 1f; // A percent of the total flotation force wanted; used for sinking the FlotationArea
       float? m_force = null;
       float? m_lastForce = null;
 
@@ -114,7 +124,7 @@ public class FlotationArea : MonoBehaviour
          if(Depth < 0) // submerged
          {
             // Apply flotation force
-            float flotationForce = SubmergedVolume * m_flotationArea.m_DensityInverse;
+            float flotationForce = SubmergedVolume * m_flotationArea.m_DensityInverse * m_flotationFactor;
             m_flotationArea.m_Rigidbody.AddForceAtPosition(Upwards * flotationForce, SubmergedPosition);
             m_flotationArea.m_Rigidbody.drag = WATER_DRAG;
             m_flotationArea.m_Rigidbody.angularDrag = WATER_DRAG;
@@ -124,6 +134,17 @@ public class FlotationArea : MonoBehaviour
             float percentForce = Utility.Percent(flotationForce, maxForce, PercentMode.AnyPercent);
             Debug.DrawRay(SubmergedPosition, Upwards * percentForce * 0.01f, Color.blue);
          }
+      }
+
+      /// <summary>
+      /// Sink this flotation area by a certain amount more.
+      /// </summary>
+      /// <param name="sinkPercent">The percent of sinking to apply.</param>
+      public void Sink(float sinkPercent)
+      {
+         Mathf.Clamp01(sinkPercent);
+         m_flotationFactor -= sinkPercent;
+         Mathf.Clamp01(m_flotationFactor);
       }
    }
 
