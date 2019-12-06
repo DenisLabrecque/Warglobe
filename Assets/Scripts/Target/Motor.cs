@@ -208,8 +208,6 @@ public abstract class Motor : MonoBehaviour {
    /// <param name="percentChangeWanted">A value from -1 to 1</param>
    public void AdjustThrottle(float percentChangeWanted)
    {
-      Debug.Log("Throttle input: " + percentChangeWanted);
-
       // Avoid input error
       m_ThrottleInput = Mathf.Clamp(percentChangeWanted, -1f, 1f);
    }

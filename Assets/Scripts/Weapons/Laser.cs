@@ -71,7 +71,7 @@ public class Laser : MonoBehaviour, IWeapon
          m_LineRenderer.SetPosition(1, new Vector3(0, 0, Vector3.Distance(transform.position, m_LaserTarget.transform.position)));
 
          // Hurt the target
-         m_LaserTarget.Attack(m_Power);
+         m_LaserTarget.Damage(m_Power);
       }
       else
          StopFire();

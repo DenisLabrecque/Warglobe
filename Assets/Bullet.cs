@@ -7,30 +7,113 @@ using UnityEngine;
 /// Plays a sound and gets forced out on Start(), once the prefab is instantiated and enabled.
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(AudioSource))]
 public class Bullet : MonoBehaviour
 {
+   public const float MAX_UNDERWATER_DIST = -20f; // How far under water a bullet can go without exploding
+
    [Tooltip("Initial shot speed")]
    [SerializeField] float m_Impulse = 1000f;
+   [SerializeField] float m_Damage = 1000f;
    [SerializeField] float m_Lifespan = 20f; // How long the bullet should live before being destroyed
 
    Rigidbody m_Rigidbody;
+   AudioSource m_Audio; // For the explosion sound
+   bool m_HasCollided = false;
+
+   private void Awake()
+   {
+      m_Rigidbody = GetComponent<Rigidbody>();
+      m_Audio = GetComponent<AudioSource>();
+   }
 
    private void Start()
    {
-      m_Rigidbody = GetComponent<Rigidbody>();
       m_Rigidbody.AddRelativeForce(new Vector3(0, 0, 1) * m_Impulse, ForceMode.Impulse);
-
+      PointForwards();
       Destroy(gameObject, m_Lifespan);
    }
 
    private void FixedUpdate()
    {
       Gravity.Gravitate(m_Rigidbody);
+      ExplodeIfUnderwater();
    }
 
    private void LateUpdate()
    {
+      PointForwards();
+   }
+
+
+   /// <summary>
+   /// Turn the bullet to point forwards along the Y axis according to its velocity.
+   /// </summary>
+   private void PointForwards()
+   {
       // Rotate bullet to face where it is heading
       gameObject.transform.rotation = Quaternion.LookRotation(m_Rigidbody.velocity, new Vector3(0, 1));
+   }
+
+
+   /// <summary>
+   /// When the bullet is a certain distance underwater, it must explode.
+   /// </summary>
+   private void ExplodeIfUnderwater()
+   {
+      float altitude = Planet.Singleton.AltitudeAboveSea(m_Rigidbody.transform.position);
+      if (altitude < MAX_UNDERWATER_DIST)
+      {
+         Explode();
+      }
+   }
+
+
+   /// <summary>
+   /// Detect when the bullet hits something.
+   /// </summary>
+   /// <param name="collision"></param>
+   void OnCollisionEnter(Collision collision)
+   {
+      if (m_HasCollided == false)
+      {
+         // Play a sound if the colliding objects had a big impact.
+         if (collision.relativeVelocity.magnitude > 2)
+         {
+            Target targetHit = collision.gameObject.GetComponent<Target>();
+
+            if (targetHit != null)
+            {
+               // Debug-draw all contact points and normals
+               foreach (ContactPoint contact in collision.contacts)
+               {
+                  Debug.Log("HIT! " + collision.gameObject);
+                  Debug.DrawRay(contact.point, contact.normal, Color.white);
+
+                  m_HasCollided = true;
+                  Explode(targetHit);
+               }
+            }
+         }
+      }
+   }
+
+
+   /// <summary>
+   /// Explode this as a bomb, and damage the target it hit.
+   /// </summary>
+   /// <param name="target">The target to damage</param>
+   public void Explode(Target target)
+   {
+      target.Damage(m_Damage);
+   }
+
+   /// <summary>
+   /// The bullet explodes without damaging a target.
+   /// </summary>
+   public void Explode()
+   {
+      m_Audio.Play();
+      Destroy(gameObject);
    }
 }

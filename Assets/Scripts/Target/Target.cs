@@ -30,6 +30,9 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    [Range(0f, 1.0f)]
    [SerializeField] float m_RadarCrossSection = 1f;
 
+   [Tooltip("Hitpoints")]
+   [SerializeField] [Range(0f, 50000f)] float m_Hitpoints;
+
    protected WeaponSystem m_WeaponSystem;
    protected SensorSystem m_SensorSystem;
    protected float m_CurrentHitpoints;
@@ -136,12 +139,11 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    /// <summary>
    /// General attack method that subtracts hitpoints from the current target.
    /// </summary>
-   public virtual void Attack(float subtract)
+   public virtual void Damage(float subtract)
    {
-      m_CurrentHitpoints -= subtract * Time.deltaTime;
+      m_CurrentHitpoints -= subtract;
       if(m_CurrentHitpoints < 0)
          m_CurrentHitpoints = 0;
-      Debug.Log("Target " + PopularName + " hitpoints " + m_CurrentHitpoints);
    }
 
    /// <summary>
