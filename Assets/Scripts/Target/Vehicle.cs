@@ -270,7 +270,6 @@ public abstract class Vehicle : Target {
    protected override void Kill()
    {
       base.Kill();
-      Debug.Log("Kill called! Flotation area sinking.");
       m_FlotationArea.Sink();
    }
 

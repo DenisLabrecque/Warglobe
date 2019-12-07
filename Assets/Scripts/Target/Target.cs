@@ -141,12 +141,14 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    /// </summary>
    public virtual void Damage(float subtract)
    {
-      m_CurrentHitpoints -= subtract;
-      if (m_CurrentHitpoints <= 0)
+      if (m_CurrentHitpoints > 0)
       {
-         m_CurrentHitpoints = 0;
-         Kill();
-         Debug.Log("Hitpoints : " + m_CurrentHitpoints);
+         m_CurrentHitpoints -= subtract;
+         if (m_CurrentHitpoints <= 0)
+         {
+            m_CurrentHitpoints = 0;
+            Kill();
+         }
       }
    }
 

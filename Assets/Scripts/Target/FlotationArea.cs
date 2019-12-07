@@ -56,9 +56,12 @@ public class FlotationArea : MonoBehaviour
    /// </summary>
    class FlotationPoint
    {
+      const float SINK_RATE = 1f;
+
       Vector3 m_position;
       FlotationArea m_flotationArea;
-      float m_flotationFactor = 1f; // A percent of the total flotation force wanted; used for sinking the FlotationArea
+      float m_trueFlotationFactor = 1f; // A percent of the total flotation force wanted; used for sinking the FlotationArea
+      float m_leastFlotationFactor = 1f;
       float? m_force = null;
       float? m_lastForce = null;
 
@@ -124,10 +127,13 @@ public class FlotationArea : MonoBehaviour
          if(Depth < 0) // submerged
          {
             // Apply flotation force
-            float flotationForce = SubmergedVolume * m_flotationArea.m_DensityInverse * m_flotationFactor;
+            float flotationForce = SubmergedVolume * m_flotationArea.m_DensityInverse * m_trueFlotationFactor;
             m_flotationArea.m_Rigidbody.AddForceAtPosition(Upwards * flotationForce, SubmergedPosition);
             m_flotationArea.m_Rigidbody.drag = WATER_DRAG;
             m_flotationArea.m_Rigidbody.angularDrag = WATER_DRAG;
+
+            Mathf.Lerp(m_trueFlotationFactor, m_leastFlotationFactor, SINK_RATE * Time.deltaTime);
+            Debug.Log("Flotation Factor: " + m_trueFlotationFactor);
 
             // Show debugging
             float maxForce = m_flotationArea.m_QuadrantVolume * m_flotationArea.m_DensityInverse;
@@ -143,8 +149,8 @@ public class FlotationArea : MonoBehaviour
       public void Sink(float sinkPercent)
       {
          Mathf.Clamp01(sinkPercent);
-         m_flotationFactor -= sinkPercent;
-         Mathf.Clamp01(m_flotationFactor);
+         m_leastFlotationFactor -= sinkPercent;
+         Mathf.Clamp01(m_leastFlotationFactor);
       }
    }
 

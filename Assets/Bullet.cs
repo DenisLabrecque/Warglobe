@@ -17,6 +17,7 @@ public class Bullet : MonoBehaviour
    [SerializeField] float m_Damage = 1000f;
    [SerializeField] float m_Lifespan = 20f; // How long the bullet should live before being destroyed
 
+   Target m_Target;
    Rigidbody m_Rigidbody;
    AudioSource m_Audio; // For the explosion sound
    bool m_HasCollided = false;
@@ -43,6 +44,16 @@ public class Bullet : MonoBehaviour
    private void LateUpdate()
    {
       PointForwards();
+   }
+
+
+   /// <summary>
+   /// Set the originator of the shot. Hits to this target are ignored.
+   /// </summary>
+   /// <param name="originator">The shooter of this bullet.</param>
+   public void IgnoreHitsOn(Target originator)
+   {
+      m_Target = originator;
    }
 
 
@@ -82,7 +93,18 @@ public class Bullet : MonoBehaviour
          {
             Target targetHit = collision.gameObject.GetComponent<Target>();
 
-            if (targetHit != null)
+            // Hit oneself
+            if(m_Target != null && targetHit == m_Target)
+            {
+               // Oops, let's ignore hits to the originator
+            }
+            // Hit terrain or something
+            else if (targetHit == null)
+            {
+               Explode();
+            }
+            // Hit a legitimate target
+            else
             {
                // Debug-draw all contact points and normals
                foreach (ContactPoint contact in collision.contacts)
