@@ -1,17 +1,36 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
+/// <summary>
+/// Disable all targets before the game starts.
+/// </summary>
 public class GameTypeAndMode : MonoBehaviour
 {
-   // Start is called before the first frame update
-   void Start()
+   static List<Target> m_Targets = new List<Target>();
+
+   private void Awake()
    {
-      StartGame();
+      m_Targets = FindObjectsOfType<Target>().ToList();
    }
 
-   private void StartGame()
+   private void Start()
    {
+      EnableTargets(true);
+   }
+
+   /// <summary>
+   /// Enable or disable all targets.
+   /// </summary>
+   public static void EnableTargets(bool doEnable)
+   {
+      // Activate or deactivate
+      foreach(Target target in m_Targets)
+      {
+         target.gameObject.SetActive(doEnable);
+      }
+
       //Vehicle player1 = UserInput.Player1Vehicle;
       //Vector3 origin = player1.transform.position;
       //Vector3 newPosition = new Vector3(origin.x + 500, origin.y, origin.z);

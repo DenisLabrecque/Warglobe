@@ -37,11 +37,18 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    protected SensorSystem m_SensorSystem;
    protected float m_CurrentHitpoints;
    protected Faction m_Country;
+   protected Rigidbody m_Rigidbody;
 
    #endregion
 
 
    #region Properties
+
+   public Rigidbody Rigidbody {
+      get {
+         return m_Rigidbody;
+      }
+   }
 
    /// <summary>
    /// Whether a target has a weapons controller or not.
@@ -117,6 +124,8 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
          m_WeaponSystem = GetComponentInChildren<WeaponSystem>();
       else
          m_WeaponSystem = null;
+
+      m_Rigidbody = GetComponent<Rigidbody>();
 
       // Sensor system
       if(GetComponentInChildren<SensorSystem>() != null)

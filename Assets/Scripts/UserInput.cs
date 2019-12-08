@@ -287,7 +287,7 @@ public class UserInput : MonoBehaviour {
    void Start()
    {
       Player1Vehicle.AttachCamera(SingleCamera.Camera1);
-      Player2Vehicle.AttachCamera(SingleCamera.Camera2);
+      //Player2Vehicle.AttachCamera(SingleCamera.Camera2);
    }
 
    /// <summary>

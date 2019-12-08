@@ -36,7 +36,6 @@ public abstract class Vehicle : Target {
 
    List<CameraEmplacement> m_CameraEmplacements;
    protected FlotationArea m_FlotationArea = null;
-   protected Rigidbody m_Rigidbody;
    protected Motor m_Motor;
    private int m_CurrentCameraIndex = 0;
 
@@ -181,7 +180,6 @@ public abstract class Vehicle : Target {
       m_Motor = GetComponentInChildren<Motor>();
       m_FlotationArea = GetComponentInChildren<FlotationArea>();
 
-      m_Rigidbody = GetComponent<Rigidbody>();
       m_Rigidbody.velocity = Vector3.forward * m_PregameSpeed;
 
       // Drag

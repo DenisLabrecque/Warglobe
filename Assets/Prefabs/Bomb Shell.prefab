@@ -95,7 +95,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4046758099690999853}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 1.6
   m_Height: 11.12893
@@ -4848,9 +4848,10 @@ AudioSource:
   m_GameObject: {fileID: 4046758099690999853}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  OutputAudioMixerGroup: {fileID: -8565912246380784825, guid: 249ba2a7f910255479ea5c8300936677,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: 9936a4c11faaba346a1da524b3e3787b, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -4860,9 +4861,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 5000
+  MaxDistance: 50000
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -4949,4 +4950,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Impulse: 2000
   m_Damage: 1000
+  m_DamageRadius: 50
   m_Lifespan: 20
+  m_TargetHit: {fileID: 8300000, guid: 213b37841ddbb0240980062a536cc60f, type: 3}
+  m_SurfaceExplosion: {fileID: 8300000, guid: 213b37841ddbb0240980062a536cc60f, type: 3}
+  m_UnderwaterExplosion: {fileID: 8300000, guid: 50aacc4d107b0524c94e88fdf633a564,
+    type: 3}

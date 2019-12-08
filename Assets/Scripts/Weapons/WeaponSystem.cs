@@ -60,10 +60,10 @@ public class WeaponSystem : MonoBehaviour {
 
    void Awake()
    {
-      m_Laser = GetComponentInChildren<Laser>();
-      m_Turrets = GetComponentsInChildren<Turret>().ToList();
-      m_SensorSystem = transform.parent.GetComponentInChildren<SensorSystem>();
-      m_TurretAiming = GetComponentInChildren<TurretAimingSystem>();
+      m_Laser = GetComponentInChildren<Laser>(true);
+      m_Turrets = GetComponentsInChildren<Turret>(true).ToList();
+      m_SensorSystem = transform.parent.GetComponentInChildren<SensorSystem>(true);
+      m_TurretAiming = GetComponentInChildren<TurretAimingSystem>(true);
 
       if(m_SensorSystem == null)
          Debug.LogError("A weapon system requires a sensor system to function properly on " + transform.parent);
