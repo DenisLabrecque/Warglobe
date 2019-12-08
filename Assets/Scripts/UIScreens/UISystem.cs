@@ -20,6 +20,7 @@ namespace UIScreens
       private List<UIScreen> m_Screens = new List<UIScreen>();
       private UIScreen m_CurrentScreen;
       private UIScreen m_PreviousScreen;
+      private static CameraEmplacement m_Emplacement;
 
       public UIScreen CurrentScreen { get { return m_CurrentScreen; } }
       public UIScreen PreviousScreen { get { return m_PreviousScreen; } }
@@ -28,6 +29,7 @@ namespace UIScreens
       {
          m_Components = GetComponentsInChildren<Component>(true).ToList();
          m_Screens = GetComponentsInChildren<UIScreen>(true).ToList();
+         m_Emplacement = GetComponentInChildren<CameraEmplacement>();
       }
 
       private void Start()
@@ -73,6 +75,11 @@ namespace UIScreens
       public void LoadScene(int sceneIndex)
       {
          StartCoroutine(WaitToLoadScene(sceneIndex));
+      }
+
+      public static void AttachCamera(Camera camera)
+      {
+         m_Emplacement.Attach(camera);
       }
 
       IEnumerator WaitToLoadScene(int sceneIndex)

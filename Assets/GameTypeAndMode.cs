@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UIScreens;
 
 /// <summary>
 /// Disable all targets before the game starts.
@@ -17,18 +18,29 @@ public class GameTypeAndMode : MonoBehaviour
 
    private void Start()
    {
-      EnableTargets(true);
+      EnableTargets(false);
    }
 
    /// <summary>
    /// Enable or disable all targets.
    /// </summary>
-   public static void EnableTargets(bool doEnable)
+   private static void EnableTargets(bool doEnable)
    {
       // Activate or deactivate
       foreach(Target target in m_Targets)
       {
          target.gameObject.SetActive(doEnable);
+      }
+
+      // Attach the camera to the vehicle
+      if(doEnable)
+      {
+         UserInput.Player1Vehicle.AttachCamera(SingleCamera.Camera1);
+      }
+      // Attach the camera to the UI
+      else
+      {
+         UISystem.AttachCamera(SingleCamera.Camera1);
       }
 
       //Vehicle player1 = UserInput.Player1Vehicle;
@@ -40,5 +52,15 @@ public class GameTypeAndMode : MonoBehaviour
       //SingleCamera.SetCameraLayout(2);
 
       //player2.AttachCamera(SingleCamera.Camera2);
+   }
+
+   public void EnableTargets()
+   {
+      EnableTargets(true);
+   }
+
+   public void DisableTargets()
+   {
+      EnableTargets(false);
    }
 }
