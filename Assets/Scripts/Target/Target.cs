@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using DGL.Math;
 
 /// <summary>
 /// Abstraction that designates any potential target. All vehicles and military buildings inherit from this.
@@ -63,6 +64,57 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    }
 
    /// <summary>
+   /// The total hitpoints the target has.
+   /// </summary>
+   public float MaxHitpoints {
+      get {
+         return m_Hitpoints;
+      }
+   }
+
+   /// <summary>
+   /// The hitpoints that the target currently has.
+   /// </summary>
+   public float Hitpoints {
+      get {
+         return m_CurrentHitpoints;
+      }
+   }
+
+   /// <summary>
+   /// Current hitpoints over the maximum hitpoints (always between 0 and 1).
+   /// </summary>
+   public float PercentHitpoints {
+      get {
+         return Utility.Percent(m_CurrentHitpoints, m_Hitpoints, PercentMode.Clamp0To1);
+      }
+   }
+
+   /// <summary>
+   /// Whether the target has no hitpoints.
+   /// </summary>
+   public bool IsDead {
+      get {
+         if (m_CurrentHitpoints <= 0)
+            return true;
+         else
+            return false;
+      }
+   }
+
+   /// <summary>
+   /// Whether the target has enough hitpoints to be alive.
+   /// </summary>
+   public bool IsAlive {
+      get {
+         if (m_CurrentHitpoints > 0)
+            return true;
+         else
+            return false;
+      }
+   }
+
+   /// <summary>
    /// Get the weapons. Can return null if this target does not have a weapon system.
    /// </summary>
    public WeaponSystem WeaponSystem { get { return m_WeaponSystem; } }
@@ -105,6 +157,18 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    public string PopularName {
       get {
          return m_GeneralName;
+      }
+   }
+
+   /// <summary>
+   /// The objective here is to kill the target.
+   /// </summary>
+   public bool IsAccomplished {
+      get {
+         if (IsDead)
+            return true;
+         else
+            return false;
       }
    }
 

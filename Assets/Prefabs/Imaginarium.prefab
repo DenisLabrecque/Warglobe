@@ -1623,12 +1623,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CountryName: 0
-  m_GeneralName: Target
-  m_Description: A generic target.
+  m_GeneralName: Imaginarium
+  m_Description: A modern battleship.
   m_RadarCrossSection: 1
   m_Hitpoints: 50
   m_DollarValue: 32000
-  m_MaxHitpoints: 1500
+  m_MaxHitpoints: 5000
   m_PercentDensity: 0.4
   m_PregameSpeed: 0
   m_Rudder: {fileID: 2416253121615313278}
@@ -2226,11 +2226,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2416253121665320348}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: 86b29a49aefaf364c9f2959b5038ba9a,
-        type: 3}
-      propertyPath: m_Name
-      value: Ship Propeller
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 86b29a49aefaf364c9f2959b5038ba9a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2285,6 +2280,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 86b29a49aefaf364c9f2959b5038ba9a,
+        type: 3}
+      propertyPath: m_Name
+      value: Ship Propeller
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86b29a49aefaf364c9f2959b5038ba9a, type: 3}
