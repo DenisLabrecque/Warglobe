@@ -64,6 +64,17 @@ public class Turret : MonoBehaviour, IWeapon
    /// </summary>
    public bool AtRest { get { return m_IsAtRest; } }
 
+   public bool IsReloaded {
+      get {
+         if (m_ReloadTimer >= m_ReloadTime)
+         {
+            return true;
+         }
+         else
+            return false;
+      }
+   }
+
    bool IWeapon.LaunchAuthority => throw new System.NotImplementedException();
 
    float IWeapon.HitProbability => throw new System.NotImplementedException();
@@ -271,9 +282,13 @@ public class Turret : MonoBehaviour, IWeapon
          Debug.DrawRay(m_Base.position, m_Base.forward * 100.0f);
    }
 
-   public void Fire()
+   /// <summary>
+   /// Fire this turret. Not garanteed to work. The turret will not fire if it is not reloaded.
+   /// Returns a boolean of whether it fired or not.
+   /// </summary>
+   public bool Fire()
    {
-      if (m_ReloadTimer >= m_ReloadTime)
+      if (IsReloaded)
       {
          m_ReloadTimer = 0f;
 
@@ -283,6 +298,10 @@ public class Turret : MonoBehaviour, IWeapon
          }
 
          m_Audio.Play();
+
+         return true; // Has fired
       }
+      else
+         return false; // Has not fired
    }
 }

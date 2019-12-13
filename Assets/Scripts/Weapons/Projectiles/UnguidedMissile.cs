@@ -52,12 +52,14 @@ public class UnguidedMissile : Projectile
    /// <summary>
    /// Separate the projectile and fire the engine.
    /// </summary>
-   public override void Fire()
+   public override bool Fire()
    {
       base.Fire();
 
       // Start the rocket
       m_Motor.StartMotor(m_Rigidbody); // Verify that the motor was not checked as started
+
+      return true;
    }
 
    private void ComputeLift()

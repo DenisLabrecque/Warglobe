@@ -27,8 +27,9 @@ public interface IWeapon {
 
    /// <summary>
    /// Main method for shooting the weapon.
+   /// Returns a boolean indicating success.
    /// </summary>
-   void Fire();
+   bool Fire();
 
    #endregion
 

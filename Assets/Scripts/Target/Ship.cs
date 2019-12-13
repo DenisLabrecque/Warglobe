@@ -10,6 +10,8 @@ public abstract class Ship : Vehicle
    [Header("Control surface")]
    [SerializeField] ControlSurface m_Rudder;
 
+   private bool m_HasFired = false; // Prevent a single click to count as multiple
+
    #endregion
 
 
@@ -71,8 +73,15 @@ public abstract class Ship : Vehicle
       // Fire weapons
       if(UserInput.Gun)
       {
-         //WeaponSystem.FireProjectile();
-         WeaponSystem.FireTurret();
+         if (m_HasFired == false)
+         {
+            WeaponSystem.FireTurret();
+            m_HasFired = true;
+         }
+      }
+      else
+      {
+         m_HasFired = false;
       }
    }
 

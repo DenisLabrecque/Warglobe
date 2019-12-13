@@ -98,12 +98,22 @@ public class WeaponSystem : MonoBehaviour {
       m_WeaponSlots[m_ProjectileTypes[m_CurrentProjectileIndex]].Fire();
    }
 
-   public void FireTurret()
+   /// <summary>
+   /// Fire the first available turret that is reloaded.
+   /// Returns whether or not a turret has fired.
+   /// </summary>
+   public bool FireTurret()
    {
+      bool hasFired = false;
+
       foreach(Turret turret in m_Turrets)
       {
-         turret.Fire();
+         hasFired = turret.Fire();
+         if (hasFired == true)
+            break;
       }
+
+      return hasFired;
    }
 
    /// <summary>

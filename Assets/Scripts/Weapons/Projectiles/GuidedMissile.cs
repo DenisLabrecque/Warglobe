@@ -172,11 +172,13 @@ public class GuidedMissile : Projectile
    /// Fire the guided missile towards the target if it has launch authorization and a target is acquired.
    /// TODO this is for testing. Firing should be at a target.
    /// </summary>
-   public override void Fire()
+   public override bool Fire()
    {
       base.Fire();
 
       m_Motor.StartMotor(m_Rigidbody);
+
+      return true;
    }
 
    /// <summary>

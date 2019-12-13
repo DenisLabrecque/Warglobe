@@ -105,7 +105,7 @@ public abstract class Projectile : MonoBehaviour, IWeapon
    /// Detach the projectile and add a rigidbody to it according to its weight, with an initial impulse equal to the 
    /// original speed of the carrying vehicle.
    /// </summary>
-   public virtual void Fire() {
+   public virtual bool Fire() {
       // Get the current speed, location, and rotation
       Vector3 velocity = m_Rigidbody.velocity;               // The vehicle's speed
       Vector3 angularVelocity = m_Rigidbody.angularVelocity; // The vehicle's turn rate
@@ -141,6 +141,8 @@ public abstract class Projectile : MonoBehaviour, IWeapon
 
       // Register the firing time (null if not fired)
       m_FiredTime = Time.time;
+
+      return true;
    }
 
    public override string ToString()

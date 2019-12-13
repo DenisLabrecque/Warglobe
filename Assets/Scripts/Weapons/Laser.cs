@@ -61,9 +61,9 @@ public class Laser : MonoBehaviour, IWeapon
    /// <summary>
    /// Method called each frame to fire.
    /// </summary>
-   public void Fire()
+   public bool Fire()
    {
-      if(LaunchAuthority)
+      if (LaunchAuthority)
       {
          // Visuals
          m_LineRenderer.enabled = true;
@@ -72,9 +72,14 @@ public class Laser : MonoBehaviour, IWeapon
 
          // Hurt the target
          m_LaserTarget.Damage(m_Power);
+
+         return true;
       }
       else
+      {
          StopFire();
+         return false;
+      }
    }
 
    /// <summary>
