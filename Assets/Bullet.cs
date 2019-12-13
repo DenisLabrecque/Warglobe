@@ -234,7 +234,7 @@ public class Bullet : MonoBehaviour
                break;
          }
          m_Audio.Play();
-         Debug.Log("Explosion! " + m_Audio.clip);
+         //Debug.Log("Explosion! " + m_Audio.clip);
 
          // Stop the shell path particles, stop physics, and don't display the shell
          gameObject.GetComponent<ParticleSystem>().Stop(true, ParticleSystemStopBehavior.StopEmitting);

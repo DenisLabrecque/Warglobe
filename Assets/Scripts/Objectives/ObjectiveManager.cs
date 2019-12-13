@@ -6,32 +6,38 @@ using UnityEngine.Events;
 public class ObjectiveManager : MonoBehaviour
 {
    [SerializeField] UnityEvent m_ObjectivesAccomplished;
-   static List<Objective> m_AllObjectives = new List<Objective>();
+   static List<Objective> m_AllObjectives;
    bool m_AllObjectivesAccomplished = false;
 
    public static void Add(Objective objective)
    {
+      if(m_AllObjectives == null)
+      {
+         m_AllObjectives = new List<Objective>();
+      }
       m_AllObjectives.Add(objective);
    }
 
    private void Start()
    {
-      StartCoroutine("CheckAccomplished");
+      InvokeRepeating("CheckAccomplished", 1f, 1f);
    }
 
    /// <summary>
    /// Coroutine checking whether the objectives are all accomplished at each second.
    /// </summary>
-   IEnumerator CheckAccomplished()
+   bool CheckAccomplished()
    {
-      for (; ; )
+      if (m_AllObjectives == null)
+      {
+         return false;
+      }
+      else
       {
          bool areObjectivesAccomplished = true;
-         foreach(Objective objective in m_AllObjectives)
+         foreach (Objective objective in m_AllObjectives)
          {
-            if (objective.IsAccomplished)
-               continue;
-            else
+            if (objective.IsObjectiveAccomplished() == false)
             {
                areObjectivesAccomplished = false;
                break;
@@ -39,17 +45,15 @@ public class ObjectiveManager : MonoBehaviour
          }
          m_AllObjectivesAccomplished = areObjectivesAccomplished;
 
-         if(m_AllObjectivesAccomplished)
+         if (m_AllObjectivesAccomplished)
          {
             m_ObjectivesAccomplished.Invoke();
-            Debug.Log("ALL OBJECTIVES ACCOMPLISHED!");
+            return true;
          }
          else
          {
-            Debug.Log("Checked... " + m_AllObjectives);
+            return false;
          }
-
-         yield return new WaitForSeconds(1f);
       }
    }
 }

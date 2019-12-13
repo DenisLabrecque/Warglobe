@@ -6,9 +6,9 @@ public abstract class Objective : MonoBehaviour
 {
    [SerializeField] protected List<Objective> m_SubObjectives = new List<Objective>();
    [SerializeField] protected UnityEvent m_Accomplished = new UnityEvent();
-   protected bool m_IsAccomplished = false; // Must be set to true in the child class
+   [SerializeField] public string name = "Testing";
 
-   private void Awake()
+   private void Start()
    {
       // Subscribe to the objective manager
       ObjectiveManager.Add(this);
@@ -16,7 +16,7 @@ public abstract class Objective : MonoBehaviour
 
    public bool IsAccomplished {
       get {
-         return m_IsAccomplished && SubObjectivesAccomplished;
+         return IsObjectiveAccomplished();
       }
    }
 
@@ -50,5 +50,5 @@ public abstract class Objective : MonoBehaviour
    /// <summary>
    /// To be implemented in the subclass.
    /// </summary>
-   protected abstract bool IsObjectiveAccomplished();
+   public abstract bool IsObjectiveAccomplished();
 }

@@ -10,16 +10,18 @@ public class ObjectiveKillTarget : Objective
    private void Awake()
    {
       // Automatically assign the target component if this was not done manually
-      Target target = GetComponent<Target>();
-      if (target)
-         m_Target = target;
+      if (m_Target == null)
+      {
+         Target target = GetComponent<Target>();
+         if (target)
+            m_Target = target;
+      }
    }
 
-   protected override bool IsObjectiveAccomplished()
+   public override bool IsObjectiveAccomplished()
    {
-      if(m_Target.IsDead && SubObjectivesAccomplished)
+      if(m_Target.IsDead)
       {
-         m_IsAccomplished = true;
          m_Accomplished.Invoke();
          return true;
       }
