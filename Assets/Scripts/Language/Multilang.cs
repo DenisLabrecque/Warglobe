@@ -63,6 +63,7 @@ public static class Multilang
          new Phrase("h1_newPlayer", new string[] { "New Player", "Nouveau joueur", "Új játékos"}),
          new Phrase("h1_language", new string[] {"Language", "Langue", "Nyelv"}),
          new Phrase("credits", new string[] {"Credits", "Attribution", "Jóváírás" }),
+         new Phrase("sounds", new string[] {"Sounds", "Sons", "Hangok"}),
 
          // Button titles
          new Phrase("btn_newPlayer", new string[] {"New Player", "Nouveau joueur", "Új játékos"}),

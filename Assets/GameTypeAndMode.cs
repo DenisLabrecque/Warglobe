@@ -20,6 +20,10 @@ public class GameTypeAndMode : MonoBehaviour
          Multilang.Initialize((Language)PlayerPrefs.GetInt(Preferences.LANGUAGE));
          Debug.Log("Current language " + Multilang.Language);
       }
+      else
+      {
+         Multilang.Initialize(Language.English);
+      }
    }
 
    private void Start()
@@ -75,7 +79,7 @@ public class GameTypeAndMode : MonoBehaviour
       Multilang.Initialize(language);
       TranslationString.UpdateAllTextStrings();
       Debug.Log("Language set is " + Multilang.Language);
-      PlayerPrefs.SetInt(Preferences.LANGUAGE, (int)Language.English);
+      PlayerPrefs.SetInt(Preferences.LANGUAGE, (int)language);
    }
 
    public void SetLanguageEnglish()
