@@ -14,6 +14,12 @@ public class GameTypeAndMode : MonoBehaviour
    private void Awake()
    {
       m_Targets = FindObjectsOfType<Target>().ToList();
+
+      if (PlayerPrefs.HasKey(Preferences.LANGUAGE))
+      {
+         Multilang.Initialize((Language)PlayerPrefs.GetInt(Preferences.LANGUAGE));
+         Debug.Log("Current language " + Multilang.Language);
+      }
    }
 
    private void Start()
@@ -62,5 +68,28 @@ public class GameTypeAndMode : MonoBehaviour
    public void DisableTargets()
    {
       EnableTargets(false);
+   }
+
+   public void SetLanguage(Language language)
+   {
+      Multilang.Initialize(language);
+      TranslationString.UpdateAllTextStrings();
+      Debug.Log("Language set is " + Multilang.Language);
+      PlayerPrefs.SetInt(Preferences.LANGUAGE, (int)Language.English);
+   }
+
+   public void SetLanguageEnglish()
+   {
+      SetLanguage(Language.English);
+   }
+
+   public void SetLanguageFrench()
+   {
+      SetLanguage(Language.Francais);
+   }
+
+   public void SetLanguageHungarian()
+   {
+      SetLanguage(Language.Magyar);
    }
 }

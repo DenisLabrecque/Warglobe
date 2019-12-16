@@ -62,6 +62,7 @@ public static class Multilang
          new Phrase("h1_setup", new string[] { "Setup", "Configuration", "Konfigurációs"}),
          new Phrase("h1_newPlayer", new string[] { "New Player", "Nouveau joueur", "Új játékos"}),
          new Phrase("h1_language", new string[] {"Language", "Langue", "Nyelv"}),
+         new Phrase("credits", new string[] {"Credits", "Attribution", "Jóváírás" }),
 
          // Button titles
          new Phrase("btn_newPlayer", new string[] {"New Player", "Nouveau joueur", "Új játékos"}),
@@ -69,6 +70,7 @@ public static class Multilang
          new Phrase("btn_country", new string[] {"Country", "Pays", "Ország" }),
          new Phrase("btn_settings", new string[] {"Settings", "Paramètres", "Beállítások"}),
          new Phrase("btn_submit", new string[] {"Submit", "Soumettre", "Belép"}),
+         new Phrase("btn_back", new string[] {"Back", "Retour", "Vissza"}),
 
          // Text input titles
          new Phrase("txt_playerName", new string[] {"Name wanted", "Nom voulu", "Játékos neve"}),
