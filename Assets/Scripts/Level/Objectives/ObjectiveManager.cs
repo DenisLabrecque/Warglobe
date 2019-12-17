@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// Maintains a list of all objectives, and fires and event when they all are accomplished.
+/// 
+/// Denis Labrecque, December 2019
+/// </summary>
 public class ObjectiveManager : MonoBehaviour
 {
    [SerializeField] UnityEvent m_ObjectivesAccomplished;
