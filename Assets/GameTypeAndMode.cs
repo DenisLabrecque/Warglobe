@@ -9,6 +9,10 @@ using UIScreens;
 /// </summary>
 public class GameTypeAndMode : MonoBehaviour
 {
+   [SerializeField] GameObject m_WhiteImaginarium;
+   [SerializeField] GameObject m_MintImaginarium;
+   [SerializeField] GameObject m_PinkImaginarium;
+
    static List<Target> m_Targets = new List<Target>();
 
    private void Awake()
