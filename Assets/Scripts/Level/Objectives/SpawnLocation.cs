@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteAlways]
+[ExecuteInEditMode]
 public class SpawnLocation : MonoBehaviour
 {
    [Header("Spawn this Vehicle")]
    [SerializeField] Vehicle m_Vehicle;
+   [SerializeField] bool m_PointVertically = true;
    private Transform m_Transform;
    private Vehicle m_LastVehicle;
    private Vehicle m_CurrentVehicle;
@@ -20,6 +21,7 @@ public class SpawnLocation : MonoBehaviour
    {
       m_Transform = gameObject.transform;
 
+      // Remove the vehicle if there was one when the prefab pointed to is null
       if(m_Vehicle == null)
       {
          DestroyVehicle();
@@ -29,6 +31,12 @@ public class SpawnLocation : MonoBehaviour
       {
          InstantiateVehicle();
       }
+      // Remove the vehicle and replace it if there is a different prefab pointed to
+      //else if (m_Vehicle != m_CurrentVehicle)
+      //{
+      //   DestroyVehicle();
+      //   InstantiateVehicle();
+      //}
 
       m_LastVehicle = m_CurrentVehicle;
    }
@@ -40,6 +48,10 @@ public class SpawnLocation : MonoBehaviour
          DestroyVehicle();
       }
       m_CurrentVehicle = Instantiate(m_Vehicle, m_Transform.position, new Quaternion(), m_Transform);
+      if(m_PointVertically)
+      {
+         PointTowardsEarth.PointVertically(m_CurrentVehicle.gameObject);
+      }
       Debug.Log("Vehicle " + m_CurrentVehicle + " instantiated");
    }
 
@@ -48,7 +60,7 @@ public class SpawnLocation : MonoBehaviour
       if (m_CurrentVehicle != null)
       {
          Debug.Log("Vehicle " + m_CurrentVehicle + " destroyed");
-         DestroyImmediate(m_CurrentVehicle);
+         DestroyImmediate(m_CurrentVehicle.gameObject);
          m_CurrentVehicle = null;
       }
    }

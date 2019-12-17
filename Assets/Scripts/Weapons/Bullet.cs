@@ -209,14 +209,15 @@ public class Bullet : MonoBehaviour
 
       // Deal this damage to the Target
       target.Damage(damage);
-      Explode(ExplosionType.surface);
+      float percentDamage = DGL.Math.Utility.Percent(damage, target.MaxHitpoints);
+      Explode(ExplosionType.surface, percentDamage);
    }
 
    /// <summary>
    /// The bullet explodes; does not damage the target, but should be called to complete the explosion.
    /// Instantiates an AudioSource where the bullet hit.
    /// </summary>
-   public void Explode(ExplosionType type)
+   public void Explode(ExplosionType type, float loudness = 1f)
    {
       if (!m_HasCollided)
       {
@@ -233,6 +234,7 @@ public class Bullet : MonoBehaviour
                m_Audio.clip = m_UnderwaterExplosion;
                break;
          }
+         m_Audio.volume = loudness;
          m_Audio.Play();
          //Debug.Log("Explosion! " + m_Audio.clip);
 

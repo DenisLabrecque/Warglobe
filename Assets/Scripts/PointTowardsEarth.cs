@@ -37,4 +37,11 @@ public class PointTowardsEarth : MonoBehaviour
       // Stop execution
       enabled = false;
    }
+
+   public static void PointVertically(GameObject gameObject)
+   {
+      Vector3 targetDirection = Vector3.Cross(Vector3.zero, gameObject.transform.position);
+      gameObject.transform.LookAt(Vector3.zero, Vector3.forward);
+      gameObject.transform.Rotate(Vector3.left, 90);
+   }
 }
