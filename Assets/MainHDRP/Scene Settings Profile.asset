@@ -54,13 +54,13 @@ MonoBehaviour:
     showEyeDropper: 1
   middle:
     m_OverrideState: 1
-    m_Value: {r: 0.007843138, g: 0.10980392, b: 0.5647059, a: 1}
+    m_Value: {r: 0.085172676, g: 0.20526724, b: 0.20754719, a: 1}
     hdr: 1
     showAlpha: 0
     showEyeDropper: 1
   bottom:
     m_OverrideState: 1
-    m_Value: {r: 1.2470589, g: 1.8901961, b: 1.9843137, a: 1}
+    m_Value: {r: 1.0121999, g: 2.438741, b: 2.6492145, a: 1}
     hdr: 1
     showAlpha: 0
     showEyeDropper: 1

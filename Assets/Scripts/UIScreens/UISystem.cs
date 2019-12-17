@@ -37,13 +37,19 @@ namespace UIScreens
          InitializeScreens();
       }
 
+      /// <summary>
+      /// Enable all screens in case an artist disabled one. Then close all screens, and open only the start screen.
+      /// </summary>
       private void InitializeScreens()
       {
-         foreach(Component screen in m_Components)
+         foreach (Component component in m_Components)
          {
-            screen.gameObject.SetActive(true);
+            if (component is UIScreen)
+            {
+               component.gameObject.SetActive(true);
+            }
          }
-         foreach(UIScreen screen in m_Screens)
+         foreach (UIScreen screen in m_Screens)
          {
             screen.Close();
          }
