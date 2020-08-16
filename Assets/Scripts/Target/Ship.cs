@@ -3,12 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Ship : Vehicle
+public class Ship : Vehicle
 {
+   public enum ShipType
+   {
+      AircraftCarrier, Battleship, Cruiser, Destroyer, Cutter
+   }
+
    #region Member Variables
 
    [Header("Control surface")]
-   [SerializeField] ControlSurface m_Rudder;
+   [SerializeField] List<ControlSurface> _rudders;
+
+   [Header("Ship subtype")]
+   [SerializeField] public ShipType _type = ShipType.Cruiser;
 
    private bool m_HasFired = false; // Prevent a single click to count as multiple
 
@@ -24,7 +32,7 @@ public abstract class Ship : Vehicle
    {
       base.Start();
 
-      if (m_Rudder == null)
+      if (_rudders == null || _rudders.Count == 0)
          Debug.LogError("A ship must have a rudder");
    }
 
@@ -68,7 +76,8 @@ public abstract class Ship : Vehicle
          m_Motor.AdjustThrottle(UserInput.Throttle);
 
       // Steer
-      m_Rudder.DeflectionPercent = UserInput.Yaw;
+      foreach(var rudder in _rudders)
+         rudder.DeflectionPercent = UserInput.Yaw;
 
       // Fire weapons
       if(UserInput.Gun)
