@@ -90,7 +90,7 @@ public class Turret : MonoBehaviour, IWeapon
    {
       if(m_Muzzles.Count == 0)
       {
-         throw new System.Exception("A Turret requires at least one muzzle to fire");
+         Debug.LogWarning("A Turret requires at least one muzzle to fire");
       }
       if (m_IsAiming == false)
          m_AimPoint = transform.TransformPoint(Vector3.forward * 100.0f);

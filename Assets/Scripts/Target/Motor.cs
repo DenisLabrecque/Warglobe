@@ -21,13 +21,13 @@ public abstract class Motor : MonoBehaviour {
    [SerializeField] protected bool m_IsEnabled = true;
 
    [Tooltip("Battery total charge when full (unitless)")]
-   [SerializeField] float m_BatteryDurationMinutes = 11.5f;
+   [SerializeField] float _powerDurationMinutes = 11.5f;
 
    [Header("Power")]
-   [SerializeField] protected Vector3 m_ThrustDirection = new Vector3(0, 0, 1);
+   [SerializeField] protected Vector3 _thrustDirection = new Vector3(0, 0, 1);
 
-   [Tooltip("Thrust to mass at maximum throttle")]
-   [SerializeField] protected float m_ThrustToWeightRatio = 1f;
+   [Tooltip("Thrust to weight ratio of power at maximum throttle")]
+   [SerializeField] protected float _thrustToWeight = 0.2f;
 
    [Tooltip("Percent of total thrust forward thrust that can be applied going backwards")]
    [SerializeField] [Range(0, 1)] protected float m_BackwardsPercentPower = 0.5f;
@@ -36,7 +36,7 @@ public abstract class Motor : MonoBehaviour {
    [SerializeField][Range(0, 1)] protected float m_ThrustChangeSpeed = 0.5f;
 
    [Tooltip("Current throttle (modified in realtime)")]
-   [Range(0,1)] [SerializeField] float m_ThrottleInput = 0; // The throttle setting that has been ordered
+   [Range(-1,1)] [SerializeField] float m_ThrottleInput = 0; // The throttle setting that has been ordered
 
    [Header("Visible Fan Properties")]
 
@@ -55,9 +55,9 @@ public abstract class Motor : MonoBehaviour {
    protected float m_MaxThrust;
 
    // Set at start
-   protected Rigidbody m_Rigidbody = null;
-   AudioSource m_AudioSource;
-   private float m_1_60th = 0.0166667f;
+   protected Rigidbody _rigidbody = null;
+   AudioSource _audioSource;
+   private readonly float m_1_60th = 0.0166667f;
 
    #endregion
 
@@ -87,7 +87,7 @@ public abstract class Motor : MonoBehaviour {
    /// </summary>
    public float PowerMassRatio {
       get {
-         return m_ThrustToWeightRatio;
+         return _thrustToWeight;
       }
    }
 
@@ -105,7 +105,7 @@ public abstract class Motor : MonoBehaviour {
    /// </summary>
    public float BatteryPercent {
       get {
-         return DGL.Math.Utility.Percent(m_CurrentBattery, m_BatteryDurationMinutes);
+         return DGL.Math.Utility.Percent(m_CurrentBattery, _powerDurationMinutes);
       }
    }
 
@@ -138,16 +138,16 @@ public abstract class Motor : MonoBehaviour {
    void Awake()
    {
       if(m_IsEnabled)
-         m_Rigidbody = GetComponentInParent<Rigidbody>();
+         _rigidbody = GetComponentInParent<Rigidbody>();
 
-      m_AudioSource = GetComponent<AudioSource>();
-      m_AudioSource.loop = true;
-      m_AudioSource.spatialBlend = 1;
-      m_AudioSource.rolloffMode = AudioRolloffMode.Linear;
+      _audioSource = GetComponent<AudioSource>();
+      _audioSource.loop = true;
+      _audioSource.spatialBlend = 1;
+      _audioSource.rolloffMode = AudioRolloffMode.Linear;
 
       m_ActualThrottle = m_ThrottleInput;
-      m_Volume = m_AudioSource.volume;
-      m_CurrentBattery = m_BatteryDurationMinutes;
+      m_Volume = _audioSource.volume;
+      m_CurrentBattery = _powerDurationMinutes;
    }
 
    void Update()
@@ -158,14 +158,14 @@ public abstract class Motor : MonoBehaviour {
          m_ActualThrottle = Mathf.Lerp(m_ActualThrottle, m_ThrottleInput, m_ThrustChangeSpeed * Time.deltaTime);
 
          // Mass can change
-         m_MaxThrust = m_ThrustToWeightRatio * m_Rigidbody.mass * 400f;
+         m_MaxThrust = _thrustToWeight * _rigidbody.mass * 400f;
 
          // Discharge the battery
          m_CurrentBattery -= m_ActualThrottle * m_1_60th * Time.deltaTime;
          if(m_CurrentBattery <= 0)
          {
             m_CurrentBattery = 0;
-            m_AudioSource.volume = 0;
+            _audioSource.volume = 0;
             m_IsEnabled = false;
          }
          else
@@ -173,15 +173,15 @@ public abstract class Motor : MonoBehaviour {
             // Sound volume
             if(m_ActualThrottle == 0f)
             {
-               m_AudioSource.volume = 0;
+               _audioSource.volume = 0;
             }
             else
             {
-               m_AudioSource.volume = m_Volume;
+               _audioSource.volume = m_Volume;
             }
 
             // Sound pitch
-            m_AudioSource.pitch = m_ActualThrottle * m_MaxPitch;
+            _audioSource.pitch = m_ActualThrottle * m_MaxPitch;
 
             // Make each fan turn
             foreach(GameObject part in m_Fans)
@@ -192,7 +192,7 @@ public abstract class Motor : MonoBehaviour {
       }
       else
       {
-         m_AudioSource.volume = 0;
+         _audioSource.volume = 0;
       }
    }
 
@@ -221,7 +221,7 @@ public abstract class Motor : MonoBehaviour {
       if(m_CurrentBattery >= 0)
       {
          m_IsEnabled = true;
-         m_Rigidbody = rigidbody;
+         _rigidbody = rigidbody;
       }
    }
 

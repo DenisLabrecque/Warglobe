@@ -9,9 +9,9 @@ public abstract class CameraEmplacement : MonoBehaviour {
 
    #region Properties
 
-   [SerializeField] int m_FieldOfView = 80;
+   [SerializeField] int _fieldOfView = 80;
 
-   protected Camera m_Camera = null;
+   protected Camera _camera = null;
 
    #endregion
 
@@ -25,7 +25,7 @@ public abstract class CameraEmplacement : MonoBehaviour {
    {
       // Activate this camera emplacement
       enabled = true;
-      m_Camera = camera;
+      _camera = camera;
 
       // Attach the camera to this object
       camera.transform.parent = transform;
@@ -37,7 +37,7 @@ public abstract class CameraEmplacement : MonoBehaviour {
    // Deactivate this camera emplacement
    public void Detach()
    {
-      m_Camera = null;
+      _camera = null;
       enabled = false;
    }
 
@@ -58,7 +58,7 @@ public abstract class CameraEmplacement : MonoBehaviour {
       camera.transform.localRotation = transform.localRotation;
 
       // FOV
-      camera.fieldOfView = m_FieldOfView;
+      camera.fieldOfView = _fieldOfView;
    }
 
    #endregion

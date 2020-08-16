@@ -9,7 +9,7 @@ public class ShipPropeller : Motor
       if (IsEnabled && Planet.Singleton.IsInWater(gameObject))
       {
          // Apply the throttle behind a vehicle
-         m_Rigidbody.AddRelativeForce(m_ThrustDirection * CurrentThrust);
+         _rigidbody.AddRelativeForce(_thrustDirection * CurrentThrust);
       }
    }
 }

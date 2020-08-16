@@ -37,7 +37,7 @@ public class OrbitCamera : CameraEmplacement {
    void Update()
    {
       // Rotate the camera emplacement
-      if(m_Camera != null && m_MouseReleased == true && UserInput.MiddleMouseButton == true)
+      if(_camera != null && m_MouseReleased == true && UserInput.MiddleMouseButton == true)
       {
          m_MouseStartPoint = Input.mousePosition;
          m_MouseReleased = false;

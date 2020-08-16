@@ -33,7 +33,7 @@ public class Ship : Vehicle
       base.Start();
 
       if (_rudders == null || _rudders.Count == 0)
-         Debug.LogError("A ship must have a rudder");
+         Debug.LogWarning("A ship is expected to have a rudder!");
    }
 
    void Update()
@@ -77,7 +77,8 @@ public class Ship : Vehicle
 
       // Steer
       foreach(var rudder in _rudders)
-         rudder.DeflectionPercent = UserInput.Yaw;
+         if(rudder != null)
+            rudder.DeflectionPercent = UserInput.Yaw;
 
       // Fire weapons
       if(UserInput.Gun)

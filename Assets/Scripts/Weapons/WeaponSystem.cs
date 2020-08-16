@@ -11,6 +11,8 @@ using System.Linq;
 /// Creates a slot for each projectile type contained by the hardpoints. In this way, the user can select to fire projectiles by type,
 /// and knows how many projectiles of each type are left to fire.
 /// 
+/// This will not work until fixed!
+/// 
 /// Denis Labrecque
 /// January 2019
 /// </summary>
@@ -66,7 +68,7 @@ public class WeaponSystem : MonoBehaviour {
       m_TurretAiming = GetComponentInChildren<TurretAimingSystem>(true);
 
       if(m_SensorSystem == null)
-         Debug.LogError("A weapon system requires a sensor system to function properly on " + transform.parent);
+         Debug.LogWarning("A weapon system requires a sensor system to function properly on " + transform.parent);
    }
 
    void Start()
@@ -186,7 +188,16 @@ public class WeaponSystem : MonoBehaviour {
             }
          }
       }
-      m_TrackingList.Add(m_SensorSystem.TrackingTarget);
+
+      // TODO
+      // TODO
+
+      // TODO
+      // TODO
+
+      // This will not work!
+
+      //m_TrackingList.Add(m_SensorSystem.TrackingTarget); // TODO handle nulls
    }
 
    #endregion
