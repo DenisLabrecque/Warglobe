@@ -53,7 +53,9 @@ public class Rudder : MonoBehaviour
 
       // Debug.Log("Force: " + (speedPercent * m_AngleOfAttack));
 
-      _rigidbody.AddRelativeTorque(new Vector3(0, 1, 0) * _effect * _actualAoa * massSquared * Math.Abs(percentSpeed) * Time.deltaTime, ForceMode.Force); // The actual turning
-      _rigidbody.AddRelativeTorque(new Vector3(0, 0, 1) * _effect * _actualAoa * _rigidbody.mass * percentSpeed * Time.deltaTime, ForceMode.Force); // Turning effect
+      // The actual turning; speed is absolute because going backwards flips control direction
+      _rigidbody.AddRelativeTorque(new Vector3(0, 1, 0) * _effect * _actualAoa * massSquared * Math.Abs(percentSpeed) * Time.deltaTime, ForceMode.Force);
+      // Turning effect; should help tilt the boat, but not required
+      _rigidbody.AddRelativeTorque(new Vector3(0, 0, 1) * _effect * _actualAoa * _rigidbody.mass * Math.Abs(percentSpeed) * Time.deltaTime, ForceMode.Force);
    }
 }

@@ -23,7 +23,7 @@ public class WeaponSystem : MonoBehaviour {
    SortedSet<Target> m_TrackingList = new SortedSet<Target>();
    SensorSystem m_SensorSystem;
    Laser m_Laser;
-   List<Turret> m_Turrets = new List<Turret>();
+   List<TurretAim> m_Turrets = new List<TurretAim>();
    int m_CurrentProjectileIndex = 0;
    Dictionary<Type, ProjectileSlot> m_WeaponSlots = new Dictionary<Type, ProjectileSlot>();
    List<Type> m_ProjectileTypes = new List<Type>();
@@ -63,7 +63,7 @@ public class WeaponSystem : MonoBehaviour {
    void Awake()
    {
       m_Laser = GetComponentInChildren<Laser>(true);
-      m_Turrets = GetComponentsInChildren<Turret>(true).ToList();
+      m_Turrets = GetComponentsInChildren<TurretAim>(true).ToList();
       m_SensorSystem = transform.parent.GetComponentInChildren<SensorSystem>(true);
       m_TurretAiming = GetComponentInChildren<TurretAimingSystem>(true);
 
@@ -108,7 +108,7 @@ public class WeaponSystem : MonoBehaviour {
    {
       bool hasFired = false;
 
-      foreach(Turret turret in m_Turrets)
+      foreach(TurretAim turret in m_Turrets)
       {
          hasFired = turret.Fire();
          if (hasFired == true)
@@ -173,18 +173,18 @@ public class WeaponSystem : MonoBehaviour {
       }
       if(m_Turrets != null)
       {
-         foreach(Turret turret in m_Turrets)
+         foreach(TurretAim turret in m_Turrets)
          {
             if(m_TurretAiming == null)
             {
                // Automatic cheapo turret aim
                if (m_SensorSystem.TrackingTarget != null)
-                  turret.SetAimpoint(m_SensorSystem.TrackingTarget.transform.position);
+                  turret.AimPosition = m_SensorSystem.TrackingTarget.transform.position;
             }
             else
             {
                // By hand turret aim
-               turret.SetAimpoint(m_TurretAiming.AimPoint);
+               turret.AimPosition = m_TurretAiming.AimPoint;
             }
          }
       }
