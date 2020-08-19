@@ -105,6 +105,8 @@ public class TurretAim : MonoBehaviour, IWeapon
 
    private void Update()
    {
+      m_ReloadTimer += Time.deltaTime;
+
       if (IsIdle)
       {
             if (!IsTurretAtRest)

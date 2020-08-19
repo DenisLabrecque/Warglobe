@@ -94,89 +94,89 @@ public class Bullet : MonoBehaviour
    /// Detect when the bullet hits something.
    /// </summary>
    /// <param name="collision"></param>
-   //void OnCollisionEnter(Collision collision)
-   //{
-   //   if (m_HasCollided == false)
-   //   {
-   //      // Play a sound if the colliding objects had a big impact.
-   //      if (collision.relativeVelocity.magnitude > 2)
-   //      {
-   //         Target targetHit = collision.gameObject.GetComponent<Target>();
-
-   //         // Hit oneself
-   //         if(m_Target != null && targetHit == m_Target)
-   //         {
-   //            // Oops, let's ignore hits to the originator
-   //            Debug.Log("Hit originator");
-   //         }
-   //         // Hit a surface
-   //         else if (targetHit == null)
-   //         {
-   //            Debug.Log("Hit surface");
-   //            //Explode(ExplosionType.surface);
-   //         }
-   //         // Hit a legitimate target
-   //         else
-   //         {
-   //            // Debug-draw all contact points and normals
-   //            foreach (ContactPoint contact in collision.contacts)
-   //            {
-   //               Debug.Log("HIT! " + collision.gameObject);
-   //               Debug.DrawRay(contact.point, contact.normal, Color.white);
-
-   //               m_HasCollided = true;
-   //               Explode(targetHit);
-   //            }
-   //         }
-   //      }
-   //   }
-   //}
-
-   private void OnTriggerEnter(Collider other)
+   void OnCollisionEnter(Collision collision)
    {
-      // Collect all the colliders in a sphere from the shell's current position to a radius of the explosion radius.
-      Collider[] colliders = Physics.OverlapSphere(transform.position, m_DamageRadius);
-
-      // Go through all the colliders
-      for (int i = 0; i < colliders.Length; i++)
+      if (m_HasCollided == false)
       {
-         if(colliders[i].gameObject.tag == "land")
+         // Play a sound if the colliding objects had a big impact.
+         if (collision.relativeVelocity.magnitude > 2)
          {
-            Explode(ExplosionType.surface);
-            return;
-         }
-         else if(colliders[i].gameObject.tag == "water")
-         {
-            // Don't explode yet, wait for the FixedUpdate to catch this underwater
-            return;
-         }
-         else
-         {
-            // Add an explosion force
-            Rigidbody rigidbody = colliders[i].GetComponentInParent<Rigidbody>();
+            Target targetHit = collision.gameObject.GetComponent<Target>();
 
-            if (rigidbody)
+            // Hit oneself
+            if (m_Target != null && targetHit == m_Target)
             {
-               // Add an explosion force.
-               rigidbody.AddExplosionForce(m_Damage, transform.position, m_DamageRadius);
-
-               // Find the Target script associated with the rigidbody.
-               Target target = rigidbody.GetComponent<Target>();
-
-               // Damage the target
-               if (target)
+               // Oops, let's ignore hits to the originator
+               Debug.Log("Hit originator");
+            }
+            // Hit a surface
+            else if (targetHit == null)
+            {
+               Debug.Log("Hit surface");
+               //Explode(ExplosionType.surface);
+            }
+            // Hit a legitimate target
+            else
+            {
+               // Debug-draw all contact points and normals
+               foreach (ContactPoint contact in collision.contacts)
                {
-                  Explode(target);
-               }
-               // If there is no Target script attached to the gameobject, go on to the next collider.
-               else
-               {
-                  continue;
+                  Debug.Log("HIT! " + collision.gameObject);
+                  Debug.DrawRay(contact.point, contact.normal, Color.white);
+
+                  m_HasCollided = true;
+                  Explode(targetHit);
                }
             }
          }
       }
    }
+
+   //private void OnTriggerEnter(Collider other)
+   //{
+   //   // Collect all the colliders in a sphere from the shell's current position to a radius of the explosion radius.
+   //   Collider[] colliders = Physics.OverlapSphere(transform.position, m_DamageRadius);
+
+   //   // Go through all the colliders
+   //   for (int i = 0; i < colliders.Length; i++)
+   //   {
+   //      if(colliders[i].gameObject.tag == "land")
+   //      {
+   //         Explode(ExplosionType.surface);
+   //         return;
+   //      }
+   //      else if(colliders[i].gameObject.tag == "water")
+   //      {
+   //         // Don't explode yet, wait for the FixedUpdate to catch this underwater
+   //         return;
+   //      }
+   //      else
+   //      {
+   //         // Add an explosion force
+   //         Rigidbody rigidbody = colliders[i].GetComponentInParent<Rigidbody>();
+
+   //         if (rigidbody)
+   //         {
+   //            // Add an explosion force.
+   //            rigidbody.AddExplosionForce(m_Damage, transform.position, m_DamageRadius);
+
+   //            // Find the Target script associated with the rigidbody.
+   //            Target target = rigidbody.GetComponent<Target>();
+
+   //            // Damage the target
+   //            if (target)
+   //            {
+   //               Explode(target);
+   //            }
+   //            // If there is no Target script attached to the gameobject, go on to the next collider.
+   //            else
+   //            {
+   //               continue;
+   //            }
+   //         }
+   //      }
+   //   }
+   //}
 
    private float CalculateDamage(Vector3 targetPosition)
    {
@@ -216,6 +216,7 @@ public class Bullet : MonoBehaviour
    /// <summary>
    /// The bullet explodes; does not damage the target, but should be called to complete the explosion.
    /// Instantiates an AudioSource where the bullet hit.
+   /// TODO this was colliding before start.
    /// </summary>
    public void Explode(ExplosionType type, float loudness = 1f)
    {

@@ -331,18 +331,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 820d31733a8e27341ad36971ea1f0cd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RunInFixed: 0
-  m_Base: {fileID: 510119024}
-  m_Barrels: {fileID: 1103673943}
-  m_TurnRate: 30
-  m_LimitTraverse: 1
-  m_LeftTraverse: 150
-  m_RightTraverse: 150
-  m_MaxElevation: 20
-  m_MaxDepression: 5
-  m_ReloadTime: 0.5
-  m_ShowArcs: 1
-  m_ShowDebugRay: 1
 --- !u!1 &23403085
 GameObject:
   m_ObjectHideFlags: 0
@@ -6530,18 +6518,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 820d31733a8e27341ad36971ea1f0cd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RunInFixed: 0
-  m_Base: {fileID: 1021628781}
-  m_Barrels: {fileID: 1055667704}
-  m_TurnRate: 30
-  m_LimitTraverse: 1
-  m_LeftTraverse: 150
-  m_RightTraverse: 150
-  m_MaxElevation: 20
-  m_MaxDepression: 5
-  m_ReloadTime: 0.5
-  m_ShowArcs: 1
-  m_ShowDebugRay: 1
 --- !u!1 &678345416
 GameObject:
   m_ObjectHideFlags: 0
@@ -6694,6 +6670,73 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &700804268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a81bcacc415a1f743bfdf703afc52027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  rotation:
+    m_OverrideState: 0
+    m_Value: 0
+    min: 0
+    max: 360
+  skyIntensityMode:
+    m_OverrideState: 0
+    m_Value: 0
+  exposure:
+    m_OverrideState: 0
+    m_Value: 1.1
+  multiplier:
+    m_OverrideState: 0
+    m_Value: 1
+    min: 0
+  upperHemisphereLuxValue:
+    m_OverrideState: 0
+    m_Value: 1
+    min: 0
+  desiredLuxValue:
+    m_OverrideState: 0
+    m_Value: 20000
+  updateMode:
+    m_OverrideState: 0
+    m_Value: 0
+  updatePeriod:
+    m_OverrideState: 0
+    m_Value: 0
+    min: 0
+  includeSunInBaking:
+    m_OverrideState: 0
+    m_Value: 0
+  top:
+    m_OverrideState: 0
+    m_Value: {r: 0, g: 0, b: 0.047058824, a: 1}
+    hdr: 1
+    showAlpha: 0
+    showEyeDropper: 1
+  middle:
+    m_OverrideState: 0
+    m_Value: {r: 0.085172676, g: 0.20526724, b: 0.20754719, a: 1}
+    hdr: 1
+    showAlpha: 0
+    showEyeDropper: 1
+  bottom:
+    m_OverrideState: 0
+    m_Value: {r: 1.0121999, g: 2.438741, b: 2.6492145, a: 1}
+    hdr: 1
+    showAlpha: 0
+    showEyeDropper: 1
+  gradientDiffusion:
+    m_OverrideState: 0
+    m_Value: 1
 --- !u!1 &710445144
 GameObject:
   m_ObjectHideFlags: 0
@@ -7893,18 +7936,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 820d31733a8e27341ad36971ea1f0cd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RunInFixed: 0
-  m_Base: {fileID: 749702829}
-  m_Barrels: {fileID: 653636014}
-  m_TurnRate: 30
-  m_LimitTraverse: 1
-  m_LeftTraverse: 150
-  m_RightTraverse: 150
-  m_MaxElevation: 20
-  m_MaxDepression: 5
-  m_ReloadTime: 0.5
-  m_ShowArcs: 1
-  m_ShowDebugRay: 1
 --- !u!1 &841800740
 GameObject:
   m_ObjectHideFlags: 0
@@ -9095,73 +9126,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &943343410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a81bcacc415a1f743bfdf703afc52027, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  active: 1
-  m_AdvancedMode: 0
-  rotation:
-    m_OverrideState: 0
-    m_Value: 0
-    min: 0
-    max: 360
-  skyIntensityMode:
-    m_OverrideState: 0
-    m_Value: 0
-  exposure:
-    m_OverrideState: 0
-    m_Value: 1.1
-  multiplier:
-    m_OverrideState: 0
-    m_Value: 1
-    min: 0
-  upperHemisphereLuxValue:
-    m_OverrideState: 0
-    m_Value: 1
-    min: 0
-  desiredLuxValue:
-    m_OverrideState: 0
-    m_Value: 20000
-  updateMode:
-    m_OverrideState: 0
-    m_Value: 0
-  updatePeriod:
-    m_OverrideState: 0
-    m_Value: 0
-    min: 0
-  includeSunInBaking:
-    m_OverrideState: 0
-    m_Value: 0
-  top:
-    m_OverrideState: 0
-    m_Value: {r: 0, g: 0, b: 0.047058824, a: 1}
-    hdr: 1
-    showAlpha: 0
-    showEyeDropper: 1
-  middle:
-    m_OverrideState: 0
-    m_Value: {r: 0.085172676, g: 0.20526724, b: 0.20754719, a: 1}
-    hdr: 1
-    showAlpha: 0
-    showEyeDropper: 1
-  bottom:
-    m_OverrideState: 0
-    m_Value: {r: 1.0121999, g: 2.438741, b: 2.6492145, a: 1}
-    hdr: 1
-    showAlpha: 0
-    showEyeDropper: 1
-  gradientDiffusion:
-    m_OverrideState: 0
-    m_Value: 1
 --- !u!1 &954993125
 GameObject:
   m_ObjectHideFlags: 0
@@ -13062,7 +13026,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Profile: {fileID: 11400000, guid: ca0a241d2ac7b0d4ba86a9ca79548b86, type: 2}
   m_StaticLightingSkyUniqueID: 3
-  m_SkySettings: {fileID: 943343410}
+  m_SkySettings: {fileID: 700804268}
   m_SkySettingsFromProfile: {fileID: -3678946070148909156, guid: ca0a241d2ac7b0d4ba86a9ca79548b86,
     type: 2}
 --- !u!114 &1302971039
@@ -14255,6 +14219,56 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_WantedString: h1_setup
+--- !u!1 &1378484991
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1378484992}
+  - component: {fileID: 1378484993}
+  m_Layer: 0
+  m_Name: Behind (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1378484992
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378484991}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 27.42, z: -98.04}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1619391019}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1378484993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378484991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 332b93efefd5e03479681b8164e13687, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fieldOfView: 80
+  _target: {fileID: 1237223687}
+  _minDistance: 100
+  _maxDistance: 400
+  _maxHeight: 100
+  _distanceDamping: 5
+  _rotationDamping: 10
 --- !u!1 &1380119957
 GameObject:
   m_ObjectHideFlags: 0
@@ -16522,6 +16536,7 @@ Transform:
   - {fileID: 1319793061}
   - {fileID: 1216244475}
   - {fileID: 249935622}
+  - {fileID: 1378484992}
   m_Father: {fileID: 1237223686}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -18472,18 +18487,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 820d31733a8e27341ad36971ea1f0cd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RunInFixed: 0
-  m_Base: {fileID: 992696878}
-  m_Barrels: {fileID: 663112215}
-  m_TurnRate: 30
-  m_LimitTraverse: 0
-  m_LeftTraverse: 132
-  m_RightTraverse: 131
-  m_MaxElevation: 60
-  m_MaxDepression: 5
-  m_ReloadTime: 0.5
-  m_ShowArcs: 0
-  m_ShowDebugRay: 1
 --- !u!82 &1982861463
 AudioSource:
   m_ObjectHideFlags: 0
