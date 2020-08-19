@@ -10,22 +10,29 @@ using DGL.Math;
 
 class SpeedFollowCamera2 : CameraEmplacement
 {
-   [SerializeField] Target _target;
+   [SerializeField] GameObject marker; // temporary
+
+
+   Vehicle _target;
    [SerializeField] float _minDistance = 100f;
    [SerializeField] float _maxDistance = 400f;
    float _distance;
    [SerializeField] float _maxHeight = 150.0f;
    float _height;
-   [SerializeField] float _distanceDamping = 5.0f;
-   [SerializeField] float _rotationDamping = 10.0f;
+   [SerializeField] float _distanceDamping = 100.0f;
+   [SerializeField] float _rotationDamping = 100.0f;
 
    void Start()
    {
       _distance = (_maxDistance - _minDistance) / 2;
+      _target = GetComponentInParent<Vehicle>();
    }
 
    void Update()
    {
+      // Show where the vector is
+      marker.transform.position = _target.PositionInSeconds(3);
+
       // Calculate zoom distance
       if(UserInput.ScrollWheel > 0)
       {
@@ -45,7 +52,7 @@ class SpeedFollowCamera2 : CameraEmplacement
       transform.position = Vector3.Lerp(transform.position, wantedPosition, Time.deltaTime * _distanceDamping);
 
       // Smooth rotation
-      Quaternion wantedRotation = Quaternion.LookRotation(_target.transform.position - transform.position, _target.transform.up);
+      Quaternion wantedRotation = Quaternion.LookRotation(_target.PositionInSeconds(10) - transform.position, _target.transform.up);
       transform.rotation = Quaternion.Slerp(transform.rotation, wantedRotation, Time.deltaTime * _rotationDamping);
    }
 }

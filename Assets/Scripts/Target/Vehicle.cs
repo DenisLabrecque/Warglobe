@@ -161,6 +161,17 @@ public abstract class Vehicle : Target {
       }
    }
 
+   /// <summary>
+   /// Predicted position considering this vehicle's speed.
+   /// </summary>
+   /// <param name="seconds">Seconds in which to find the position.</param>
+   /// <returns>World space position</returns>
+   public Vector3 PositionInSeconds(float seconds)
+   {
+      return m_Rigidbody.transform.position + m_Rigidbody.velocity * seconds;
+      //return new Vector3(m_Rigidbody.velocity.x * seconds, m_Rigidbody.velocity.y * seconds, m_Rigidbody.velocity.z * seconds);
+   }
+
    #endregion
 
 
