@@ -56,7 +56,7 @@ public abstract class Vehicle : Target {
    /// </summary>
    public float ForwardSpeed {
       get {
-         return transform.InverseTransformDirection(m_Rigidbody.velocity).z;
+         return transform.InverseTransformDirection(_Rigidbody.velocity).z;
       }
    }
 
@@ -72,7 +72,7 @@ public abstract class Vehicle : Target {
    /// </summary>
    public float VerticalSpeed {
       get {
-         return transform.InverseTransformDirection(m_Rigidbody.velocity).y;
+         return transform.InverseTransformDirection(_Rigidbody.velocity).y;
       }
    }
 
@@ -81,7 +81,7 @@ public abstract class Vehicle : Target {
    /// </summary>
    public float LateralSpeed {
       get {
-         return transform.InverseTransformDirection(m_Rigidbody.velocity).x;
+         return transform.InverseTransformDirection(_Rigidbody.velocity).x;
       }
    }
 
@@ -129,7 +129,7 @@ public abstract class Vehicle : Target {
    /// </summary>
    public Vector3 NormalizedVelocity {
       get {
-         return m_Rigidbody.velocity.normalized;
+         return _Rigidbody.velocity.normalized;
       }
    }
 
@@ -168,7 +168,8 @@ public abstract class Vehicle : Target {
    /// <returns>World space position</returns>
    public Vector3 PositionInSeconds(float seconds)
    {
-      return m_Rigidbody.transform.position + m_Rigidbody.velocity * seconds;
+      //return m_Rigidbody.transform.position + m_Rigidbody.transform.InverseTransformDirection(m_Rigidbody.velocity) * seconds;
+      return _Rigidbody.transform.position + _Rigidbody.velocity * seconds;
       //return new Vector3(m_Rigidbody.velocity.x * seconds, m_Rigidbody.velocity.y * seconds, m_Rigidbody.velocity.z * seconds);
    }
 
@@ -191,11 +192,11 @@ public abstract class Vehicle : Target {
       m_Motor = GetComponentInChildren<Motor>();
       m_FlotationArea = GetComponentInChildren<FlotationArea>();
 
-      m_Rigidbody.velocity = Vector3.forward * m_PregameSpeed;
+      _Rigidbody.velocity = Vector3.forward * m_PregameSpeed;
 
       // Drag
-      m_Rigidbody.drag = AIR_DRAG;
-      m_Rigidbody.angularDrag = AIR_DRAG;
+      _Rigidbody.drag = AIR_DRAG;
+      _Rigidbody.angularDrag = AIR_DRAG;
    }
 
    protected void Start()
@@ -263,7 +264,7 @@ public abstract class Vehicle : Target {
    {
       if (m_FlotationArea == null)
       {
-         m_Rigidbody.angularDrag = RotationalSpeedDrag;
+         _Rigidbody.angularDrag = RotationalSpeedDrag;
       }
       else
       {
@@ -271,8 +272,8 @@ public abstract class Vehicle : Target {
          float airDrag = m_FlotationArea.PercentNotSubmerged * AIR_DRAG;
          float airRotationalDrag = m_FlotationArea.PercentNotSubmerged * RotationalSpeedDrag;
 
-         m_Rigidbody.drag = waterDrag + airDrag;
-         m_Rigidbody.angularDrag = waterDrag + airRotationalDrag;
+         _Rigidbody.drag = waterDrag + airDrag;
+         _Rigidbody.angularDrag = waterDrag + airRotationalDrag;
       }
    }
 

@@ -155,7 +155,7 @@ public abstract class Airplane : Vehicle {
 
    void FixedUpdate()
    {
-      Gravity.Gravitate(m_Rigidbody);
+      Gravity.Gravitate(_Rigidbody);
       AdjustWingLift();
       AdjustDrag();
    }

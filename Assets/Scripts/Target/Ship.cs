@@ -55,7 +55,7 @@ public class Ship : Vehicle
    /// </summary>
    void FixedUpdate()
    {
-      Gravity.Gravitate(m_Rigidbody);
+      Gravity.Gravitate(_Rigidbody);
       AdjustDrag();
    }
 

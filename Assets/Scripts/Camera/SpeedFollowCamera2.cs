@@ -19,8 +19,8 @@ class SpeedFollowCamera2 : CameraEmplacement
    float _distance;
    [SerializeField] float _maxHeight = 150.0f;
    float _height;
-   [SerializeField] float _distanceDamping = 100.0f;
-   [SerializeField] float _rotationDamping = 100.0f;
+   [SerializeField] float _distanceDamping = 1f;
+   [SerializeField] float _rotationDamping = 1f;
 
    void Start()
    {
@@ -33,25 +33,51 @@ class SpeedFollowCamera2 : CameraEmplacement
       // Show where the vector is
       marker.transform.position = _target.PositionInSeconds(3);
 
-      // Calculate zoom distance
+      CalculateZoomDistance();
+      CalculateHeight();
+
+      RotateCameraWithCursor();
+
+      //FollowBehind();
+      //RotateTowardsVector();
+   }
+
+   void RotateCameraWithCursor()
+   {
+      // Find rotation plane
+      //Vector3 rotationPlane = _target.transform.TransformPoint(Vector3.zero);
+
+      transform.RotateAround(_target.transform.position, transform.up, Input.GetAxis("Mouse X") * _rotationDamping);
+   }
+
+   void CalculateZoomDistance()
+   {
       if(UserInput.ScrollWheel > 0)
       {
-         _distance -= 1000 * Time.deltaTime;
+         _distance -= 1000;
       }
       else if(UserInput.ScrollWheel < 0)
       {
-         _distance += 1000 * Time.deltaTime;
+         _distance += 1000;
       }
       _distance = Mathf.Clamp(_distance, _minDistance, _maxDistance);
+   }
 
+   void CalculateHeight()
+   {
       // Calculate height as percent of distance (higher points down, closer points forwards)
+      //transform.RotateAround(_target.transform.position, transform.right, Input.GetAxis("Mouse Y") * _rotationDamping);
       _height = _maxHeight * Utility.Percent(_distance, _maxDistance, PercentMode.Clamp0To1);
+   }
 
-      // Follow behind
+   void FollowBehind()
+   {
       Vector3 wantedPosition = _target.transform.TransformPoint(0, _height, -_distance);
       transform.position = Vector3.Lerp(transform.position, wantedPosition, Time.deltaTime * _distanceDamping);
+   }
 
-      // Smooth rotation
+   void RotateTowardsVector()
+   {
       Quaternion wantedRotation = Quaternion.LookRotation(_target.PositionInSeconds(10) - transform.position, _target.transform.up);
       transform.rotation = Quaternion.Slerp(transform.rotation, wantedRotation, Time.deltaTime * _rotationDamping);
    }
