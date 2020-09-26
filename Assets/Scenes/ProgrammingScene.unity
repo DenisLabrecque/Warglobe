@@ -3565,9 +3565,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IsEnabled: 1
-  _powerDurationMinutes: 11.5
+  _powerDurationMinutes: 25
   _thrustDirection: {x: 0, y: 0, z: 1}
-  _thrustToWeight: 2
+  _thrustToWeight: 0.5
   m_BackwardsPercentPower: 0.25
   m_ThrustChangeSpeed: 0.5
   m_ThrottleInput: 0
@@ -12419,6 +12419,7 @@ MonoBehaviour:
   m_Script: {fileID: 2096195892}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Entries: []
 --- !u!4 &1286317158
 Transform:
   m_ObjectHideFlags: 19
@@ -14273,7 +14274,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1408119551
 Transform:
   m_ObjectHideFlags: 0
@@ -16708,7 +16709,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1766553973
 Transform:
   m_ObjectHideFlags: 0
