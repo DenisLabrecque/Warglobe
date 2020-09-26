@@ -241,7 +241,7 @@ public class Bullet : MonoBehaviour
 
          // Stop the shell path particles, stop physics, and don't display the shell
          gameObject.GetComponent<ParticleSystem>().Stop(true, ParticleSystemStopBehavior.StopEmitting);
-         gameObject.GetComponent<MeshRenderer>().enabled = false;
+         //gameObject.GetComponent<MeshRenderer>().enabled = false;
          gameObject.GetComponent<Rigidbody>().isKinematic = true;
 
          // Destroy the shell

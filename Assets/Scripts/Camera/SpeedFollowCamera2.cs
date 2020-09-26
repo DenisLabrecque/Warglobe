@@ -10,17 +10,15 @@ using DGL.Math;
 
 class SpeedFollowCamera2 : CameraEmplacement
 {
-   [SerializeField] GameObject marker; // temporary
-
-
    Vehicle _target;
    [SerializeField] float _minDistance = 100f;
    [SerializeField] float _maxDistance = 400f;
    float _distance;
    [SerializeField] float _maxHeight = 150.0f;
    float _height;
-   [SerializeField] float _distanceDamping = 1f;
-   [SerializeField] float _rotationDamping = 1f;
+   [SerializeField] float _distanceDamping = 4f;
+   [SerializeField] float _rotationDamping = 4f;
+   [SerializeField] float _zoomSpeed = 100f;
 
    void Start()
    {
@@ -30,15 +28,13 @@ class SpeedFollowCamera2 : CameraEmplacement
 
    void Update()
    {
-      // Show where the vector is
-      marker.transform.position = _target.PositionInSeconds(3);
-
       CalculateZoomDistance();
       CalculateHeight();
 
-      RotateCameraWithCursor();
+      
 
-      //FollowBehind();
+      FollowBehind();
+      RotateCameraWithCursor();
       //RotateTowardsVector();
    }
 
@@ -54,11 +50,13 @@ class SpeedFollowCamera2 : CameraEmplacement
    {
       if(UserInput.ScrollWheel > 0)
       {
-         _distance -= 1000;
+         Debug.Log("Distance is " + _distance);
+         _distance -= _zoomSpeed;
       }
       else if(UserInput.ScrollWheel < 0)
       {
-         _distance += 1000;
+         Debug.Log("Distance is " + _distance);
+         _distance += _zoomSpeed;
       }
       _distance = Mathf.Clamp(_distance, _minDistance, _maxDistance);
    }
@@ -66,7 +64,6 @@ class SpeedFollowCamera2 : CameraEmplacement
    void CalculateHeight()
    {
       // Calculate height as percent of distance (higher points down, closer points forwards)
-      //transform.RotateAround(_target.transform.position, transform.right, Input.GetAxis("Mouse Y") * _rotationDamping);
       _height = _maxHeight * Utility.Percent(_distance, _maxDistance, PercentMode.Clamp0To1);
    }
 
