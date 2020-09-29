@@ -106,20 +106,21 @@ public class AircraftHUD : MonoBehaviour {
    private void TrackTargets()
    {
       // Manage every tracker depending on target visibility to sensors
-      foreach(HUDTracker tracker in m_HUDTrackers)
-      {
-         // Only show the player target trackers when his vehicle is actually tracking them
-         if(UserInput.Player1Vehicle.SensorSystem.FusedSensorData.Contains(tracker.Target))
-            tracker.IsVisible = true;
-         else
-            tracker.IsVisible = false;
+      // TODO
+      //foreach(HUDTracker tracker in m_HUDTrackers)
+      //{
+      //   // Only show the player target trackers when his vehicle is actually tracking them
+      //   if(UserInput.Player1Vehicle.SensorSystem.FusedSensorData.Contains(tracker.Target))
+      //      tracker.IsVisible = true;
+      //   else
+      //      tracker.IsVisible = false;
 
-         // Show the player lock-on symbology
-         if(UserInput.Player1Vehicle.WeaponSystem.SensorSystem.TrackingTarget == tracker.Target)
-            tracker.IsLockedOn = true;
-         else
-            tracker.IsLockedOn = false;
-      }
+      //   // Show the player lock-on symbology
+      //   if(UserInput.Player1Vehicle.WeaponSystem.SensorSystem.TrackingTarget == tracker.Target)
+      //      tracker.IsLockedOn = true;
+      //   else
+      //      tracker.IsLockedOn = false;
+      //}
    }
 
    /// <summary>
@@ -140,11 +141,13 @@ public class AircraftHUD : MonoBehaviour {
 
 
 
-      // Radar on/off
-      m_RadarIOText.text = currentVehicle.SensorSystem.Radar.IsOn ? Multilang.Text["radar_on"] : Multilang.Text["radar_off"];
+      // Radar on/off // TODO
+         // m_RadarIOText.text = currentVehicle.SensorSystem.Radar.IsOn ? Multilang.Text["radar_on"] : Multilang.Text["radar_off"];
 
       // Selected weapon
-      m_SelectedWeaponText.text = currentVehicle.WeaponSystem.CurrentProjectile.Abbreviation + " " + currentVehicle.WeaponSystem.CurrentSlot.NumberLeft;
+
+      // TODO
+      //m_SelectedWeaponText.text = currentVehicle.WeaponSystem.CurrentProjectile.Abbreviation + " " + currentVehicle.WeaponSystem.CurrentSlot.NumberLeft;
 
 
 

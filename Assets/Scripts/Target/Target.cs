@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DGL.Math;
+using BeardedManStudios.Forge.Networking;
+using BeardedManStudios.Forge.Networking.Generated;
 
 /// <summary>
 /// Abstraction that designates any potential target. All vehicles and military buildings inherit from this.
@@ -9,10 +11,10 @@ using DGL.Math;
 /// For radar tracking purposes, every target requires a rigidbody. On buildings, that rigidbody must be set to kinematic so it's not affected by gravity.
 /// 
 /// Denis Labrecque
-/// November 2018, December 2018
+/// November 2018, December 2018, September 2020
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
-public abstract class Target : MonoBehaviour, IComparable<Target>
+public abstract class Target : ShipBehavior, IComparable<Target>
 {
 
    #region Member Variables
@@ -175,7 +177,17 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    #endregion
 
 
-   #region Unity Methods
+   #region Standard Methods
+
+   protected override void NetworkStart()
+   {
+      base.NetworkStart();
+
+      if(!networkObject.IsOwner)
+      {
+         // this network object is the enemy player, not the one we control
+      }
+   }
 
    protected void Awake()
    {
@@ -202,6 +214,15 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
          m_SensorSystem = null;
 //         Debug.Log("No sensor system found on " + PopularName);
       }
+   }
+
+   private void Update()
+   {
+      //if (!networkObject.IsOwner)
+      //   // Position updated across the network
+      //   transform.position = networkObject.position;
+
+      //networkObject.position = transform.position;
    }
 
    #endregion

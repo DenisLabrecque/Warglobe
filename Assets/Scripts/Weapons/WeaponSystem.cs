@@ -38,7 +38,16 @@ public class WeaponSystem : MonoBehaviour {
    /// Return the currently selected projectile.
    /// </summary>
    public Projectile CurrentProjectile {
-      get { return m_WeaponSlots[m_ProjectileTypes[m_CurrentProjectileIndex]].Projectile; }
+      get {
+         try
+         {
+            return m_WeaponSlots[m_ProjectileTypes[m_CurrentProjectileIndex]].Projectile;
+         }
+         catch
+         {
+            return null;
+         }
+      }
    }
 
    /// <summary>

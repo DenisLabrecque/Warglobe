@@ -1,6 +1,4 @@
-﻿
-
-using UnityEngine;
+﻿using UnityEngine;
 using DGL.Math;
 using System;
 
@@ -10,7 +8,9 @@ using System;
 public class Rudder : MonoBehaviour
 {
    [Tooltip("How much steering force the rudder actually has")]
-   [SerializeField][Range(0, 1)] float _effect = 0.1f;
+   [SerializeField][Range(0, 1)] float _turnEffect = 0.1f;
+
+   [SerializeField] [Range(100, 100000)] float _tiltEffect = 90000;
 
    [Tooltip("Speed the rudder reaches full effect")]
    [SerializeField] [Range(0, 1)] float _shiftSpeed = 0.5f;
@@ -45,7 +45,7 @@ public class Rudder : MonoBehaviour
    {
       // Find the total direction the ship is going as compared to the rudder
       Vector3 localVelocity = transform.InverseTransformDirection(_rigidbody.velocity);
-      if (localVelocity.z > 0) // Forwards
+      if (_ship.ForwardSpeed > 0) // Forwards
          _angleOfAttack = Vector3.Angle(new Vector3(0, 0, 1), localVelocity);
       else // Backwards
          _angleOfAttack = Vector3.Angle(new Vector3(0, 0, -1), localVelocity);
@@ -58,8 +58,9 @@ public class Rudder : MonoBehaviour
       float massSquared = _rigidbody.mass * _rigidbody.mass;
 
       // The actual turning; speed is absolute because going backwards flips control direction
-      _rigidbody.AddRelativeTorque(new Vector3(0, 1, 0) * _effect * _actualAoa * massSquared * Math.Abs(percentSpeed) * Time.deltaTime, ForceMode.Force);
-      // Turning effect; should help tilt the boat, but not required
-      _rigidbody.AddRelativeTorque(new Vector3(0, 0, 1) * 100000 * _actualAoa * _rigidbody.mass * Math.Abs(percentSpeed) * Time.deltaTime, ForceMode.Force);
+      _rigidbody.AddRelativeTorque(new Vector3(0, 1, 0) * _turnEffect * _actualAoa * massSquared * Math.Abs(percentSpeed) * Time.deltaTime, ForceMode.Force);
+      
+      // Tilt effect (only for looks)
+      _rigidbody.AddRelativeTorque(new Vector3(0, 0, 1) * _tiltEffect * _actualAoa * _rigidbody.mass * Math.Abs(percentSpeed) * Time.deltaTime, ForceMode.Force);
    }
 }

@@ -73,7 +73,7 @@ public class Bullet : MonoBehaviour
    private void PointForwards()
    {
       // Rotate bullet to face where it is heading
-      gameObject.transform.rotation = Quaternion.LookRotation(m_Rigidbody.velocity, new Vector3(0, 1));
+      //gameObject.transform.rotation = Quaternion.LookRotation(m_Rigidbody.velocity, new Vector3(0, 1));
    }
 
 
@@ -112,8 +112,8 @@ public class Bullet : MonoBehaviour
             // Hit a surface
             else if (targetHit == null)
             {
-               Debug.Log("Hit surface");
-               //Explode(ExplosionType.surface);
+               //Debug.Log("Hit surface");
+               Explode(ExplosionType.surface);
             }
             // Hit a legitimate target
             else

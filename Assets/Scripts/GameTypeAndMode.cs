@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UIScreens;
+using BeardedManStudios.Forge.Networking.Unity;
 
 /// <summary>
 /// Disable all targets before the game starts.
 /// </summary>
 public class GameTypeAndMode : MonoBehaviour
 {
-   [SerializeField] GameObject m_WhiteImaginarium;
-   [SerializeField] GameObject m_MintImaginarium;
-   [SerializeField] GameObject m_PinkImaginarium;
+   [SerializeField] GameObject m_Friendly;
+   [SerializeField] GameObject m_Enemy;
+
+   [SerializeField] GameObject m_Spawn1;
+   [SerializeField] GameObject m_Spawn2;
 
    static List<Target> m_Targets = new List<Target>();
 
@@ -71,6 +74,8 @@ public class GameTypeAndMode : MonoBehaviour
    public void EnableTargets()
    {
       EnableTargets(true);
+
+      Instantiate(m_Enemy, m_Spawn2.transform.position, m_Spawn2.transform.rotation);
    }
 
    public void DisableTargets()
@@ -84,20 +89,5 @@ public class GameTypeAndMode : MonoBehaviour
       TranslationString.UpdateAllTextStrings();
       Debug.Log("Language set is " + Multilang.Language);
       PlayerPrefs.SetInt(Preferences.LANGUAGE, (int)language);
-   }
-
-   public void SetLanguageEnglish()
-   {
-      SetLanguage(Language.English);
-   }
-
-   public void SetLanguageFrench()
-   {
-      SetLanguage(Language.Francais);
-   }
-
-   public void SetLanguageHungarian()
-   {
-      SetLanguage(Language.Magyar);
    }
 }

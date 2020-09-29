@@ -30,7 +30,6 @@ public class GunMuzzle : MonoBehaviour
 
    public void Fire()
    {
-      Debug.Log("Fire hit");
       GameObject bullet = Instantiate(m_ShellPrefab, gameObject.transform.position, gameObject.transform.rotation);
       bullet.GetComponent<Bullet>().IgnoreHitsOn(m_Target); // The shooter shouldn't get shot by his own bullets in general
    }
