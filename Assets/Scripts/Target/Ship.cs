@@ -18,7 +18,6 @@ public class Ship : Vehicle
    [Header("Ship subtype")]
    [SerializeField] public ShipType _type = ShipType.Cruiser;
 
-   private bool m_HasFired = false; // Prevent a single click to count as multiple
 
    #endregion
 
@@ -72,8 +71,7 @@ public class Ship : Vehicle
    private void HumanControl()
    {
       // Throttle up the engines
-      if (UserInput.Throttle != 0)
-         m_Motor.AdjustThrottle(UserInput.Throttle);
+      _motor.PercentThrottle = UserInput.Throttle;
 
       // Steer
       foreach(var rudder in _rudders)
@@ -82,17 +80,7 @@ public class Ship : Vehicle
 
       // Fire weapons
       if(UserInput.Gun)
-      {
-         if (m_HasFired == false)
-         {
-            WeaponSystem.FireTurret();
-            m_HasFired = true;
-         }
-      }
-      else
-      {
-         m_HasFired = false;
-      }
+         WeaponSystem.FireTurrets();
    }
 
    #endregion

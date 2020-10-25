@@ -18,7 +18,7 @@ public abstract class Motor : MonoBehaviour {
    [Header("Basic Motor Data")]
 
    [Tooltip("Whether the engine starts on awake. When the start method is called, the rigidbody is assigned. That way, rockets propel their own rigidbody.")]
-   [SerializeField] protected bool m_IsEnabled = true;
+   [SerializeField] protected bool _isEnabled = true;
 
    [Tooltip("Battery total charge when full (unitless)")]
    [SerializeField] float _powerDurationMinutes = 11.5f;
@@ -30,29 +30,30 @@ public abstract class Motor : MonoBehaviour {
    [SerializeField] protected float _thrustToWeight = 0.2f;
 
    [Tooltip("Percent of total thrust forward thrust that can be applied going backwards")]
-   [SerializeField] [Range(0, 1)] protected float m_BackwardsPercentPower = 0.5f;
+   [SerializeField] [Range(0, 1)] protected float _backwardsPercentPower = 0.5f;
 
    [Tooltip("How quickly thrust reacts to inputs")]
-   [SerializeField][Range(0, 1)] protected float m_ThrustChangeSpeed = 0.5f;
+   [SerializeField][Range(0, 1)] protected float _acceleration = 0.5f;
 
    [Tooltip("Current throttle (modified in realtime)")]
-   [Range(-1,1)] [SerializeField] float m_ThrottleInput = 0; // The throttle setting that has been ordered
+   [Range(-1,1)] [SerializeField] float _percentThrottle = 0f; // Backing variable for throttle input
+   bool _blockedThrottle = false;
 
    [Header("Visible Fan Properties")]
 
-   [SerializeField] Vector3 m_RotationAxis = Vector3.up;
+   [SerializeField] Vector3 _rotationAxis = Vector3.up;
    [SerializeField][Range(1, 5000)] float m_RPM = 1000;
 
    [Tooltip("The mesh/meshes that are propellers/fans")]
    [SerializeField] List<GameObject> m_Fans;
 
    [Header("Audio")]
-   [SerializeField] float m_MaxPitch = 2.2f;
+   [SerializeField] float _maxPitch = 2.2f;
    
    float m_Volume;
-   protected float m_ActualThrottle; // The throttle setting the engine has had time to reach
-   protected float m_CurrentBattery;
-   protected float m_MaxThrust;
+   protected float _percentThrust; // The throttle setting the engine has had time to reach
+   protected float _currentEnergy;
+   protected float _maxThrust;
 
    // Set at start
    protected Rigidbody _rigidbody = null;
@@ -65,20 +66,33 @@ public abstract class Motor : MonoBehaviour {
    #region Properties
 
    /// <summary>
-   /// Percent throttle that the motor has gotten to.
-   /// </summary>
-   public float ActualThrottle {
-      get {
-         return m_ActualThrottle;
-      }
-   }
-
-   /// <summary>
    /// Percent throttle that the motor was ordered to get to.
+   /// Though this will accept larger/smaller values, they will always be returned clamped from -1 to 1.
    /// </summary>
-   public float InputThrottle {
+   public float PercentThrottle {
+      set {
+         if(_percentThrottle > 0 && value < 0 ||
+            _percentThrottle < 0 && value > 0)
+         {
+            _percentThrottle = 0;
+            _blockedThrottle = true;
+         }
+         else if(value == 0)
+         {
+            _blockedThrottle = false;
+         }
+         //if (_percentThrottle < 0f && _previousThrottlePercent > 0f ||
+         //   _percentThrottle > 0f && _previousThrottlePercent < 0f)
+         //{
+         //   // Block input so the player can accurately stop at zero
+         //}
+         //else
+         else {
+             _percentThrottle = Mathf.Clamp(value, -1f, 1f);
+         }
+      }
       get {
-         return m_ThrottleInput;
+         return _percentThrottle;
       }
    }
 
@@ -92,11 +106,11 @@ public abstract class Motor : MonoBehaviour {
    }
 
    /// <summary>
-   /// Power output
+   /// Current power output
    /// </summary>
-   public float CurrentThrust {
+   public float Thrust {
       get {
-         return m_ActualThrottle * m_MaxThrust;
+         return _percentThrust * _maxThrust;
       }
    }
 
@@ -105,7 +119,7 @@ public abstract class Motor : MonoBehaviour {
    /// </summary>
    public float BatteryPercent {
       get {
-         return DGL.Math.Utility.Percent(m_CurrentBattery, _powerDurationMinutes);
+         return DGL.Math.Utility.Percent(_currentEnergy, _powerDurationMinutes);
       }
    }
 
@@ -114,7 +128,7 @@ public abstract class Motor : MonoBehaviour {
    /// </summary>
    public int BatteryMinutesLeft {
       get {
-         return (int)m_CurrentBattery;
+         return (int)_currentEnergy;
       }
    }
 
@@ -123,10 +137,10 @@ public abstract class Motor : MonoBehaviour {
    /// </summary>
    public bool IsEnabled {
       get {
-         return m_IsEnabled;
+         return _isEnabled;
       }
       set {
-         m_IsEnabled = false;
+         _isEnabled = false;
       }
    }
 
@@ -137,7 +151,7 @@ public abstract class Motor : MonoBehaviour {
 
    void Awake()
    {
-      if(m_IsEnabled)
+      if(_isEnabled)
          _rigidbody = GetComponentInParent<Rigidbody>();
 
       _audioSource = GetComponent<AudioSource>();
@@ -145,33 +159,32 @@ public abstract class Motor : MonoBehaviour {
       _audioSource.spatialBlend = 1;
       _audioSource.rolloffMode = AudioRolloffMode.Linear;
 
-      m_ActualThrottle = m_ThrottleInput;
       m_Volume = _audioSource.volume;
-      m_CurrentBattery = _powerDurationMinutes;
+      _currentEnergy = _powerDurationMinutes;
    }
 
    void Update()
    {
-      if(m_IsEnabled)
+      if(_isEnabled)
       {
          // Move thrust to desired throttle
-         m_ActualThrottle = Mathf.Lerp(m_ActualThrottle, m_ThrottleInput, m_ThrustChangeSpeed * Time.deltaTime);
+         _percentThrust = Mathf.Lerp(_percentThrust, _percentThrottle, _acceleration * Time.deltaTime);
 
          // Mass can change
-         m_MaxThrust = _thrustToWeight * _rigidbody.mass * 400f;
+         _maxThrust = _thrustToWeight * _rigidbody.mass * 400f;
 
          // Discharge the battery
-         m_CurrentBattery -= m_ActualThrottle * m_1_60th * Time.deltaTime;
-         if(m_CurrentBattery <= 0)
+         _currentEnergy -= _percentThrust * m_1_60th * Time.deltaTime;
+         if(_currentEnergy <= 0)
          {
-            m_CurrentBattery = 0;
+            _currentEnergy = 0;
             _audioSource.volume = 0;
-            m_IsEnabled = false;
+            _isEnabled = false;
          }
          else
          {
             // Sound volume
-            if(m_ActualThrottle == 0f)
+            if(_percentThrust == 0f)
             {
                _audioSource.volume = 0;
             }
@@ -181,12 +194,12 @@ public abstract class Motor : MonoBehaviour {
             }
 
             // Sound pitch
-            _audioSource.pitch = m_ActualThrottle * m_MaxPitch;
+            _audioSource.pitch = _percentThrust * _maxPitch;
 
             // Make each fan turn
             foreach(GameObject part in m_Fans)
             {
-               part.transform.Rotate(m_RotationAxis, m_ActualThrottle * m_RPM * Time.deltaTime);
+               part.transform.Rotate(_rotationAxis, _percentThrust * m_RPM * Time.deltaTime);
             }
          }
       }
@@ -202,25 +215,14 @@ public abstract class Motor : MonoBehaviour {
    #region Public Methods
 
    /// <summary>
-   /// Change the throttle according to the percent throttle wanted.
-   /// Throttle change speed is controlled by the input manager, not in code.
-   /// </summary>
-   /// <param name="percentChangeWanted">A value from -1 to 1</param>
-   public void AdjustThrottle(float percentChangeWanted)
-   {
-      // Avoid input error
-      m_ThrottleInput = Mathf.Clamp(percentChangeWanted, -1f, 1f);
-   }
-
-   /// <summary>
    /// Start the engine, and assign a rigidbody on which the engine must operate.
    /// </summary>
    /// <param name="rigidbody">The body the engine must propel.</param>
    public void StartMotor(Rigidbody rigidbody)
    {
-      if(m_CurrentBattery >= 0)
+      if(_currentEnergy >= 0)
       {
-         m_IsEnabled = true;
+         _isEnabled = true;
          _rigidbody = rigidbody;
       }
    }

@@ -59,10 +59,11 @@ public class TurretAim : MonoBehaviour, IWeapon
    private bool isBaseAtRest = false;
    private bool isBarrelAtRest = false;
 
-   [Header("Bullets")]
+   [Header("Turrets")]
    [Tooltip("How long before each canon in the turret can refire")]
-   [SerializeField] float m_ReloadTime = 2f;
-   private float m_ReloadTimer = 0f;
+   [SerializeField] float _reloadTime = 1f;
+   private float _reloadTimer = 0f;
+
    List<GunMuzzle> m_Muzzles = new List<GunMuzzle>();
    private AudioSource m_Audio;
 
@@ -105,7 +106,7 @@ public class TurretAim : MonoBehaviour, IWeapon
 
    private void Update()
    {
-      m_ReloadTimer += Time.deltaTime;
+      _reloadTimer += Time.deltaTime;
 
       if (IsIdle)
       {
@@ -302,17 +303,7 @@ public class TurretAim : MonoBehaviour, IWeapon
             }
       }
    }
-
-   public bool IsReloaded {
-      get {
-         if (m_ReloadTimer >= m_ReloadTime)
-         {
-            return true;
-         }
-         else
-            return false;
-      }
-   }
+#endif
 
    /// <summary>
    /// Fire this turret. Not garanteed to work. The turret will not fire if it is not reloaded.
@@ -320,14 +311,12 @@ public class TurretAim : MonoBehaviour, IWeapon
    /// </summary>
    public bool Fire()
    {
-      if (IsReloaded)
+      if (IsReloadTimeElapsed)
       {
-         m_ReloadTimer = 0f;
+         _reloadTimer = 0f;
 
          foreach (GunMuzzle muzzle in m_Muzzles)
-         {
             muzzle.Fire();
-         }
 
          m_Audio.Play();
 
@@ -336,5 +325,10 @@ public class TurretAim : MonoBehaviour, IWeapon
       else
          return false; // Has not fired
    }
-#endif
+
+   public bool IsReloadTimeElapsed {
+      get {
+         return _reloadTimer >= _reloadTime;
+      }
+   }
 }

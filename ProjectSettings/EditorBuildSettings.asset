@@ -6,15 +6,24 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: Assets/Bearded Man Studios Inc/Scenes/MultiplayerMenu.unity
+    guid: a5b9e296c950dcc4d862eeda4ce5052a
+  - enabled: 0
     path: Assets/Scenes/1_Language.unity
     guid: f5fc25d094a63354caa69fd69f2f37ed
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainHDRP.unity
     guid: ffa5de241c2ba4c449a1ca370df8790f
+  - enabled: 0
+    path: Assets/Scenes/ProgrammingScene.unity
+    guid: d6955ac4c10df3d4ba2dc4e6dd0e2ee7
+  - enabled: 1
+    path: Assets/Scenes/Planet.unity
+    guid: 6d42eb3117df0c94195d7981fa49145b
   m_configObjects: {}

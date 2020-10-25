@@ -194,7 +194,7 @@ public abstract class Airplane : Vehicle {
       // Throttle up the engines
       SpeedPID.SetPoint = 450f;
       SpeedPID.ProcessVariable = ForwardSpeed;
-      m_Motor.AdjustThrottle((float)SpeedPID.ControlVariable(Time.deltaTime));
+      _motor.PercentThrottle = ((float)SpeedPID.ControlVariable(Time.deltaTime));
       //m_Motor.AdjustThrottle(0.75f);
 
       // Roll
@@ -239,7 +239,7 @@ public abstract class Airplane : Vehicle {
    {
       // Throttle up the engines
       if(UserInput.Throttle != 0)
-         m_Motor.AdjustThrottle(UserInput.Throttle);
+         _motor.PercentThrottle = (UserInput.Throttle);
       //SpeedPID.SetPoint = 275f;
       //SpeedPID.ProcessVariable = ForwardSpeed;
       //Debug.Log("PID SPEED: " + (float)SpeedPID.ControlVariable(Time.deltaTime));

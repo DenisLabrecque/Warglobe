@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// Lists the countries of the game. Countries are by default enemies.
 /// </summary>
-[InitializeOnLoad]
+//[InitializeOnLoad]
 [ExecuteAlways]
 public class Faction : ScriptableObject
 {

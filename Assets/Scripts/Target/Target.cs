@@ -14,7 +14,7 @@ using BeardedManStudios.Forge.Networking.Generated;
 /// November 2018, December 2018, September 2020
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
-public abstract class Target : ShipBehavior, IComparable<Target>
+public abstract class Target : MonoBehaviour, IComparable<Target>
 {
 
    #region Member Variables
@@ -179,15 +179,16 @@ public abstract class Target : ShipBehavior, IComparable<Target>
 
    #region Standard Methods
 
-   protected override void NetworkStart()
-   {
-      base.NetworkStart();
+   //protected override void NetworkStart()
+   //{
+   //   base.NetworkStart();
 
-      if(!networkObject.IsOwner)
-      {
-         // this network object is the enemy player, not the one we control
-      }
-   }
+
+   //   if(!networkObject.IsOwner)
+   //   {
+   //      // this network object is the enemy player, not the one we control
+   //   }
+   //}
 
    protected void Awake()
    {
@@ -218,11 +219,22 @@ public abstract class Target : ShipBehavior, IComparable<Target>
 
    private void Update()
    {
-      //if (!networkObject.IsOwner)
-      //   // Position updated across the network
+      //// Server (owner)
+      //if (networkObject.IsServer)
+      //{
+      //   // Send this data over the network
+      //   networkObject.position = transform.position;
+      //   networkObject.rotation = transform.rotation;
+      //}
+      //// Client
+      //else
+      //{
+      //   // Get data from the server
       //   transform.position = networkObject.position;
+      //   transform.rotation = networkObject.rotation;
 
-      //networkObject.position = transform.position;
+      //   return;
+      //}
    }
 
    #endregion

@@ -31,31 +31,19 @@ class SpeedFollowCamera2 : CameraEmplacement
       CalculateZoomDistance();
       CalculateHeight();
 
-      
-
+            RotateCameraWithCursor();
       FollowBehind();
-      RotateCameraWithCursor();
       //RotateTowardsVector();
-   }
-
-   void RotateCameraWithCursor()
-   {
-      // Find rotation plane
-      //Vector3 rotationPlane = _target.transform.TransformPoint(Vector3.zero);
-
-      transform.RotateAround(_target.transform.position, transform.up, Input.GetAxis("Mouse X") * _rotationDamping);
    }
 
    void CalculateZoomDistance()
    {
       if(UserInput.ScrollWheel > 0)
       {
-         Debug.Log("Distance is " + _distance);
          _distance -= _zoomSpeed;
       }
       else if(UserInput.ScrollWheel < 0)
       {
-         Debug.Log("Distance is " + _distance);
          _distance += _zoomSpeed;
       }
       _distance = Mathf.Clamp(_distance, _minDistance, _maxDistance);
@@ -71,6 +59,14 @@ class SpeedFollowCamera2 : CameraEmplacement
    {
       Vector3 wantedPosition = _target.transform.TransformPoint(0, _height, -_distance);
       transform.position = Vector3.Lerp(transform.position, wantedPosition, Time.deltaTime * _distanceDamping);
+   }
+
+   void RotateCameraWithCursor()
+   {
+      // Find rotation plane
+      //Vector3 rotationPlane = _target.transform.TransformPoint(Vector3.zero);
+
+      transform.RotateAround(_target.transform.position, transform.up, Input.GetAxis("Mouse X") * _rotationDamping);
    }
 
    void RotateTowardsVector()

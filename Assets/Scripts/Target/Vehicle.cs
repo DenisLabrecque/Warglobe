@@ -36,7 +36,7 @@ public abstract class Vehicle : Target {
 
    List<CameraEmplacement> m_CameraEmplacements;
    protected FlotationArea m_FlotationArea = null;
-   protected Motor m_Motor;
+   protected Motor _motor;
    private int m_CurrentCameraIndex = 0;
 
    #endregion
@@ -64,7 +64,7 @@ public abstract class Vehicle : Target {
    /// Current throttle percent
    /// </summary>
    public float Throttle {
-      get { return m_Motor.InputThrottle; }
+      get { return _motor.PercentThrottle; }
    }
 
    /// <summary>
@@ -111,7 +111,7 @@ public abstract class Vehicle : Target {
    /// </summary>
    public float PercentBattery {
       get {
-         return m_Motor.BatteryPercent;
+         return _motor.BatteryPercent;
       }
    }
 
@@ -120,7 +120,7 @@ public abstract class Vehicle : Target {
    /// </summary>
    public int BatteryAmperage {
       get {
-         return m_Motor.BatteryMinutesLeft;
+         return _motor.BatteryMinutesLeft;
       }
    }
 
@@ -189,7 +189,7 @@ public abstract class Vehicle : Target {
       m_CurrentHitpoints = m_MaxHitpoints;
 
       // Assign the child items
-      m_Motor = GetComponentInChildren<Motor>();
+      _motor = GetComponentInChildren<Motor>();
       m_FlotationArea = GetComponentInChildren<FlotationArea>();
 
       _Rigidbody.velocity = Vector3.forward * m_PregameSpeed;
@@ -203,7 +203,7 @@ public abstract class Vehicle : Target {
    {
       if(m_CameraEmplacements.Count == 0 || m_CameraEmplacements == null)
          Debug.LogError("Vehicle " + PopularName + " must absolutely have at least one camera emplacement as a child");
-      else if(m_Motor == null)
+      else if(_motor == null)
          Debug.LogError("Vehicle " + PopularName + " must have a motor");
    }
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UIScreens;
+using BeardedManStudios.Forge.Networking;
+using BeardedManStudios.Forge.Networking.Generated;
 using BeardedManStudios.Forge.Networking.Unity;
 
 /// <summary>
@@ -75,7 +77,7 @@ public class GameTypeAndMode : MonoBehaviour
    {
       EnableTargets(true);
 
-      Instantiate(m_Enemy, m_Spawn2.transform.position, m_Spawn2.transform.rotation);
+      NetworkManager.Instance.InstantiateShip(position: m_Spawn2.transform.position);
    }
 
    public void DisableTargets()

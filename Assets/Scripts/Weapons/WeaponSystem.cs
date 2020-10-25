@@ -113,7 +113,7 @@ public class WeaponSystem : MonoBehaviour {
    /// Fire the first available turret that is reloaded.
    /// Returns whether or not a turret has fired.
    /// </summary>
-   public bool FireTurret()
+   public bool FireTurrets()
    {
       bool hasFired = false;
 
