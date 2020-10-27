@@ -6,9 +6,11 @@
 /// Denis Labrecque
 /// December 2018
 /// </summary>
-public class Radar : Sensor
+public class Radar : ActiveSensor
 {
    const float RADAR_NOT_ON_ALTITUDE = -1f;
+   
+   [SerializeField] Spin _spin;
 
    #region Properties
 
@@ -18,7 +20,7 @@ public class Radar : Sensor
    /// </summary>
    public float Altitude {
       get {
-         if(m_IsOn == false)
+         if(_isOn == false)
             return -1f;
          else
          {
@@ -50,10 +52,10 @@ public class Radar : Sensor
       }
 
       // Check radar cross section
-      else if(!RCSIsSufficient(target.RadarCrossSection, m_Range, Vector3.Distance(gameObject.transform.position, other.transform.position)))
+      else if(!RCSIsSufficient(target.RadarCrossSection, _range, Vector3.Distance(gameObject.transform.position, other.transform.position)))
       {
          Debug.DrawLine(gameObject.transform.position, other.transform.position, Color.grey);
-         m_TargetList.Remove(target);
+         _targetList.Remove(target);
       }
 
       // Check whether the target is in LOS
@@ -67,7 +69,7 @@ public class Radar : Sensor
       else
       {
          Debug.DrawLine(gameObject.transform.position, other.transform.position, Color.green);
-         m_TargetList.Add(target);
+         _targetList.Add(target);
       }
    }
 
@@ -81,17 +83,17 @@ public class Radar : Sensor
       float distance = Vector3.Distance(gameObject.transform.position, target.transform.position);
 
       // Whether the target is in range
-      if(distance > m_Range)
+      if(distance > _range)
       {
-         m_TargetList.Remove(target);
+         _targetList.Remove(target);
          return;
       }
 
       // Whether radar cross section is sufficient
-      else if(!RCSIsSufficient(target.RadarCrossSection, m_Range, Vector3.Distance(gameObject.transform.position, target.transform.position)))
+      else if(!RCSIsSufficient(target.RadarCrossSection, _range, Vector3.Distance(gameObject.transform.position, target.transform.position)))
       {
          Debug.DrawLine(gameObject.transform.position, target.transform.position, Color.grey);
-         m_TargetList.Remove(target);
+         _targetList.Remove(target);
          return;
       }
 
@@ -100,14 +102,14 @@ public class Radar : Sensor
       {
          Debug.DrawLine(gameObject.transform.position, target.transform.position, Color.yellow);
 //         Debug.Log("LOS from " + gameObject + " on " + gameObject.GetComponentInParent<Target>().PopularName + " to " + target.PopularName);
-         m_TargetList.Remove(target);
+         _targetList.Remove(target);
       }
 
       // Add the target because it passed all tests to be tracked
       else
       {
          Debug.DrawLine(gameObject.transform.position, target.transform.position, Color.green);
-         m_TargetList.Add(target);
+         _targetList.Add(target);
          return;
       }
    }
@@ -127,5 +129,20 @@ public class Radar : Sensor
          return true;
       else
          return false;
+   }
+
+   public override void Switch(bool onOff)
+   {
+      _isOn = onOff;
+      if(_spin != null)
+         _spin.Switch(onOff);
+   }
+
+   public override void Switch()
+   {
+      Debug.Log("Radar " + gameObject + " is being switched");
+      _isOn = !_isOn;
+      if(_spin != null)
+         _spin.Switch(_isOn);
    }
 }

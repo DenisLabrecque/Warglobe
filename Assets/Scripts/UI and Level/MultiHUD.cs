@@ -5,16 +5,17 @@ using System.Linq;
 using UnityEngine.UI;
 using TMPro;
 using System.Globalization;
+using System.Text;
 
 /// <summary>
-/// Control what is seen on an aircraft's HUD, referencing all parts of an aircraft HUD and modifying values according to the currently selected airplane.
+/// Control what is seen on a vehicle's HUD, referencing all parts of the HUD and modifying values according to the currently selected vehicle.
 /// </summary>
-public class AircraftHUD : MonoBehaviour {
+public class MultiHUD : MonoBehaviour {
 
    #region Member Variables
    
-   static List<HUDTracker> m_HUDTrackers = new List<HUDTracker>();
-   static List<Waypoint> m_Waypoints = new List<Waypoint>();
+   static List<HUDTracker> _hudTrackers = new List<HUDTracker>();
+   static List<Waypoint> _waypoints = new List<Waypoint>();
 
    // HUD Elements
    [SerializeField] Slider m_ThrottleSlider;
@@ -27,8 +28,8 @@ public class AircraftHUD : MonoBehaviour {
    [SerializeField] TextMeshProUGUI m_MessageText;
    [SerializeField] TextMeshProUGUI m_TestingText;
 
-   [SerializeField] HUDTracker m_HUDTracker;
-   [SerializeField] Image m_HeadingMarker;
+   [SerializeField] HUDTracker _hudTracker;
+   [SerializeField] Image _headingMarker;
 
    #endregion
 
@@ -47,21 +48,21 @@ public class AircraftHUD : MonoBehaviour {
       // Add the tracker to the list of trackers
       foreach(Target target in sceneTargets)
       {
-         HUDTracker tracker = Instantiate(m_HUDTracker, gameObject.transform);
+         HUDTracker tracker = Instantiate(_hudTracker, gameObject.transform);
          tracker.SetTarget(target);
-         m_HUDTrackers.Add(tracker);
+         _hudTrackers.Add(tracker);
       }
 
       // Find all scene waypoints
-      m_Waypoints = FindObjectsOfType<Waypoint>().ToList();
+      //_waypoints = FindObjectsOfType<Waypoint>().ToList();
 
-      // Go through each waypoint in the scene and make a tracker for each
-      foreach(Waypoint waypoint in m_Waypoints)
-      {
-         HUDTracker tracker = Instantiate(m_HUDTracker, gameObject.transform);
-         tracker.SetWaypoint(waypoint);
+      //// Go through each waypoint in the scene and make a tracker for each
+      //foreach(Waypoint waypoint in _waypoints)
+      //{
+      //   HUDTracker tracker = Instantiate(_hudTracker, gameObject.transform);
+      //   tracker.SetWaypoint(waypoint);
 
-      }
+      //}
    }
 
    /// <summary>
@@ -70,7 +71,11 @@ public class AircraftHUD : MonoBehaviour {
    void Update()
    {
       PrintVehicleHUDInfo();
-      ShowFPM();
+
+      if (UserInput.Player1Vehicle.GetType() == typeof(Airplane))
+         ShowFPM();
+      else if (UserInput.Player1Vehicle.GetType() == typeof(Ship))
+         _headingMarker.enabled = false;
    }
 
    /// <summary>
@@ -88,15 +93,17 @@ public class AircraftHUD : MonoBehaviour {
 
    private void ShowFPM()
    {
+      _headingMarker.enabled = true;
+
       // Math the vehicle's  AOA
       Vehicle vehicle = UserInput.Player1Vehicle;
-      m_HeadingMarker.transform.position = Camera.main.WorldToScreenPoint(vehicle.transform.position + (vehicle.NormalizedVelocity * 900f));
+      _headingMarker.transform.position = Camera.main.WorldToScreenPoint(vehicle.transform.position + (vehicle.NormalizedVelocity * 900f));
 
       // Match the vehicle's heading
       //m_HeadingMarker.transform.position = Camera.main.WorldToScreenPoint(vehicle.transform.position + (vehicle.transform.forward.normalized * 500f));
 
       // Match the earth's surface rotation
-      m_HeadingMarker.transform.eulerAngles = (Vector3.forward * vehicle.RollAngle);
+      _headingMarker.transform.eulerAngles = (Vector3.forward * vehicle.RollAngle);
    }
 
    /// <summary>
@@ -105,22 +112,28 @@ public class AircraftHUD : MonoBehaviour {
    /// </summary>
    private void TrackTargets()
    {
-      // Manage every tracker depending on target visibility to sensors
-      // TODO
-      //foreach(HUDTracker tracker in m_HUDTrackers)
-      //{
-      //   // Only show the player target trackers when his vehicle is actually tracking them
-      //   if(UserInput.Player1Vehicle.SensorSystem.FusedSensorData.Contains(tracker.Target))
-      //      tracker.IsVisible = true;
-      //   else
-      //      tracker.IsVisible = false;
+      StringBuilder builder = new StringBuilder();
+      foreach(Target target in UserInput.Player1Vehicle.SensorSystem.FusedSensorData)
+      {
+         builder.Append(target.ToString() + " ");
+      }
+      m_MessageText.text = builder.ToString();
 
-      //   // Show the player lock-on symbology
-      //   if(UserInput.Player1Vehicle.WeaponSystem.SensorSystem.TrackingTarget == tracker.Target)
-      //      tracker.IsLockedOn = true;
-      //   else
-      //      tracker.IsLockedOn = false;
-      //}
+      // Manage every tracker depending on target visibility to sensors
+      foreach (HUDTracker tracker in _hudTrackers)
+      {
+         // Only show the player target trackers when his vehicle is actually tracking them
+         if (UserInput.Player1Vehicle.SensorSystem.FusedSensorData.Contains(tracker.Target))
+            tracker.IsVisible = true;
+         else
+            tracker.IsVisible = false;
+
+         // Show the player lock-on symbology
+         if (UserInput.Player1Vehicle.WeaponSystem.SensorSystem.TrackingTarget == tracker.Target)
+            tracker.IsLockedOn = true;
+         else
+            tracker.IsLockedOn = false;
+      }
    }
 
    /// <summary>
@@ -128,7 +141,7 @@ public class AircraftHUD : MonoBehaviour {
    /// </summary>
    private void PrintVehicleHUDInfo()
    {
-      Vehicle currentVehicle = UserInput.Player1Vehicle as Vehicle;
+      Vehicle currentVehicle = UserInput.Player1Vehicle;
 
       // Throttle value
       m_ThrottleSlider.value = currentVehicle.Throttle;
@@ -141,8 +154,8 @@ public class AircraftHUD : MonoBehaviour {
 
 
 
-      // Radar on/off // TODO
-         // m_RadarIOText.text = currentVehicle.SensorSystem.Radar.IsOn ? Multilang.Text["radar_on"] : Multilang.Text["radar_off"];
+      // Radar on/off
+      m_RadarIOText.text = currentVehicle.SensorSystem.ActiveSensorsOn ? Multilang.Text["radar_on"] : Multilang.Text["radar_off"];
 
       // Selected weapon
 
@@ -171,9 +184,9 @@ public class AircraftHUD : MonoBehaviour {
 
       // Altitude
       string altitudeString;
-      if (currentAirplane.SensorSystem.Radar.IsOn)
-         altitudeString = currentAirplane.SensorSystem.Radar.Altitude.ToString("N0", CultureInfo.InvariantCulture).Replace(',', ' ');
-      else
+      //if (currentAirplane.SensorSystem.ActiveSensors.IsOn)
+      //   altitudeString = currentAirplane.SensorSystem.ActiveSensors.Altitude.ToString("N0", CultureInfo.InvariantCulture).Replace(',', ' ');
+      //else
          altitudeString = currentAirplane.AltitudeAboveSea.ToString("N0", CultureInfo.InvariantCulture).Replace(',', ' ');
       m_AltitudeText.text = altitudeString;
 

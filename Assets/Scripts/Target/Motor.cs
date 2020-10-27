@@ -37,7 +37,6 @@ public abstract class Motor : MonoBehaviour {
 
    [Tooltip("Current throttle (modified in realtime)")]
    [Range(-1,1)] [SerializeField] float _percentThrottle = 0f; // Backing variable for throttle input
-   bool _blockedThrottle = false;
 
    [Header("Visible Fan Properties")]
 
@@ -50,7 +49,7 @@ public abstract class Motor : MonoBehaviour {
    [Header("Audio")]
    [SerializeField] float _maxPitch = 2.2f;
    
-   float m_Volume;
+   float _volume;
    protected float _percentThrust; // The throttle setting the engine has had time to reach
    protected float _currentEnergy;
    protected float _maxThrust;
@@ -59,6 +58,10 @@ public abstract class Motor : MonoBehaviour {
    protected Rigidbody _rigidbody = null;
    AudioSource _audioSource;
    private readonly float m_1_60th = 0.0166667f;
+   public const float ReverseSeconds = 1f;
+   private float _seconds = 0f;
+   private float _reverseSeconds = 0f;
+   private float _valueAtReverseBoundary;
 
    #endregion
 
@@ -71,25 +74,7 @@ public abstract class Motor : MonoBehaviour {
    /// </summary>
    public float PercentThrottle {
       set {
-         if(_percentThrottle > 0 && value < 0 ||
-            _percentThrottle < 0 && value > 0)
-         {
-            _percentThrottle = 0;
-            _blockedThrottle = true;
-         }
-         else if(value == 0)
-         {
-            _blockedThrottle = false;
-         }
-         //if (_percentThrottle < 0f && _previousThrottlePercent > 0f ||
-         //   _percentThrottle > 0f && _previousThrottlePercent < 0f)
-         //{
-         //   // Block input so the player can accurately stop at zero
-         //}
-         //else
-         else {
-             _percentThrottle = Mathf.Clamp(value, -1f, 1f);
-         }
+         _percentThrottle = Mathf.Clamp(value, -1f, 1f);
       }
       get {
          return _percentThrottle;
@@ -159,7 +144,7 @@ public abstract class Motor : MonoBehaviour {
       _audioSource.spatialBlend = 1;
       _audioSource.rolloffMode = AudioRolloffMode.Linear;
 
-      m_Volume = _audioSource.volume;
+      _volume = _audioSource.volume;
       _currentEnergy = _powerDurationMinutes;
    }
 
@@ -190,7 +175,7 @@ public abstract class Motor : MonoBehaviour {
             }
             else
             {
-               _audioSource.volume = m_Volume;
+               _audioSource.volume = _volume;
             }
 
             // Sound pitch
@@ -202,6 +187,9 @@ public abstract class Motor : MonoBehaviour {
                part.transform.Rotate(_rotationAxis, _percentThrust * m_RPM * Time.deltaTime);
             }
          }
+
+         // Update timer
+         _seconds += Time.deltaTime;
       }
       else
       {

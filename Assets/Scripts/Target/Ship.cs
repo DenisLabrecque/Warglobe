@@ -37,6 +37,8 @@ public class Ship : Vehicle
 
    void Update()
    {
+      base.Update();
+
       // Steer through user input
       if (UserInput.Player1Vehicle == this)
       {

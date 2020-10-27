@@ -26,7 +26,7 @@ public class RadarDetector : Sensor
       else if(!radar.IsOn)
       {
          Debug.DrawLine(gameObject.transform.position, collider.transform.position, Color.grey);
-         m_TargetList.Remove(target);
+         _targetList.Remove(target);
       }
 
       // Check whether the target is in LOS
@@ -40,7 +40,7 @@ public class RadarDetector : Sensor
       else
       {
          Debug.DrawLine(gameObject.transform.position, collider.transform.position, Color.green);
-         m_TargetList.Add(target);
+         _targetList.Add(target);
       }
    }
 

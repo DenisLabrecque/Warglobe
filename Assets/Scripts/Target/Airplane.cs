@@ -135,8 +135,6 @@ public abstract class Airplane : Vehicle {
          Debug.LogError("An airplane's landing gear must be assigned");
       else if(m_Tail == null)
          Debug.LogError("An airplane's tail control surface must be assigned");
-
-      m_SensorSystem.Radar.TurnOff();
    }
 
    void Update()
@@ -214,9 +212,9 @@ public abstract class Airplane : Vehicle {
 
       // Climb/dive
       AltitudePID.SetPoint = 200f; // Altitude
-      if(m_SensorSystem.Radar != null && m_SensorSystem.Radar.IsOn)
-         AltitudePID.ProcessVariable = m_SensorSystem.Radar.Altitude;
-      else
+      //if(_sensorSystem.ActiveSensors != null && _sensorSystem.ActiveSensors.IsOn)
+      //   AltitudePID.ProcessVariable = _sensorSystem.ActiveSensors.Altitude;
+      //else
          AltitudePID.ProcessVariable = AltitudeAboveSea;
 
       float pitchDeflection;
@@ -296,21 +294,6 @@ public abstract class Airplane : Vehicle {
          {
             m_Undercarriage.Extend();
             Debug.Log("Extending gear of " + gameObject);
-         }
-      }
-
-      // Radar
-      if(UserInput.Radar)
-      {
-         if(m_SensorSystem.Radar.IsOn)
-         {
-            Debug.Log("Radar turned off");
-            m_SensorSystem.Radar.TurnOff();
-         }
-         else
-         {
-            Debug.Log("Radar turned on");
-            m_SensorSystem.Radar.TurnOn();
          }
       }
 

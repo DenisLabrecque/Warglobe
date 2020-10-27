@@ -77,7 +77,7 @@ public class GameTypeAndMode : MonoBehaviour
    {
       EnableTargets(true);
 
-      NetworkManager.Instance.InstantiateShip(position: m_Spawn2.transform.position);
+      //NetworkManager.Instance.InstantiateShip(position: m_Spawn2.transform.position);
    }
 
    public void DisableTargets()

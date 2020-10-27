@@ -4,7 +4,6 @@ using System.Linq;
 
 /// <summary>
 /// Base class for sonars and radars.
-/// A trigger sphere collider serves as maximum range.
 /// The important method is ListPotentialTarget(); it should be overridden in any actual implementation to consider targets that are not only
 /// within range, but also within acceptable parameters (ie. within LOS, radar on, loud enough, on the same team, etc.)
 /// 
@@ -13,13 +12,13 @@ using System.Linq;
 /// </summary>
 public abstract class Sensor : MonoBehaviour {
 
-   public static List<Target> m_SceneTargets = new List<Target>(); // All targets in the scene. When a new target is created, it must be added to this list.
+   public static List<Target> _sceneTargets = new List<Target>(); // All targets in the scene. When a new target is created, it must be added to this list.
 
    #region Member Variables
 
-   protected SortedSet<Target> m_TargetList = new SortedSet<Target>(); // Things tracked by the sensor
-   [SerializeField] protected bool m_IsOn = true;
-   protected float m_Range = 5000f;
+   protected SortedSet<Target> _targetList = new SortedSet<Target>(); // Things tracked by the sensor
+   [SerializeField] protected bool _isOn = true;
+   [SerializeField] protected float _range = 5000f;
 
    #endregion
 
@@ -29,12 +28,12 @@ public abstract class Sensor : MonoBehaviour {
    /// <summary>
    /// Get information from the sensor (only if the sensor is on).
    /// </summary>
-   public SortedSet<Target> TargetList { get { return m_IsOn ? m_TargetList : null; } }
+   public SortedSet<Target> TargetList { get { return _isOn ? _targetList : null; } }
 
    /// <summary>
    /// Whether the sensor is/should be on/off.
    /// </summary>
-   public bool IsOn { get { return m_IsOn; } }
+   public bool IsOn { get { return _isOn; } }
 
    #endregion
 
@@ -44,43 +43,25 @@ public abstract class Sensor : MonoBehaviour {
    void Awake()
    {
       // Find all targets in the area and list them once
-      if(m_SceneTargets.Count < 1)
-         m_SceneTargets = Resources.FindObjectsOfTypeAll<Target>().ToList<Target>();
+      if(_sceneTargets.Count < 1)
+         _sceneTargets = Resources.FindObjectsOfTypeAll<Target>().ToList();
    }
 
    void FixedUpdate()
    {
       // Add targets to the tracking list if they can be seen
-      if(m_IsOn)
+      if(_isOn)
       {
-         foreach(Target target in m_SceneTargets)
+         foreach(Target target in _sceneTargets)
             ListIfTrackable(target);
       }
 
       // Clear the tracking list if the radar is off
-      else if(m_TargetList.Count != 0)
+      else if(_targetList.Count != 0)
       {
-         m_TargetList.Clear();
+         _targetList.Clear();
       }
    }
-
-   ///// <summary>
-   ///// Check for targets already within the sensor range and list them if they are trackable targets.
-   ///// </summary>
-   //void OnTriggerStay(Collider collider)
-   //{
-   //   if(m_IsOn)
-   //      ListIfTrackable(collider);
-   //}
-
-   ///// <summary>
-   ///// Delete a target from the target list.
-   ///// </summary>
-   //void OnTriggerExit(Collider collider)
-   //{
-   //   if(m_IsOn)
-   //      Unlist(collider);
-   //}
 
    #endregion
 
@@ -104,7 +85,7 @@ public abstract class Sensor : MonoBehaviour {
    {
       Target target = collider.gameObject.GetComponent<Target>();
       if(target != null)
-         m_TargetList.Remove(target);
+         _targetList.Remove(target);
    }
 
    /// <summary>
@@ -143,26 +124,6 @@ public abstract class Sensor : MonoBehaviour {
          return true;
       else
          return false;
-   }
-
-   #endregion
-
-   #region Public Methods
-
-   /// <summary>
-   /// Turn on this sensor.
-   /// </summary>
-   public void TurnOn()
-   {
-      m_IsOn = true;
-   }
-
-   /// <summary>
-   /// Turn off this sensor.
-   /// </summary>
-   public void TurnOff()
-   {
-      m_IsOn = false;
    }
 
    #endregion

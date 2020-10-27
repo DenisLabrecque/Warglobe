@@ -7,12 +7,15 @@ public class SensorSystem : MonoBehaviour
 {
    #region Member Variables
 
-   List<Sensor> m_Sensors = new List<Sensor>();
-   SortedSet<Target> m_FusedSensorData;
-   Radar m_Radar;
-   Target m_ParentTarget; // Reference to the controling vehicle
-   Target m_CurrentTarget = null; // The target currently selected to fire at
-   int m_TrackingIndex = 0; // The list target item we are looking at
+   [Header("The sensor setting at start")]
+   [SerializeField] bool _activeSensorsOn = false;
+
+   List<Sensor> _sensors = new List<Sensor>();
+   SortedSet<Target> _fusedSensorData;
+   List<ActiveSensor> _activeSensors;
+   Target _parentTarget; // Reference to the controling vehicle
+   Target _currentTarget = null; // The target currently selected to fire at
+   int _trackingIndex = 0; // The list target item we are looking at
 
    #endregion
 
@@ -21,20 +24,26 @@ public class SensorSystem : MonoBehaviour
 
    /// <summary>
    /// Get all targets that the weapon system is tracking at the moment.
-   /// Updated at each fixed update.
-   /// MAY RETURN AN EMPTY SET IF THE SYSTEM IS OFF OR IF NO TARGETS ARE IN SIGHT.
+   /// Updated at each fixed update. Returns null if there are no targets in sight.
    /// </summary>
    public SortedSet<Target> FusedSensorData {
       get {
-         return m_FusedSensorData;
+         return _fusedSensorData;
       }
    }
 
    /// <summary>
-   /// Get the radar. Returns null if there is no radar.
+   /// Gets active sensors attached to this system.
    /// </summary>
-   public Radar Radar {
-      get { return m_Radar; }
+   protected List<ActiveSensor> ActiveSensors {
+      get { return _activeSensors; }
+   }
+
+   /// <summary>
+   /// Returns whether the active sensors are on or off.
+   /// </summary>
+   public bool ActiveSensorsOn {
+      get { return _activeSensorsOn; }
    }
 
    /// <summary>
@@ -43,8 +52,8 @@ public class SensorSystem : MonoBehaviour
    /// </summary>
    public Target TrackingTarget {
       get {
-         if(m_FusedSensorData.Count > 0)
-            return m_FusedSensorData.ElementAt(m_TrackingIndex); // out of range because the list is being changed, perhaps?
+         if (_fusedSensorData.Count > 0)
+            return _fusedSensorData.ElementAt(_trackingIndex); // out of range because the list is being changed, perhaps?
          else
             return null;
       }
@@ -54,7 +63,7 @@ public class SensorSystem : MonoBehaviour
    /// The number of targets currently seen by every sensor in this sensor system.
    /// </summary>
    public int TargetCount {
-      get { return m_FusedSensorData.Count; }
+      get { return _fusedSensorData.Count; }
    }
 
    #endregion
@@ -64,24 +73,29 @@ public class SensorSystem : MonoBehaviour
 
    void Awake()
    {
-      m_Sensors = GetComponentsInChildren<Sensor>().ToList();
+      _sensors = GetComponentsInChildren<Sensor>().ToList();
 
-      if(GetComponentInChildren<Radar>() != null)
-         m_Radar = GetComponentInChildren<Radar>();
-      else
-         m_Radar = null;
+      _activeSensors = GetComponentsInChildren<ActiveSensor>().ToList();
+      if (_activeSensors == null)
+         Debug.LogWarning("No active sensors found for " + gameObject);
 
-      m_ParentTarget = GetComponentInParent<Target>();
-      if(m_ParentTarget == null)
+      _parentTarget = GetComponentInParent<Target>();
+      if (_parentTarget == null)
          Debug.LogError("Target was not found for " + gameObject);
 
-      m_FusedSensorData = new SortedSet<Target>(new BySeekerDistance(m_ParentTarget));
+      _fusedSensorData = new SortedSet<Target>(new BySeekerDistance(_parentTarget));
+   }
+
+   private void Start()
+   {
+      foreach (ActiveSensor sensor in _activeSensors)
+         sensor.Switch(_activeSensorsOn);
    }
 
    void FixedUpdate()
    {
       // Re-order the targets until a selection is made (or a target becomes visible, in which case the list is empty)
-      if(m_CurrentTarget == null)
+      //if (_currentTarget == null)
          FuseSensorData();
    }
 
@@ -95,12 +109,13 @@ public class SensorSystem : MonoBehaviour
    /// </summary>
    /// <param name="increment">How many targets down the list to fetch (back or forwards)</param>
    /// <returns>A target to be tracked</returns>
-   public void NextTarget() {
-      if(m_CurrentTarget == null)
+   public void NextTarget()
+   {
+      if (_currentTarget == null)
          EnterTrackingTarget();
       else
       {
-         m_TrackingIndex++;
+         _trackingIndex++;
       }
    }
 
@@ -110,8 +125,18 @@ public class SensorSystem : MonoBehaviour
    /// <returns>The selected target</returns>
    public void EnterTrackingTarget()
    {
-      m_CurrentTarget = m_FusedSensorData.ElementAt(m_TrackingIndex);
-      m_TrackingIndex = 0; // Reset to the nearest target
+      _currentTarget = _fusedSensorData.ElementAt(_trackingIndex);
+      _trackingIndex = 0; // Reset to the nearest target
+   }
+
+   /// <summary>
+   /// Switch all active sensors on/off based on their current setting.
+   /// </summary>
+   public void SwitchActiveSensors()
+   {
+      _activeSensorsOn = !_activeSensorsOn;
+      foreach (ActiveSensor sensor in _activeSensors)
+         sensor.Switch(_activeSensorsOn);
    }
 
    #endregion
@@ -126,22 +151,22 @@ public class SensorSystem : MonoBehaviour
    private void FuseSensorData()
    {
       // Dump the previous frame's list
-      m_FusedSensorData.Clear();
+      _fusedSensorData.Clear();
 
       // Go through each sensor on the vehicle
-      foreach(Sensor sensor in m_Sensors)
+      foreach (Sensor sensor in _sensors)
       {
-         if(sensor.IsOn && sensor.TargetList != null)
+         if (sensor.IsOn && sensor.TargetList != null)
          {
             // Go through each sensed target
-            foreach(Target target in sensor.TargetList)
+            foreach (Target target in sensor.TargetList)
             {
-               if(target != (UserInput.Player1Vehicle as Target)) // We already know that our vehicle exists, so don't add it to the target list
-                  m_FusedSensorData.Add(target);
+               if (target != UserInput.Player1Vehicle) // We already know that our vehicle exists, so don't add it to the target list
+                  _fusedSensorData.Add(target);
             }
          }
       }
    }
-   
+
    #endregion
 }

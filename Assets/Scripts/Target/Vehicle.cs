@@ -207,6 +207,14 @@ public abstract class Vehicle : Target {
          Debug.LogError("Vehicle " + PopularName + " must have a motor");
    }
 
+   protected void Update()
+   {
+      if (UserInput.Radar)
+      {
+         _sensorSystem.SwitchActiveSensors();
+      }
+   }
+
    #endregion
 
 

@@ -20,14 +20,14 @@ public class WeaponSystem : MonoBehaviour {
 
    #region Member Variables
 
-   SortedSet<Target> m_TrackingList = new SortedSet<Target>();
-   SensorSystem m_SensorSystem;
+   SortedSet<Target> _trackingList = new SortedSet<Target>();
+   SensorSystem _sensorSystem;
    Laser m_Laser;
-   List<TurretAim> m_Turrets = new List<TurretAim>();
-   int m_CurrentProjectileIndex = 0;
+   List<TurretAim> _turrets = new List<TurretAim>();
+   int _currentProjectileIndex = 0;
    Dictionary<Type, ProjectileSlot> m_WeaponSlots = new Dictionary<Type, ProjectileSlot>();
-   List<Type> m_ProjectileTypes = new List<Type>();
-   TurretAimingSystem m_TurretAiming;
+   List<Type> _projectileTypes = new List<Type>();
+   TurretAimingSystem _turretAiming;
 
    #endregion
 
@@ -41,7 +41,7 @@ public class WeaponSystem : MonoBehaviour {
       get {
          try
          {
-            return m_WeaponSlots[m_ProjectileTypes[m_CurrentProjectileIndex]].Projectile;
+            return m_WeaponSlots[_projectileTypes[_currentProjectileIndex]].Projectile;
          }
          catch
          {
@@ -54,14 +54,14 @@ public class WeaponSystem : MonoBehaviour {
    /// Get the current slot, which holds information like the current projectile and the number of projectiles of the selected type.
    /// </summary>
    public ProjectileSlot CurrentSlot {
-      get { return m_WeaponSlots[m_ProjectileTypes[m_CurrentProjectileIndex]]; }
+      get { return m_WeaponSlots[_projectileTypes[_currentProjectileIndex]]; }
    }
 
    /// <summary>
    /// Get the weapon system's eye and ears (a sensor system is required to exist).
    /// </summary>
    public SensorSystem SensorSystem {
-      get { return m_SensorSystem; }
+      get { return _sensorSystem; }
    }
 
    #endregion
@@ -72,11 +72,11 @@ public class WeaponSystem : MonoBehaviour {
    void Awake()
    {
       m_Laser = GetComponentInChildren<Laser>(true);
-      m_Turrets = GetComponentsInChildren<TurretAim>(true).ToList();
-      m_SensorSystem = transform.parent.GetComponentInChildren<SensorSystem>(true);
-      m_TurretAiming = GetComponentInChildren<TurretAimingSystem>(true);
+      _turrets = GetComponentsInChildren<TurretAim>(true).ToList();
+      _sensorSystem = transform.parent.GetComponentInChildren<SensorSystem>(true);
+      _turretAiming = GetComponentInChildren<TurretAimingSystem>(true);
 
-      if(m_SensorSystem == null)
+      if(_sensorSystem == null)
          Debug.LogWarning("A weapon system requires a sensor system to function properly on " + transform.parent);
    }
 
@@ -98,7 +98,7 @@ public class WeaponSystem : MonoBehaviour {
       }
 
       // Enumerate the available weapons
-      m_ProjectileTypes = new List<Type>(m_WeaponSlots.Keys);
+      _projectileTypes = new List<Type>(m_WeaponSlots.Keys);
    }
 
    /// <summary>
@@ -106,7 +106,7 @@ public class WeaponSystem : MonoBehaviour {
    /// </summary>
    public void FireProjectile()
    {
-      m_WeaponSlots[m_ProjectileTypes[m_CurrentProjectileIndex]].Fire();
+      m_WeaponSlots[_projectileTypes[_currentProjectileIndex]].Fire();
    }
 
    /// <summary>
@@ -117,7 +117,7 @@ public class WeaponSystem : MonoBehaviour {
    {
       bool hasFired = false;
 
-      foreach(TurretAim turret in m_Turrets)
+      foreach(TurretAim turret in _turrets)
       {
          hasFired = turret.Fire();
          if (hasFired == true)
@@ -150,17 +150,17 @@ public class WeaponSystem : MonoBehaviour {
       // Next weapon
       if(increment > 0)
       {
-         m_CurrentProjectileIndex++;
-         if(m_CurrentProjectileIndex > m_WeaponSlots.Count - 1)
-            m_CurrentProjectileIndex = 0;
+         _currentProjectileIndex++;
+         if(_currentProjectileIndex > m_WeaponSlots.Count - 1)
+            _currentProjectileIndex = 0;
       }
 
       // Previous weapon
       else if(increment < 0)
       {
-         m_CurrentProjectileIndex--;
-         if(m_CurrentProjectileIndex < 0)
-            m_CurrentProjectileIndex = m_WeaponSlots.Count - 1;
+         _currentProjectileIndex--;
+         if(_currentProjectileIndex < 0)
+            _currentProjectileIndex = m_WeaponSlots.Count - 1;
       }
 
       // Increment input error
@@ -173,27 +173,27 @@ public class WeaponSystem : MonoBehaviour {
    void FixedUpdate()
    {
       // Empty the tracking list
-      m_TrackingList.Clear();
+      _trackingList.Clear();
 
       // Feed the laser the closest target (this can be null)
       if (m_Laser != null)
       {
-         m_Laser.SetTarget(m_SensorSystem.TrackingTarget);
+         m_Laser.SetTarget(_sensorSystem.TrackingTarget);
       }
-      if(m_Turrets != null)
+      if(_turrets != null)
       {
-         foreach(TurretAim turret in m_Turrets)
+         foreach(TurretAim turret in _turrets)
          {
-            if(m_TurretAiming == null)
+            if(_turretAiming == null)
             {
                // Automatic cheapo turret aim
-               if (m_SensorSystem.TrackingTarget != null)
-                  turret.AimPosition = m_SensorSystem.TrackingTarget.transform.position;
+               if (_sensorSystem.TrackingTarget != null)
+                  turret.AimPosition = _sensorSystem.TrackingTarget.transform.position;
             }
             else
             {
                // By hand turret aim
-               turret.AimPosition = m_TurretAiming.AimPoint;
+               turret.AimPosition = _turretAiming.AimPoint;
             }
          }
       }

@@ -37,7 +37,7 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    [SerializeField] [Range(0f, 50000f)] float m_Hitpoints;
 
    protected WeaponSystem m_WeaponSystem;
-   protected SensorSystem m_SensorSystem;
+   protected SensorSystem _sensorSystem;
    protected float m_CurrentHitpoints;
    protected Faction m_Country;
    protected Rigidbody _Rigidbody;
@@ -124,7 +124,7 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    /// <summary>
    /// Get the sensors. Can return null if there are no sensors.
    /// </summary>
-   public SensorSystem SensorSystem { get { return m_SensorSystem; } }
+   public SensorSystem SensorSystem { get { return _sensorSystem; } }
 
    /// <summary>
    /// A smaller RCS shortens the percent normal range an aircraft can be detected using radar.
@@ -207,12 +207,12 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
       // Sensor system
       if(GetComponentInChildren<SensorSystem>() != null)
       {
-         m_SensorSystem = GetComponentInChildren<SensorSystem>();
+         _sensorSystem = GetComponentInChildren<SensorSystem>();
 //         Debug.Log("Sensor system found on " + PopularName);
       }
       else
       {
-         m_SensorSystem = null;
+         _sensorSystem = null;
 //         Debug.Log("No sensor system found on " + PopularName);
       }
    }
@@ -265,8 +265,8 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    {
       if (m_WeaponSystem != null)
          m_WeaponSystem.enabled = false;
-      if (m_SensorSystem != null)
-         m_SensorSystem.enabled = false;
+      if (_sensorSystem != null)
+         _sensorSystem.enabled = false;
    }
 
    /// <summary>
