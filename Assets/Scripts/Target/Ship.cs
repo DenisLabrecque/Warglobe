@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Ship : Vehicle
 {
-   public enum ShipType
+   public enum Class
    {
       AircraftCarrier, Battleship, Cruiser, Destroyer, Cutter
    }
@@ -15,8 +15,8 @@ public class Ship : Vehicle
    [Header("Control surface")]
    [SerializeField] List<ControlSurface> _rudders;
 
-   [Header("Ship subtype")]
-   [SerializeField] public ShipType _type = ShipType.Cruiser;
+   [Header("Class")]
+   [SerializeField] protected Class _class = Class.Cruiser;
 
 
    #endregion
@@ -83,6 +83,11 @@ public class Ship : Vehicle
       // Fire weapons
       if(UserInput.Gun)
          WeaponSystem.FireTurrets();
+   }
+
+   public override string ToString()
+   {
+      return _class + " " + PopularName;
    }
 
    #endregion

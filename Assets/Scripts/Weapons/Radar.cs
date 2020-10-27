@@ -7,16 +7,13 @@
 /// December 2018
 /// </summary>
 public class Radar : ActiveSensor
-{
-   const float RADAR_NOT_ON_ALTITUDE = -1f;
-   
+{   
    [SerializeField] Spin _spin;
 
    #region Properties
 
    /// <summary>
    /// Radar altitude in meters above ground.
-   /// Returns a negative if the radar is off.
    /// </summary>
    public float Altitude {
       get {
@@ -34,45 +31,6 @@ public class Radar : ActiveSensor
    }
 
    #endregion
-
-
-   /// <summary>
-   /// Perform checks before considering that a sensor can see a target.
-   /// </summary>
-   /// <param name="other">The collider of the game object that has entered the radar.</param>
-   protected override void ListIfTrackable(Collider other)
-   {
-      // Check whether the collider is actually a target
-      Target target = other.transform.GetComponent<Target>();
-
-      if(target == null)
-      {
-         // Debug.DrawLine(gameObject.transform.position, other.transform.position, Color.cyan);
-         return;
-      }
-
-      // Check radar cross section
-      else if(!RCSIsSufficient(target.RadarCrossSection, _range, Vector3.Distance(gameObject.transform.position, other.transform.position)))
-      {
-         Debug.DrawLine(gameObject.transform.position, other.transform.position, Color.grey);
-         _targetList.Remove(target);
-      }
-
-      // Check whether the target is in LOS
-      //else if(!InLOS(gameObject.transform, other.transform))
-      //{
-      //   Debug.DrawLine(gameObject.transform.position, other.transform.position, Color.yellow);
-      //   m_TargetList.Remove(target);
-      //}
-
-      // Finally add the target because it can be tracked
-      else
-      {
-         Debug.DrawLine(gameObject.transform.position, other.transform.position, Color.green);
-         _targetList.Add(target);
-      }
-   }
-
 
    /// <summary>
    /// Perform checks before considering that a sensor can see a target.
@@ -92,18 +50,19 @@ public class Radar : ActiveSensor
       // Whether radar cross section is sufficient
       else if(!RCSIsSufficient(target.RadarCrossSection, _range, Vector3.Distance(gameObject.transform.position, target.transform.position)))
       {
-         Debug.DrawLine(gameObject.transform.position, target.transform.position, Color.grey);
+         // Debug.DrawLine(gameObject.transform.position, target.transform.position, Color.grey);
          _targetList.Remove(target);
          return;
       }
 
-      // Whether target is in line of sight
-      else if(!InLineOfSight(gameObject.transform, target))
-      {
-         Debug.DrawLine(gameObject.transform.position, target.transform.position, Color.yellow);
-//         Debug.Log("LOS from " + gameObject + " on " + gameObject.GetComponentInParent<Target>().PopularName + " to " + target.PopularName);
-         _targetList.Remove(target);
-      }
+//      // Whether target is in line of sight
+//      else if(!InLineOfSight(gameObject.transform, target))
+//      {
+//         Debug.Log("Not in LOS " + target);
+//         Debug.DrawLine(gameObject.transform.position, target.transform.position, Color.yellow);
+////         Debug.Log("LOS from " + gameObject + " on " + gameObject.GetComponentInParent<Target>().PopularName + " to " + target.PopularName);
+//         _targetList.Remove(target);
+//      }
 
       // Add the target because it passed all tests to be tracked
       else
@@ -131,6 +90,10 @@ public class Radar : ActiveSensor
          return false;
    }
 
+   /// <summary>
+   /// Switch the radar on/off.
+   /// </summary>
+   /// <param name="onOff">True for on, false for off.</param>
    public override void Switch(bool onOff)
    {
       _isOn = onOff;
@@ -138,9 +101,11 @@ public class Radar : ActiveSensor
          _spin.Switch(onOff);
    }
 
+   /// <summary>
+   /// Flip the radar from on to off or vice versa.
+   /// </summary>
    public override void Switch()
    {
-      Debug.Log("Radar " + gameObject + " is being switched");
       _isOn = !_isOn;
       if(_spin != null)
          _spin.Switch(_isOn);

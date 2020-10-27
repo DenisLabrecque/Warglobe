@@ -47,6 +47,9 @@ public abstract class Sensor : MonoBehaviour {
          _sceneTargets = Resources.FindObjectsOfTypeAll<Target>().ToList();
    }
 
+   /// <summary>
+   /// Adds targets to the tracking list.
+   /// </summary>
    void FixedUpdate()
    {
       // Add targets to the tracking list if they can be seen
@@ -73,8 +76,6 @@ public abstract class Sensor : MonoBehaviour {
    /// Main method to customize sensor behaviour.
    /// </summary>
    /// <param name="collider">A potential target</param>
-   protected abstract void ListIfTrackable(Collider collider);
-
    protected abstract void ListIfTrackable(Target target);
    
    /// <summary>

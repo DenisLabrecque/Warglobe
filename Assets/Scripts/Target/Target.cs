@@ -24,7 +24,7 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    [SerializeField] public Faction.CountryName m_CountryName;
 
    [Tooltip("A vehicle's marketing name; should be capitalized appropriately. This is the name most people call a vehicle (eg. Raptor, Hornet, Mustang)")]
-   [SerializeField] string m_GeneralName = "Target";
+   [SerializeField] string _popularName = "Target";
 
    [Tooltip("A general description of the target")]
    [SerializeField][TextArea] string m_Description = "A generic target.";
@@ -158,7 +158,7 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    /// </summary>
    public string PopularName {
       get {
-         return m_GeneralName;
+         return _popularName;
       }
    }
 
