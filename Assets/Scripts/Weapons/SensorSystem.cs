@@ -161,17 +161,9 @@ public class SensorSystem : MonoBehaviour
             // Go through each sensed target
             foreach (Target target in sensor.TargetList)
             {
-               Debug.Log("Target " + target.gameObject);
                if (target != UserInput.Player1Vehicle) // We already know that our vehicle exists, so don't add it to the target list
                   _fusedSensorData.Add(target);
             }
-         }
-         else
-         {
-            if (sensor.IsOn == false)
-               Debug.Log("Sensor off " + sensor.gameObject);
-            else
-               Debug.Log("Target list null " + sensor.gameObject);
          }
       }
    }
