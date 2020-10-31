@@ -18,16 +18,29 @@ public class MultiHUD : MonoBehaviour {
    static List<Waypoint> _waypoints = new List<Waypoint>();
 
    // HUD Elements
-   [SerializeField] Slider m_ThrottleSlider;
-   [SerializeField] TextMeshProUGUI m_AlphaText;
-   [SerializeField] TextMeshProUGUI m_MachText;
-   [SerializeField] TextMeshProUGUI m_AirspeedText;
-   [SerializeField] TextMeshProUGUI m_AltitudeText;
-   [SerializeField] TextMeshProUGUI m_RadarIOText;
-   [SerializeField] TextMeshProUGUI m_SelectedWeaponText;
-   [SerializeField] TextMeshProUGUI m_MessageText;
+   [Header("Waypoint")]
+   [SerializeField] TextMeshProUGUI _waypointText;
+   [SerializeField] Slider _waypointSlider;
+
+   [Header("Power")]
+   [SerializeField] TextMeshProUGUI _speed;
+   [SerializeField] Slider _thrustSlider;
+   [SerializeField] TextMeshProUGUI _throttle;
+   [SerializeField] Slider _throttleSlider;
+
+   [Header("Energy")]
+   [SerializeField] TextMeshProUGUI _energy;
+   [SerializeField] Slider _energySlider;
+
+   [Header("Health")]
+   [SerializeField] TextMeshProUGUI _health;
+   [SerializeField] TextMeshProUGUI _healthPercent;
+   [SerializeField] Slider _healthSlider;
+
+   [Header("Testing")]
    [SerializeField] TextMeshProUGUI m_TestingText;
 
+   [Header("Tracker")]
    [SerializeField] HUDTracker _hudTracker;
    [SerializeField] Image _headingMarker;
 
@@ -117,7 +130,7 @@ public class MultiHUD : MonoBehaviour {
       {
          builder.Append(target.ToString() + " ");
       }
-      m_MessageText.text = builder.ToString();
+      //m_MessageText.text = builder.ToString();
 
       // Manage every tracker depending on target visibility to sensors
       foreach (HUDTracker tracker in _hudTrackers)
@@ -143,25 +156,28 @@ public class MultiHUD : MonoBehaviour {
    {
       Vehicle currentVehicle = UserInput.Player1Vehicle;
 
-      // Throttle value
-      m_ThrottleSlider.value = currentVehicle.Throttle;
-
-      // Battery
-      m_MachText.text = currentVehicle.BatteryAmperage.ToString();
-
-      // Airspeed
-      m_AirspeedText.text = (currentVehicle.ForwardSpeed).ToString("N0", CultureInfo.InvariantCulture).Replace(',', ' ');
-
-
-
-      // Radar on/off
-      m_RadarIOText.text = currentVehicle.SensorSystem.ActiveSensorsOn ? Multilang.Text["radar_on"] : Multilang.Text["radar_off"];
-
-      // Selected weapon
-
       // TODO
       //m_SelectedWeaponText.text = currentVehicle.WeaponSystem.CurrentProjectile.Abbreviation + " " + currentVehicle.WeaponSystem.CurrentSlot.NumberLeft;
 
+
+      // Waypoint
+      _waypointText.text = "NONE";
+      _waypointSlider.value = 0.5f;
+
+      // Power
+      _speed.text = (currentVehicle.ForwardSpeed).ToString("N0", CultureInfo.InvariantCulture).Replace(',', ' ');
+      _thrustSlider.value = Mathf.Abs(currentVehicle.Motor.PercentThrust);
+      _throttle.text = (currentVehicle.Motor.PercentThrottle * 100f).ToString("N0", CultureInfo.InvariantCulture) + "%";
+      _throttleSlider.value = Mathf.Abs(currentVehicle.Motor.PercentThrottle);
+
+      // Energy
+      _energy.text = currentVehicle.BatteryAmperage.ToString();
+      _energySlider.value = currentVehicle.PercentBattery;
+
+      // Health
+      _health.text = currentVehicle.Hitpoints.ToString();
+      _healthPercent.text = (currentVehicle.HitpointPercent * 100f).ToString("N0", CultureInfo.InvariantCulture) + "%";
+      _healthSlider.value = currentVehicle.HitpointPercent;
 
 
       // Testing sensor output
@@ -180,7 +196,7 @@ public class MultiHUD : MonoBehaviour {
    private void PrintAirplaneHUDInfo(Airplane currentAirplane)
    {
       // Angle
-      m_AlphaText.text = currentAirplane.PitchAngle.ToString("N1");
+      //m_AlphaText.text = currentAirplane.PitchAngle.ToString("N1");
 
       // Altitude
       string altitudeString;
@@ -188,7 +204,7 @@ public class MultiHUD : MonoBehaviour {
       //   altitudeString = currentAirplane.SensorSystem.ActiveSensors.Altitude.ToString("N0", CultureInfo.InvariantCulture).Replace(',', ' ');
       //else
          altitudeString = currentAirplane.AltitudeAboveSea.ToString("N0", CultureInfo.InvariantCulture).Replace(',', ' ');
-      m_AltitudeText.text = altitudeString;
+      //m_AltitudeText.text = altitudeString;
 
       // Message area
       string action;
@@ -197,7 +213,7 @@ public class MultiHUD : MonoBehaviour {
       else
          action = currentAirplane.SensorSystem.TrackingTarget.PopularName;
       string state = currentAirplane.IsUpright ? "upright" : "upside-down";
-      m_MessageText.text = action + "\n" + state;
+      //m_MessageText.text = action + "\n" + state;
    }
 
    private void PrintShipHUDInfo(Ship currentShip)

@@ -21,7 +21,7 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
 
    [Header("Target metadata")]
    [Tooltip("Which country this target belongs to")]
-   [SerializeField] public Faction.CountryName m_CountryName;
+   [SerializeField] public Faction.CountryName _countryName;
 
    [Tooltip("A vehicle's marketing name; should be capitalized appropriately. This is the name most people call a vehicle (eg. Raptor, Hornet, Mustang)")]
    [SerializeField] string _popularName = "Target";
@@ -34,13 +34,13 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    [SerializeField] float m_RadarCrossSection = 1f;
 
    [Tooltip("Hitpoints")]
-   [SerializeField] [Range(0f, 50000f)] float m_Hitpoints;
+   [SerializeField] [Range(0f, 50000f)] protected float _maxHitpoints;
 
-   protected WeaponSystem m_WeaponSystem;
+   protected WeaponSystem _weaponSystem;
    protected SensorSystem _sensorSystem;
-   protected float m_CurrentHitpoints;
-   protected Faction m_Country;
-   protected Rigidbody _Rigidbody;
+   protected float _currentHitpoints;
+   protected Faction _faction;
+   protected Rigidbody _rigidbody;
 
    #endregion
 
@@ -49,7 +49,7 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
 
    public Rigidbody Rigidbody {
       get {
-         return _Rigidbody;
+         return _rigidbody;
       }
    }
 
@@ -58,7 +58,7 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    /// </summary>
    public bool IsMilitary {
       get {
-         if(m_WeaponSystem == null)
+         if(_weaponSystem == null)
             return false;
          else
             return true;
@@ -70,7 +70,7 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    /// </summary>
    public float MaxHitpoints {
       get {
-         return m_Hitpoints;
+         return _maxHitpoints;
       }
    }
 
@@ -79,16 +79,16 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    /// </summary>
    public float Hitpoints {
       get {
-         return m_CurrentHitpoints;
+         return _currentHitpoints;
       }
    }
 
    /// <summary>
-   /// Current hitpoints over the maximum hitpoints (always between 0 and 1).
+   /// Current hitpoints over the maximum hitpoints, from 0 to 1.
    /// </summary>
-   public float PercentHitpoints {
+   public float HitpointPercent {
       get {
-         return Utility.Percent(m_CurrentHitpoints, m_Hitpoints, PercentMode.Clamp0To1);
+         return Utility.Percent(_currentHitpoints, _maxHitpoints, PercentMode.Clamp0To1);
       }
    }
 
@@ -97,7 +97,7 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    /// </summary>
    public bool IsDead {
       get {
-         if (m_CurrentHitpoints <= 0)
+         if (_currentHitpoints <= 0)
             return true;
          else
             return false;
@@ -109,7 +109,7 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    /// </summary>
    public bool IsAlive {
       get {
-         if (m_CurrentHitpoints > 0)
+         if (_currentHitpoints > 0)
             return true;
          else
             return false;
@@ -119,7 +119,7 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    /// <summary>
    /// Get the weapons. Can return null if this target does not have a weapon system.
    /// </summary>
-   public WeaponSystem WeaponSystem { get { return m_WeaponSystem; } }
+   public WeaponSystem WeaponSystem { get { return _weaponSystem; } }
 
    /// <summary>
    /// Get the sensors. Can return null if there are no sensors.
@@ -140,7 +140,7 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    /// </summary>
    public Faction Country {
       get {
-         return m_Country;
+         return _faction;
       }
    }
 
@@ -149,7 +149,7 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    /// </summary>
    public Faction.CountryName CountryName {
       get {
-         return m_CountryName;
+         return _countryName;
       }
    }
 
@@ -194,15 +194,15 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    {
 
       // Assign the manually selected country to this target
-      m_Country = Faction.m_CountryList[m_CountryName];
+      _faction = Faction.m_CountryList[_countryName];
 
       // Weapon system
       if(GetComponentInChildren<WeaponSystem>() != null)
-         m_WeaponSystem = GetComponentInChildren<WeaponSystem>();
+         _weaponSystem = GetComponentInChildren<WeaponSystem>();
       else
-         m_WeaponSystem = null;
+         _weaponSystem = null;
 
-      _Rigidbody = GetComponent<Rigidbody>();
+      _rigidbody = GetComponent<Rigidbody>();
 
       // Sensor system
       if(GetComponentInChildren<SensorSystem>() != null)
@@ -247,12 +247,12 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    /// </summary>
    public virtual void Damage(float subtract)
    {
-      if (m_CurrentHitpoints > 0)
+      if (_currentHitpoints > 0)
       {
-         m_CurrentHitpoints -= subtract;
-         if (m_CurrentHitpoints <= 0)
+         _currentHitpoints -= subtract;
+         if (_currentHitpoints <= 0)
          {
-            m_CurrentHitpoints = 0;
+            _currentHitpoints = 0;
             Kill();
          }
       }
@@ -263,8 +263,8 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    /// </summary>
    protected virtual void Kill()
    {
-      if (m_WeaponSystem != null)
-         m_WeaponSystem.enabled = false;
+      if (_weaponSystem != null)
+         _weaponSystem.enabled = false;
       if (_sensorSystem != null)
          _sensorSystem.enabled = false;
    }
@@ -276,7 +276,7 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
    /// <returns>Friend, foe, or neutral identification</returns>
    public Faction.Identification Relationship(Target target)
    {
-      return m_Country.Relationship(target.Country);
+      return _faction.Relationship(target.Country);
    }
 
    /// <summary>

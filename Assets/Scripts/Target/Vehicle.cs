@@ -24,8 +24,6 @@ public abstract class Vehicle : Target {
    [Header("Vehicle data")]
    [Tooltip("Vehicle cost in dollars (not including components)")]
    [SerializeField][Range(25000,308000000)] int  m_DollarValue = 32000;
-   
-   [SerializeField] int m_MaxHitpoints = 1500;
 
    [Tooltip("Density for flotation")]
    [SerializeField]
@@ -56,15 +54,14 @@ public abstract class Vehicle : Target {
    /// </summary>
    public float ForwardSpeed {
       get {
-         return transform.InverseTransformDirection(_Rigidbody.velocity).z;
+         return transform.InverseTransformDirection(_rigidbody.velocity).z;
       }
    }
 
-   /// <summary>
-   /// Current throttle percent
-   /// </summary>
-   public float Throttle {
-      get { return _motor.PercentThrottle; }
+   public Motor Motor {
+      get {
+         return _motor;
+      }
    }
 
    /// <summary>
@@ -72,7 +69,7 @@ public abstract class Vehicle : Target {
    /// </summary>
    public float VerticalSpeed {
       get {
-         return transform.InverseTransformDirection(_Rigidbody.velocity).y;
+         return transform.InverseTransformDirection(_rigidbody.velocity).y;
       }
    }
 
@@ -81,16 +78,7 @@ public abstract class Vehicle : Target {
    /// </summary>
    public float LateralSpeed {
       get {
-         return transform.InverseTransformDirection(_Rigidbody.velocity).x;
-      }
-   }
-
-   /// <summary>
-   /// Return how alive a vehicle is as a percent of the original hitpoints.
-   /// </summary>
-   public float HitpointPercent {
-      get {
-         return m_CurrentHitpoints / m_MaxHitpoints;
+         return transform.InverseTransformDirection(_rigidbody.velocity).x;
       }
    }
 
@@ -99,10 +87,10 @@ public abstract class Vehicle : Target {
    /// </summary>
    public float Hitpoints {
       get {
-         return m_CurrentHitpoints;
+         return _currentHitpoints;
       }
       set {
-         m_CurrentHitpoints = (int)value;
+         _currentHitpoints = (int)value;
       }
    }
 
@@ -129,7 +117,7 @@ public abstract class Vehicle : Target {
    /// </summary>
    public Vector3 NormalizedVelocity {
       get {
-         return _Rigidbody.velocity.normalized;
+         return _rigidbody.velocity.normalized;
       }
    }
 
@@ -169,7 +157,7 @@ public abstract class Vehicle : Target {
    public Vector3 PositionInSeconds(float seconds)
    {
       //return m_Rigidbody.transform.position + m_Rigidbody.transform.InverseTransformDirection(m_Rigidbody.velocity) * seconds;
-      return _Rigidbody.transform.position + _Rigidbody.velocity * seconds;
+      return _rigidbody.transform.position + _rigidbody.velocity * seconds;
       //return new Vector3(m_Rigidbody.velocity.x * seconds, m_Rigidbody.velocity.y * seconds, m_Rigidbody.velocity.z * seconds);
    }
 
@@ -186,17 +174,17 @@ public abstract class Vehicle : Target {
       m_CameraEmplacements = GetComponentsInChildren<CameraEmplacement>().ToList<CameraEmplacement>();
 
       // Initialize hitpoints
-      m_CurrentHitpoints = m_MaxHitpoints;
+      _currentHitpoints = _maxHitpoints;
 
       // Assign the child items
       _motor = GetComponentInChildren<Motor>();
       m_FlotationArea = GetComponentInChildren<FlotationArea>();
 
-      _Rigidbody.velocity = Vector3.forward * m_PregameSpeed;
+      _rigidbody.velocity = Vector3.forward * m_PregameSpeed;
 
       // Drag
-      _Rigidbody.drag = AIR_DRAG;
-      _Rigidbody.angularDrag = AIR_DRAG;
+      _rigidbody.drag = AIR_DRAG;
+      _rigidbody.angularDrag = AIR_DRAG;
    }
 
    protected void Start()
@@ -272,7 +260,7 @@ public abstract class Vehicle : Target {
    {
       if (m_FlotationArea == null)
       {
-         _Rigidbody.angularDrag = RotationalSpeedDrag;
+         _rigidbody.angularDrag = RotationalSpeedDrag;
       }
       else
       {
@@ -280,8 +268,8 @@ public abstract class Vehicle : Target {
          float airDrag = m_FlotationArea.PercentNotSubmerged * AIR_DRAG;
          float airRotationalDrag = m_FlotationArea.PercentNotSubmerged * RotationalSpeedDrag;
 
-         _Rigidbody.drag = waterDrag + airDrag;
-         _Rigidbody.angularDrag = waterDrag + airRotationalDrag;
+         _rigidbody.drag = waterDrag + airDrag;
+         _rigidbody.angularDrag = waterDrag + airRotationalDrag;
       }
    }
 

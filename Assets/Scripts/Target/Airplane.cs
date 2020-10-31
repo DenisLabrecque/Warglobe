@@ -153,7 +153,7 @@ public abstract class Airplane : Vehicle {
 
    void FixedUpdate()
    {
-      Gravity.Gravitate(_Rigidbody);
+      Gravity.Gravitate(_rigidbody);
       AdjustWingLift();
       AdjustDrag();
    }
@@ -300,19 +300,19 @@ public abstract class Airplane : Vehicle {
       // Fire laser
       if(UserInput.Gun)
       {
-         m_WeaponSystem.FireLaser();
+         _weaponSystem.FireLaser();
       }
 
       // Fire projectiles
       if(UserInput.Fire)
       {
-         m_WeaponSystem.FireProjectile();
+         _weaponSystem.FireProjectile();
       }
 
       // Next projectile
       if(UserInput.ChangeWeapon != 0)
       {
-         m_WeaponSystem.NextProjectile(UserInput.ChangeWeapon);
+         _weaponSystem.NextProjectile(UserInput.ChangeWeapon);
       }
 
       // Next/previous target selection

@@ -31,8 +31,8 @@ class SpeedFollowCamera2 : CameraEmplacement
       CalculateZoomDistance();
       CalculateHeight();
 
-            RotateCameraWithCursor();
-      FollowBehind();
+      RotateCameraWithCursor();
+      //FollowBehind();
       //RotateTowardsVector();
    }
 

@@ -1,4 +1,5 @@
 ﻿using DGL;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -100,6 +101,16 @@ public abstract class Motor : MonoBehaviour {
    }
 
    /// <summary>
+   /// Percent of propulsion that the motor has been able to attain considering its rev up speed.
+   /// From -1 to 1.
+   /// </summary>
+   public float PercentThrust {
+      get {
+         return _percentThrust;
+      }
+   }
+
+   /// <summary>
    /// Battery charge percent
    /// </summary>
    public float BatteryPercent {
@@ -184,7 +195,14 @@ public abstract class Motor : MonoBehaviour {
             // Make each fan turn
             foreach(GameObject part in m_Fans)
             {
-               part.transform.Rotate(_rotationAxis, _percentThrust * m_RPM * Time.deltaTime);
+               try
+               {
+                  part.transform.Rotate(_rotationAxis, _percentThrust * m_RPM * Time.deltaTime);
+               }
+               catch(Exception)
+               {
+                  Debug.LogError("Null reference exception when rotating engine fans");
+               }
             }
          }
 
