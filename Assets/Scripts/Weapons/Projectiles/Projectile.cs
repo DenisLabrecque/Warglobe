@@ -5,26 +5,29 @@ using UnityEngine;
 /// <summary>
 /// Defines the projectile type from which all missiles (air-to-air, air-to-ground, ground-to-air, ICBM) derive from.
 /// </summary>
-public abstract class Projectile : MonoBehaviour, IWeapon
+public abstract class Projectile : MonoBehaviour, IWeapon, ISwitchable
 {
    #region Member Variables
 
+   [Header("Identification")]
+   [SerializeField] string _name = "Missile";
+
    [Tooltip("The force directing the missile off a rack. No force is a simple drop.")]
-   [SerializeField] Vector3 m_Impulse = new Vector3(0,0,0);
+   [SerializeField] Vector3 _impulse = new Vector3(0,0,0);
 
    [Tooltip("Time in seconds before the engine is started.")]
-   [SerializeField][Range(0,2f)] protected float m_DropDelay = 0.2f;
+   [SerializeField][Range(0,2f)] protected float _dropDelay = 0.2f;
 
-   [SerializeField] protected ProjectileWeight m_ProjectileWeight = ProjectileWeight.Light;
-   [SerializeField] string m_ShortName = null;
-   [SerializeField] protected float m_Drag = 0.3f;
-   [SerializeField] protected RigidbodyInterpolation m_Interpolate = RigidbodyInterpolation.Interpolate;
-   [SerializeField] protected CollisionDetectionMode m_CollisionDetection = CollisionDetectionMode.ContinuousDynamic;
+   [SerializeField] protected ProjectileWeight _weight = ProjectileWeight.Light;
+   [SerializeField] string _shortName = null;
+   [SerializeField] protected float _drag = 0.3f;
+   [SerializeField] protected RigidbodyInterpolation _interpolation = RigidbodyInterpolation.Interpolate;
+   [SerializeField] protected CollisionDetectionMode _collisionDetection = CollisionDetectionMode.ContinuousDynamic;
 
-   protected Rigidbody m_Rigidbody;
-   protected bool m_IsArmed = true;
-   protected float m_FiredTime = -1f;
-   protected List<SimpleWing> m_Fins = new List<SimpleWing>();
+   protected Rigidbody _rigidbody;
+   protected bool _isArmed = true;
+   protected float _firedTime = -1f;
+   protected List<SimpleWing> _fins = new List<SimpleWing>();
 
    #endregion
 
@@ -35,28 +38,28 @@ public abstract class Projectile : MonoBehaviour, IWeapon
    /// Get the projectile's short name.
    /// </summary>
    public string Abbreviation {
-      get { return m_ShortName; }
+      get { return _shortName; }
    }
 
    /// <summary>
    /// The approximate projectile weight.
    /// </summary>
    public ProjectileWeight Weight {
-      get { return m_ProjectileWeight; }
+      get { return _weight; }
    }
 
    /// <summary>
    /// Whether the projectile has been launched yet.
    /// </summary>
    public bool IsFired {
-      get { return (m_FiredTime == -1f) ? false : true; }
+      get { return (_firedTime == -1f) ? false : true; }
    }
 
    /// <summary>
    /// Whether the projectile is ready for explosion.
    /// </summary>
    public bool IsArmed {
-      get { return m_IsArmed; }
+      get { return _isArmed; }
    }
 
    #endregion
@@ -66,15 +69,15 @@ public abstract class Projectile : MonoBehaviour, IWeapon
 
    protected void Awake()
    {
-      m_Rigidbody = GetComponentInParent<Rigidbody>(); // The vehicle's rigidbody
+      _rigidbody = GetComponentInParent<Rigidbody>(); // The vehicle's rigidbody
 
-      if(m_Rigidbody == null)
+      if(_rigidbody == null)
       {
          Debug.Log("Haha, " + gameObject + " is null rigid");
       }
 
-      m_Fins = GetComponentsInChildren<SimpleWing>(true).ToList<SimpleWing>();
-      foreach(SimpleWing fin in m_Fins)
+      _fins = GetComponentsInChildren<SimpleWing>(true).ToList<SimpleWing>();
+      foreach(SimpleWing fin in _fins)
       {
          fin.enabled = false;
       }
@@ -82,13 +85,13 @@ public abstract class Projectile : MonoBehaviour, IWeapon
 
    protected void Start()
    {
-      m_ShortName = m_ShortName ?? Multilang.Text["projectile_short"];
+      _shortName = _shortName ?? Multilang.Text["projectile_short"];
    }
 
    protected void FixedUpdate()
    {
       if(IsFired)
-         Gravity.Gravitate(m_Rigidbody);
+         Gravity.Gravitate(_rigidbody);
    }
 
    #endregion
@@ -100,6 +103,14 @@ public abstract class Projectile : MonoBehaviour, IWeapon
 
    public abstract float HitProbability { get; }
 
+   public string Name => _name;
+
+   public bool IsOnOrSelected => !IsFired;
+
+   public string Keystroke => "Space";
+
+   public Group Group => Group.Missiles;
+
    /// <summary>
    /// Main method to fire any projectile.
    /// Detach the projectile and add a rigidbody to it according to its weight, with an initial impulse equal to the 
@@ -107,8 +118,8 @@ public abstract class Projectile : MonoBehaviour, IWeapon
    /// </summary>
    public virtual bool Fire() {
       // Get the current speed, location, and rotation
-      Vector3 velocity = m_Rigidbody.velocity;               // The vehicle's speed
-      Vector3 angularVelocity = m_Rigidbody.angularVelocity; // The vehicle's turn rate
+      Vector3 velocity = _rigidbody.velocity;               // The vehicle's speed
+      Vector3 angularVelocity = _rigidbody.angularVelocity; // The vehicle's turn rate
 
       // Detach the projectile game object
       transform.parent = null;
@@ -116,38 +127,38 @@ public abstract class Projectile : MonoBehaviour, IWeapon
 
       // Add a rigidbody to the game object
       gameObject.AddComponent<Rigidbody>(); // Change rigidbody reference
-      m_Rigidbody = gameObject.GetComponent<Rigidbody>();
-      m_Rigidbody.useGravity = true;
-      m_Rigidbody.isKinematic = false;
-      m_Rigidbody.drag = m_Drag;
-      m_Rigidbody.angularDrag = m_Drag;
-      m_Rigidbody.mass = (float)m_ProjectileWeight;
-      m_Rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
-      m_Rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+      _rigidbody = gameObject.GetComponent<Rigidbody>();
+      _rigidbody.useGravity = true;
+      _rigidbody.isKinematic = false;
+      _rigidbody.drag = _drag;
+      _rigidbody.angularDrag = _drag;
+      _rigidbody.mass = (float)_weight;
+      _rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
+      _rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
       // Enable the fins and assign the rigidbody to them
-      foreach(SimpleWing fin in m_Fins)
+      foreach(SimpleWing fin in _fins)
       {
          fin.enabled = true;
-         fin.Rigidbody = m_Rigidbody;
+         fin.Rigidbody = _rigidbody;
       }
 
       // Transfer the vehicle's speed to the missile
-      m_Rigidbody.AddForce(velocity, ForceMode.VelocityChange);
-      m_Rigidbody.AddForce(angularVelocity, ForceMode.VelocityChange);
+      _rigidbody.AddForce(velocity, ForceMode.VelocityChange);
+      _rigidbody.AddForce(angularVelocity, ForceMode.VelocityChange);
 
       // Apply the initial impulse force
-      m_Rigidbody.AddForce(m_Impulse, ForceMode.VelocityChange);
+      _rigidbody.AddForce(_impulse, ForceMode.VelocityChange);
 
       // Register the firing time (null if not fired)
-      m_FiredTime = Time.time;
+      _firedTime = Time.time;
 
       return true;
    }
 
    public override string ToString()
    {
-      return m_ShortName;
+      return _shortName;
    }
 
    public static float TimeSince(float since)

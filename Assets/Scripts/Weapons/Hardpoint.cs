@@ -12,10 +12,8 @@ public class Hardpoint : MonoBehaviour
    [SerializeField] bool m_IsChargePoint = false;
 
    [Tooltip("Maximum weight rating of a weapon attached to this hardpoint")]
-   [SerializeField] ProjectileWeight m_Capacity = ProjectileWeight.Light;
-
-   private Projectile m_Projectile = null;
-   private bool m_HasFired = false;
+   [SerializeField] ProjectileWeight _capacity = ProjectileWeight.Light;
+   private bool _hasFired = false;
 
    #endregion
 
@@ -27,7 +25,7 @@ public class Hardpoint : MonoBehaviour
    /// </summary>
    public bool IsArmed {
       get {
-         if(m_Projectile != null && m_HasFired == false)
+         if(Projectile != null && _hasFired == false)
             return true;
          else
             return false;
@@ -37,9 +35,7 @@ public class Hardpoint : MonoBehaviour
    /// <summary>
    /// The projectile parented to this hardpoint.
    /// </summary>
-   public Projectile Projectile {
-      get { return m_Projectile; }
-   }
+   public Projectile Projectile { get; private set; } = null;
 
    #endregion
 
@@ -48,9 +44,9 @@ public class Hardpoint : MonoBehaviour
 
    void Awake()
    {
-      m_Projectile = GetComponentInChildren<Projectile>();
+      Projectile = GetComponentInChildren<Projectile>();
 
-      if (m_Projectile != null && !IsCompatible(m_Projectile)) { }
+      if (Projectile != null && !IsCompatible(Projectile)) { }
          //throw new System.Exception("Projectile incompatible with hardpoint: a projectile was assigned to hardpoint " + gameObject + " of insufficient capacity");
    }
 
@@ -64,7 +60,7 @@ public class Hardpoint : MonoBehaviour
    /// <returns></returns>
    public bool IsCompatible(Projectile projectile)
    {
-      if((int)projectile.Weight <= (int)m_Capacity)
+      if((int)projectile.Weight <= (int)_capacity)
          return true;
       else
          return false;
@@ -75,10 +71,10 @@ public class Hardpoint : MonoBehaviour
    /// </summary>
    public void Launch()
    {
-      if(m_Projectile != null)
+      if(Projectile != null)
       {
-         m_HasFired = true;
-         m_Projectile.Fire();
+         _hasFired = true;
+         Projectile.Fire();
       }
    }
 
@@ -87,6 +83,6 @@ public class Hardpoint : MonoBehaviour
    /// </summary>
    public void Jettison()
    {
-      m_HasFired = true;
+      _hasFired = true;
    }
 }

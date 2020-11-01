@@ -113,7 +113,7 @@ public class GuidedMissile : Projectile
    /// </summary>
    public bool IsDropDelayPassed {
       get {
-         return TimeSince(m_FiredTime) >= m_DropDelay;
+         return TimeSince(_firedTime) >= _dropDelay;
       }
    }
 
@@ -176,7 +176,7 @@ public class GuidedMissile : Projectile
    {
       base.Fire();
 
-      m_Motor.StartMotor(m_Rigidbody);
+      m_Motor.StartMotor(_rigidbody);
 
       return true;
    }
