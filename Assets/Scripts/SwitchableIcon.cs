@@ -39,6 +39,8 @@ public class SwitchableIcon : MonoBehaviour
 
       _switchable = switchable;
       _name.text = _switchable.Name.ToUpperInvariant();
+      if(_switchable.HudIcon != null)
+         _icon.sprite = _switchable.HudIcon;
 
       // Place in the correct spot
       switch(_switchable.Group)

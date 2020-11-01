@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Laser : MonoBehaviour, IWeapon
+public class Laser : MonoBehaviour, IFireable
 {
    [SerializeField][Range(0,180)] float m_AngularLimit = 2.2f;
    [SerializeField] float m_MaxDistance = 5000f;

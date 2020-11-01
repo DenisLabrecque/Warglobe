@@ -392,7 +392,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isOn: 1
   _range: 5000
-  _spin: {fileID: 0}
+  _name: Radars
+  _hudIcon: {fileID: 0}
+  _spin: {fileID: 2935722020979492506}
 --- !u!114 &2935722020979492506
 MonoBehaviour:
   m_ObjectHideFlags: 0

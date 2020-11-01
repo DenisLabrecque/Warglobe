@@ -1,5 +1,22 @@
-﻿public abstract class ActiveSensor : Sensor, ISwitchable
+﻿using UnityEngine;
+using UnityEngine.UI;
+
+/// <summary>
+/// Active sensors cause a detectable signal that can be passively detected.
+/// Game logic should take this into account.
+/// 
+/// Denis Labrecque, October 2020
+/// </summary>
+public abstract class ActiveSensor : Sensor, ISwitchable
 {
+   #region Member Variables
+
+   [Header("Switchable")]
+   [SerializeField] string _name = "Radars";
+   [SerializeField] Sprite _hudIcon;
+
+   #endregion
+
    #region Public Methods
 
    public abstract void Switch();
@@ -10,7 +27,9 @@
 
    #region Switchable Interface
 
-   public string Name => "Sensor"; // TODO return radar or sonar or whatever
+   public Sprite HudIcon { get => _hudIcon; }
+
+   public string Name => _name;
 
    public bool IsOnOrSelected => _isOn;
 

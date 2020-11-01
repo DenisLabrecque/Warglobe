@@ -2,12 +2,14 @@
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(AudioSource))]
-public class Turret : MonoBehaviour, IWeapon, ISwitchable
+public class Turret : MonoBehaviour, IFireable, ISwitchable
 {
    [Header("Identification")]
-   [SerializeField] private string _name = "Turret";
+   [SerializeField] string _name = "Turret";
+   [SerializeField] Sprite _hudIcon;
 
    [Header("Rotations")]
 
@@ -307,7 +309,7 @@ public class Turret : MonoBehaviour, IWeapon, ISwitchable
             }
       }
    }
-#endif
+   #endif
 
    /// <summary>
    /// Fire this turret. Not garanteed to work. The turret will not fire if it is not reloaded.
@@ -336,6 +338,9 @@ public class Turret : MonoBehaviour, IWeapon, ISwitchable
       }
    }
 
+
+   #region Switchable Interface
+
    public string Name => _name;
 
    public bool IsOnOrSelected => true;
@@ -343,4 +348,8 @@ public class Turret : MonoBehaviour, IWeapon, ISwitchable
    public string Keystroke => "M-Mse";
 
    public Group Group => Group.Guns;
+
+   public Sprite HudIcon => _hudIcon;
+
+   #endregion
 }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// A class that all sensors and launchers are based upon. This decides when a weapon is fired.
+/// A class that all launchers are based upon. This decides when a weapon is fired.
 /// </summary>
-public interface IWeapon {
+public interface IFireable {
 
    #region Properties
 

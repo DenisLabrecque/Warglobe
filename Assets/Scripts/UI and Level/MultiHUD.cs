@@ -69,22 +69,10 @@ public class MultiHUD : MonoBehaviour {
       }
 
       foreach (KeyValuePair<string, List<ISwitchable>> keyValue in UserInput.Player1Vehicle.SwitchablesByName)
-         foreach (ISwitchable switchable in keyValue.Value)
-         {
-            SwitchableIcon weaponInfo = Instantiate(_toggleWeaponInfo, _bottomPanel);
-            weaponInfo.Initialize(switchable);
-         }
-
-      // Find all scene waypoints
-      //_waypoints = FindObjectsOfType<Waypoint>().ToList();
-
-      //// Go through each waypoint in the scene and make a tracker for each
-      //foreach(Waypoint waypoint in _waypoints)
-      //{
-      //   HUDTracker tracker = Instantiate(_hudTracker, gameObject.transform);
-      //   tracker.SetWaypoint(waypoint);
-
-      //}
+      {
+         SwitchableIcon weaponInfo = Instantiate(_toggleWeaponInfo, _bottomPanel);
+         weaponInfo.Initialize(keyValue.Value.FirstOrDefault());
+      }
    }
 
    /// <summary>

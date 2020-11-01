@@ -1,4 +1,6 @@
-﻿/// <summary>
+﻿using UnityEngine;
+
+/// <summary>
 /// Which are of the HUD this switchable belongs to.
 /// </summary>
 public enum Group
@@ -17,6 +19,11 @@ public interface ISwitchable
    /// Name of the toggle or weapon.
    /// </summary>
    string Name { get; }
+
+   /// <summary>
+   /// Icon for this switchable that will display in the HUD.
+   /// </summary>
+   Sprite HudIcon { get; }
 
    /// <summary>
    /// Whether the current setting or weapon is in use or ready to be used.

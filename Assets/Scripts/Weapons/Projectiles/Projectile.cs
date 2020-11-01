@@ -1,16 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Defines the projectile type from which all missiles (air-to-air, air-to-ground, ground-to-air, ICBM) derive from.
 /// </summary>
-public abstract class Projectile : MonoBehaviour, IWeapon, ISwitchable
+public abstract class Projectile : MonoBehaviour, IFireable, ISwitchable
 {
    #region Member Variables
 
    [Header("Identification")]
    [SerializeField] string _name = "Missile";
+   [SerializeField] Sprite _hudIcon;
 
    [Tooltip("The force directing the missile off a rack. No force is a simple drop.")]
    [SerializeField] Vector3 _impulse = new Vector3(0,0,0);
@@ -99,18 +101,6 @@ public abstract class Projectile : MonoBehaviour, IWeapon, ISwitchable
 
    #region Public Methods
 
-   public abstract bool LaunchAuthority { get; }
-
-   public abstract float HitProbability { get; }
-
-   public string Name => _name;
-
-   public bool IsOnOrSelected => !IsFired;
-
-   public string Keystroke => "Space";
-
-   public Group Group => Group.Missiles;
-
    /// <summary>
    /// Main method to fire any projectile.
    /// Detach the projectile and add a rigidbody to it according to its weight, with an initial impulse equal to the 
@@ -165,6 +155,30 @@ public abstract class Projectile : MonoBehaviour, IWeapon, ISwitchable
    {
       return Time.time - since;
    }
+
+   #endregion
+
+
+   #region Fireable Interface
+
+   public abstract bool LaunchAuthority { get; }
+
+   public abstract float HitProbability { get; }
+
+   #endregion
+
+
+   #region Switchable Interface
+
+   public string Name => _name;
+
+   public bool IsOnOrSelected => !IsFired;
+
+   public string Keystroke => "Space";
+
+   public Group Group => Group.Missiles;
+
+   public Sprite HudIcon => _hudIcon;
 
    #endregion
 }
