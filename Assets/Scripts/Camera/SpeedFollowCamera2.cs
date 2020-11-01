@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TMPro;
-using UnityEngine;
-using DGL;
+﻿using UnityEngine;
 using DGL.Math;
 
 class SpeedFollowCamera2 : CameraEmplacement
@@ -32,41 +25,36 @@ class SpeedFollowCamera2 : CameraEmplacement
       CalculateHeight();
 
       RotateCameraWithCursor();
-      //FollowBehind();
-      //RotateTowardsVector();
    }
 
    void CalculateZoomDistance()
    {
       if(UserInput.ScrollWheel > 0)
-      {
          _distance -= _zoomSpeed;
-      }
       else if(UserInput.ScrollWheel < 0)
-      {
          _distance += _zoomSpeed;
-      }
+
       _distance = Mathf.Clamp(_distance, _minDistance, _maxDistance);
    }
 
+   // Calculate height as percent of distance (higher points down, closer points forwards)
    void CalculateHeight()
    {
-      // Calculate height as percent of distance (higher points down, closer points forwards)
       _height = _maxHeight * Utility.Percent(_distance, _maxDistance, PercentMode.Clamp0To1);
-   }
-
-   void FollowBehind()
-   {
-      Vector3 wantedPosition = _target.transform.TransformPoint(0, _height, -_distance);
-      transform.position = Vector3.Lerp(transform.position, wantedPosition, Time.deltaTime * _distanceDamping);
    }
 
    void RotateCameraWithCursor()
    {
-      // Find rotation plane
-      //Vector3 rotationPlane = _target.transform.TransformPoint(Vector3.zero);
-
+      // Rotate around the vehicle
+      Transform oldTransform = transform;
       transform.RotateAround(_target.transform.position, transform.up, Input.GetAxis("Mouse X") * _rotationDamping);
+      Transform newTransform = transform;
+
+      // Add distance
+      Vector3 distance = _target.transform.position + (newTransform.TransformDirection(Vector3.forward) * -_distance) + (newTransform.TransformDirection(Vector3.up) * _height);
+
+      // Lerp
+      transform.position = Vector3.Lerp(oldTransform.position, distance, Time.deltaTime * _distanceDamping);
    }
 
    void RotateTowardsVector()

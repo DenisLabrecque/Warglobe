@@ -81,6 +81,11 @@ public abstract class Target : MonoBehaviour, IComparable<Target>
       get {
          return _currentHitpoints;
       }
+      set {
+         if (value > _maxHitpoints)
+            throw new ArgumentOutOfRangeException("Hitpoints cannot be more than the maximum hitpoints allowed");
+         _currentHitpoints = (int)value;
+      }
    }
 
    /// <summary>

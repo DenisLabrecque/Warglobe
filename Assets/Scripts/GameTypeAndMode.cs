@@ -62,6 +62,8 @@ public class GameTypeAndMode : MonoBehaviour
          UISystem.AttachCamera(SingleCamera.Camera1);
       }
 
+
+
       //Vehicle player1 = UserInput.Player1Vehicle;
       //Vector3 origin = player1.transform.position;
       //Vector3 newPosition = new Vector3(origin.x + 500, origin.y, origin.z);

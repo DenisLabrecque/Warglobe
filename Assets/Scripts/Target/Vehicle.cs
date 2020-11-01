@@ -23,19 +23,20 @@ public abstract class Vehicle : Target {
 
    [Header("Vehicle data")]
    [Tooltip("Vehicle cost in dollars (not including components)")]
-   [SerializeField][Range(25000,308000000)] int  m_DollarValue = 32000;
+   [SerializeField][Range(25000,308000000)] int  _dollarValue = 32000;
 
    [Tooltip("Density for flotation")]
-   [SerializeField]
-   [Range(0,1)] float m_PercentDensity = 0.4f;
+   [SerializeField][Range(0,1)] float _percentDensity = 0.4f;
 
    [Header("Pre-game settings")]
-   [SerializeField][Range(0,1500)] int m_PregameSpeed = 0;
+   [SerializeField][Range(0,1500)] int _pregameSpeed = 0;
 
-   List<CameraEmplacement> m_CameraEmplacements;
-   protected FlotationArea m_FlotationArea = null;
+   List<CameraEmplacement> _cameraEmplacements;
+   protected FlotationArea _flotationArea = null;
    protected Motor _motor;
-   private int m_CurrentCameraIndex = 0;
+   private int _currentCameraIndx = 0;
+   protected List<ISwitchable> _switchables;
+   protected Dictionary<string, List<ISwitchable>> _switchablesByName = new Dictionary<string, List<ISwitchable>>();
 
    #endregion
 
@@ -79,18 +80,6 @@ public abstract class Vehicle : Target {
    public float LateralSpeed {
       get {
          return transform.InverseTransformDirection(_rigidbody.velocity).x;
-      }
-   }
-
-   /// <summary>
-   /// Return how alive a vehicle is according to the total hitpoints it has left.
-   /// </summary>
-   public float Hitpoints {
-      get {
-         return _currentHitpoints;
-      }
-      set {
-         _currentHitpoints = (int)value;
       }
    }
 
@@ -161,6 +150,13 @@ public abstract class Vehicle : Target {
       //return new Vector3(m_Rigidbody.velocity.x * seconds, m_Rigidbody.velocity.y * seconds, m_Rigidbody.velocity.z * seconds);
    }
 
+   /// <summary>
+   /// Gets all switchables.
+   /// </summary>
+   public Dictionary<string, List<ISwitchable>> SwitchablesByName {
+      get => _switchablesByName;
+   }
+
    #endregion
 
 
@@ -170,17 +166,27 @@ public abstract class Vehicle : Target {
    {
       base.Awake();
 
-      // List camera emplacements
-      m_CameraEmplacements = GetComponentsInChildren<CameraEmplacement>().ToList<CameraEmplacement>();
+      // List children
+      _cameraEmplacements = GetComponentsInChildren<CameraEmplacement>().ToList<CameraEmplacement>();
+      _switchables = GetComponentsInChildren<ISwitchable>().ToList();
+      foreach (ISwitchable switchable in _switchables)
+      {
+         // Add the key if it doesn't exist
+         if(_switchablesByName.ContainsKey(switchable.Name) == false)
+            _switchablesByName.Add(switchable.Name, new List<ISwitchable>());
+
+         // Add the element
+         _switchablesByName[switchable.Name].Add(switchable);
+      }
 
       // Initialize hitpoints
       _currentHitpoints = _maxHitpoints;
 
       // Assign the child items
       _motor = GetComponentInChildren<Motor>();
-      m_FlotationArea = GetComponentInChildren<FlotationArea>();
+      _flotationArea = GetComponentInChildren<FlotationArea>();
 
-      _rigidbody.velocity = Vector3.forward * m_PregameSpeed;
+      _rigidbody.velocity = Vector3.forward * _pregameSpeed;
 
       // Drag
       _rigidbody.drag = AIR_DRAG;
@@ -189,7 +195,7 @@ public abstract class Vehicle : Target {
 
    protected void Start()
    {
-      if(m_CameraEmplacements.Count == 0 || m_CameraEmplacements == null)
+      if(_cameraEmplacements.Count == 0 || _cameraEmplacements == null)
          Debug.LogError("Vehicle " + PopularName + " must absolutely have at least one camera emplacement as a child");
       else if(_motor == null)
          Debug.LogError("Vehicle " + PopularName + " must have a motor");
@@ -217,19 +223,19 @@ public abstract class Vehicle : Target {
          return;
 
       // Set the current camera in the list of camera emplacements
-      m_CurrentCameraIndex += signedOne;
+      _currentCameraIndx += signedOne;
 
-      if(m_CurrentCameraIndex < 0)
+      if(_currentCameraIndx < 0)
       {
-         m_CurrentCameraIndex = m_CameraEmplacements.Count -1;
+         _currentCameraIndx = _cameraEmplacements.Count -1;
       }
-      else if(m_CurrentCameraIndex > m_CameraEmplacements.Count -1)
+      else if(_currentCameraIndx > _cameraEmplacements.Count -1)
       {
-         m_CurrentCameraIndex = 0;
+         _currentCameraIndx = 0;
       }
 
       // Attach the camera to the current emplacement
-      var cameraEmplacement = m_CameraEmplacements[m_CurrentCameraIndex];
+      var cameraEmplacement = _cameraEmplacements[_currentCameraIndx];
       cameraEmplacement.Attach(camera);
    }
 
@@ -240,7 +246,7 @@ public abstract class Vehicle : Target {
    /// <param name="camera">The camera to attach</param>
    public void AttachCamera(Camera camera)
    {
-      m_CameraEmplacements[m_CurrentCameraIndex].Attach(camera);
+      _cameraEmplacements[_currentCameraIndx].Attach(camera);
    }
 
    /// <summary>
@@ -258,15 +264,15 @@ public abstract class Vehicle : Target {
    /// </summary>
    protected void AdjustDrag()
    {
-      if (m_FlotationArea == null)
+      if (_flotationArea == null)
       {
          _rigidbody.angularDrag = RotationalSpeedDrag;
       }
       else
       {
-         float waterDrag = m_FlotationArea.PercentSubmerged * WATER_DRAG;
-         float airDrag = m_FlotationArea.PercentNotSubmerged * AIR_DRAG;
-         float airRotationalDrag = m_FlotationArea.PercentNotSubmerged * RotationalSpeedDrag;
+         float waterDrag = _flotationArea.PercentSubmerged * WATER_DRAG;
+         float airDrag = _flotationArea.PercentNotSubmerged * AIR_DRAG;
+         float airRotationalDrag = _flotationArea.PercentNotSubmerged * RotationalSpeedDrag;
 
          _rigidbody.drag = waterDrag + airDrag;
          _rigidbody.angularDrag = waterDrag + airRotationalDrag;
@@ -276,7 +282,7 @@ public abstract class Vehicle : Target {
    protected override void Kill()
    {
       base.Kill();
-      m_FlotationArea.Sink();
+      _flotationArea.Sink();
    }
 
    #endregion

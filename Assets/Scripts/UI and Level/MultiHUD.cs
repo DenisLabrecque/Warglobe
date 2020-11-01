@@ -39,6 +39,8 @@ public class MultiHUD : MonoBehaviour {
 
    [Header("Testing")]
    [SerializeField] TextMeshProUGUI m_TestingText;
+   [SerializeField] SwitchableIcon _toggleWeaponInfo;
+   [SerializeField] Transform _bottomPanel;
 
    [Header("Tracker")]
    [SerializeField] HUDTracker _hudTracker;
@@ -65,6 +67,13 @@ public class MultiHUD : MonoBehaviour {
          tracker.SetTarget(target);
          _hudTrackers.Add(tracker);
       }
+
+      foreach (KeyValuePair<string, List<ISwitchable>> keyValue in UserInput.Player1Vehicle.SwitchablesByName)
+         foreach (ISwitchable switchable in keyValue.Value)
+         {
+            SwitchableIcon weaponInfo = Instantiate(_toggleWeaponInfo, _bottomPanel);
+            weaponInfo.Initialize(switchable);
+         }
 
       // Find all scene waypoints
       //_waypoints = FindObjectsOfType<Waypoint>().ToList();

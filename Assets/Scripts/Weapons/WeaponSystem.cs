@@ -22,8 +22,8 @@ public class WeaponSystem : MonoBehaviour {
 
    SortedSet<Target> _trackingList = new SortedSet<Target>();
    SensorSystem _sensorSystem;
-   Laser m_Laser;
-   List<TurretAim> _turrets = new List<TurretAim>();
+   Laser _laser;
+   List<Turret> _turrets = new List<Turret>();
    int _currentProjectileIndex = 0;
    Dictionary<Type, ProjectileSlot> m_WeaponSlots = new Dictionary<Type, ProjectileSlot>();
    List<Type> _projectileTypes = new List<Type>();
@@ -33,6 +33,12 @@ public class WeaponSystem : MonoBehaviour {
 
 
    #region Properties
+
+   public bool HasTurret {
+      get {
+         return _turrets.Any();
+      }
+   }
 
    /// <summary>
    /// Return the currently selected projectile.
@@ -71,8 +77,8 @@ public class WeaponSystem : MonoBehaviour {
 
    void Awake()
    {
-      m_Laser = GetComponentInChildren<Laser>(true);
-      _turrets = GetComponentsInChildren<TurretAim>(true).ToList();
+      _laser = GetComponentInChildren<Laser>(true);
+      _turrets = GetComponentsInChildren<Turret>(true).ToList();
       _sensorSystem = transform.parent.GetComponentInChildren<SensorSystem>(true);
       _turretAiming = GetComponentInChildren<TurretAimingSystem>(true);
 
@@ -117,7 +123,7 @@ public class WeaponSystem : MonoBehaviour {
    {
       bool hasFired = false;
 
-      foreach(TurretAim turret in _turrets)
+      foreach(Turret turret in _turrets)
       {
          hasFired = turret.Fire();
          if (hasFired == true)
@@ -132,13 +138,13 @@ public class WeaponSystem : MonoBehaviour {
    /// </summary>
    public void FireLaser()
    {
-      if(m_Laser != null)
+      if(_laser != null)
       {
-         m_Laser.Fire();
+         _laser.Fire();
       }
       else
       {
-         m_Laser.StopFire();
+         _laser.StopFire();
       }
    }
 
@@ -176,13 +182,13 @@ public class WeaponSystem : MonoBehaviour {
       _trackingList.Clear();
 
       // Feed the laser the closest target (this can be null)
-      if (m_Laser != null)
+      if (_laser != null)
       {
-         m_Laser.SetTarget(_sensorSystem.TrackingTarget);
+         _laser.SetTarget(_sensorSystem.TrackingTarget);
       }
       if(_turrets != null)
       {
-         foreach(TurretAim turret in _turrets)
+         foreach(Turret turret in _turrets)
          {
             if(_turretAiming == null)
             {

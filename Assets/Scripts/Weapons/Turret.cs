@@ -1,10 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-public class TurretAim : MonoBehaviour, IWeapon
+public class Turret : MonoBehaviour, IWeapon, ISwitchable
 {
+   [Header("Identification")]
+   [SerializeField] private string _name = "Turret";
+
    [Header("Rotations")]
 
    [Tooltip("Transform of the turret's azimuthal rotations.")]
@@ -331,4 +335,12 @@ public class TurretAim : MonoBehaviour, IWeapon
          return _reloadTimer >= _reloadTime;
       }
    }
+
+   public string Name => _name;
+
+   public bool IsOnOrSelected => true;
+
+   public string Keystroke => "M-Mse";
+
+   public Group Group => Group.Guns;
 }
