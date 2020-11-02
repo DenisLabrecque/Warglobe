@@ -13,3 +13,6 @@ You can see a [devlog of my work on YouTube. Check it out!](https://www.youtube.
 Here's a Discord invitation if you want to discuss the game: https://discord.gg/AWRBdcH
 
 An Itch.io page will be started soon.
+
+## Wiki
+[Learn more about the game.](https://github.com/DenisLabrecque/Warglobe/wiki)
