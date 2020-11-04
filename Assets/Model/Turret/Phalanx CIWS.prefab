@@ -267,7 +267,7 @@ MonoBehaviour:
   RightLimit: 90
   IsIdle: 0
   AimPosition: {x: 0, y: 0, z: 0}
-  aimedThreshold: 0.5
+  aimedThreshold: 5
   DrawDebugRay: 1
   DrawDebugArcs: 1
   _reloadTime: 0.01
@@ -314,7 +314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b10879e3d93adcc469fb772093c7b032, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ShellPrefab: {fileID: 4046758099690999853, guid: 85e2423086ec4744db58d0327bbdef54,
+  _shellPrefab: {fileID: 4046758099690999853, guid: 85e2423086ec4744db58d0327bbdef54,
     type: 3}
 --- !u!1 &5873071245333752251
 GameObject:

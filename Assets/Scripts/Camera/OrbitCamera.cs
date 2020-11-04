@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Warglobe;
 
 /// <summary>
 /// Defines a camera that rotates around an object (at the starting distance) according to how the user drags the middle mouse button

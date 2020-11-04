@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Warglobe;
 
 public class LPauseMenu : LPanelController
 {

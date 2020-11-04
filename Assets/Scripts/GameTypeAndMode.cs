@@ -7,91 +7,94 @@ using BeardedManStudios.Forge.Networking;
 using BeardedManStudios.Forge.Networking.Generated;
 using BeardedManStudios.Forge.Networking.Unity;
 
-/// <summary>
-/// Disable all targets before the game starts.
-/// </summary>
-public class GameTypeAndMode : MonoBehaviour
+namespace Warglobe
 {
-   [SerializeField] GameObject m_Friendly;
-   [SerializeField] GameObject m_Enemy;
-
-   [SerializeField] GameObject m_Spawn1;
-   [SerializeField] GameObject m_Spawn2;
-
-   static List<Target> m_Targets = new List<Target>();
-
-   private void Awake()
-   {
-      m_Targets = FindObjectsOfType<Target>().ToList();
-
-      if (PlayerPrefs.HasKey(Preferences.LANGUAGE))
-      {
-         Multilang.Initialize((Language)PlayerPrefs.GetInt(Preferences.LANGUAGE));
-         Debug.Log("Current language " + Multilang.Language);
-      }
-      else
-      {
-         Multilang.Initialize(Language.English);
-      }
-   }
-
-   private void Start()
-   {
-      EnableTargets(false);
-   }
-
    /// <summary>
-   /// Enable or disable all targets.
+   /// Disable all targets before the game starts.
    /// </summary>
-   private static void EnableTargets(bool doEnable)
+   public class GameTypeAndMode : MonoBehaviour
    {
-      // Activate or deactivate
-      foreach(Target target in m_Targets)
+      [SerializeField] GameObject m_Friendly;
+      [SerializeField] GameObject m_Enemy;
+
+      [SerializeField] GameObject m_Spawn1;
+      [SerializeField] GameObject m_Spawn2;
+
+      static List<Target> m_Targets = new List<Target>();
+
+      private void Awake()
       {
-         target.gameObject.SetActive(doEnable);
+         m_Targets = FindObjectsOfType<Target>().ToList();
+
+         if (PlayerPrefs.HasKey(Preferences.LANGUAGE))
+         {
+            Multilang.Initialize((Language)PlayerPrefs.GetInt(Preferences.LANGUAGE));
+            Debug.Log("Current language " + Multilang.Language);
+         }
+         else
+         {
+            Multilang.Initialize(Language.English);
+         }
       }
 
-      // Attach the camera to the vehicle
-      if(doEnable)
+      private void Start()
       {
-         UserInput.Player1Vehicle.AttachCamera(SingleCamera.Camera1);
-      }
-      // Attach the camera to the UI
-      else
-      {
-         UISystem.AttachCamera(SingleCamera.Camera1);
+         EnableTargets(false);
       }
 
+      /// <summary>
+      /// Enable or disable all targets.
+      /// </summary>
+      private static void EnableTargets(bool doEnable)
+      {
+         // Activate or deactivate
+         foreach (Target target in m_Targets)
+         {
+            target.gameObject.SetActive(doEnable);
+         }
+
+         // Attach the camera to the vehicle
+         if (doEnable)
+         {
+            UserInput.Player1Vehicle.AttachCamera(SingleCamera.Camera1);
+         }
+         // Attach the camera to the UI
+         else
+         {
+            UISystem.AttachCamera(SingleCamera.Camera1);
+         }
 
 
-      //Vehicle player1 = UserInput.Player1Vehicle;
-      //Vector3 origin = player1.transform.position;
-      //Vector3 newPosition = new Vector3(origin.x + 500, origin.y, origin.z);
 
-      //Vehicle player2 = Instantiate(player1, newPosition, player1.transform.rotation);
+         //Vehicle player1 = UserInput.Player1Vehicle;
+         //Vector3 origin = player1.transform.position;
+         //Vector3 newPosition = new Vector3(origin.x + 500, origin.y, origin.z);
 
-      //SingleCamera.SetCameraLayout(2);
+         //Vehicle player2 = Instantiate(player1, newPosition, player1.transform.rotation);
 
-      //player2.AttachCamera(SingleCamera.Camera2);
-   }
+         //SingleCamera.SetCameraLayout(2);
 
-   public void EnableTargets()
-   {
-      EnableTargets(true);
+         //player2.AttachCamera(SingleCamera.Camera2);
+      }
 
-      //NetworkManager.Instance.InstantiateShip(position: m_Spawn2.transform.position);
-   }
+      public void EnableTargets()
+      {
+         EnableTargets(true);
 
-   public void DisableTargets()
-   {
-      EnableTargets(false);
-   }
+         //NetworkManager.Instance.InstantiateShip(position: m_Spawn2.transform.position);
+      }
 
-   public void SetLanguage(Language language)
-   {
-      Multilang.Initialize(language);
-      TranslationString.UpdateAllTextStrings();
-      Debug.Log("Language set is " + Multilang.Language);
-      PlayerPrefs.SetInt(Preferences.LANGUAGE, (int)language);
+      public void DisableTargets()
+      {
+         EnableTargets(false);
+      }
+
+      public void SetLanguage(Language language)
+      {
+         Multilang.Initialize(language);
+         TranslationString.UpdateAllTextStrings();
+         Debug.Log("Language set is " + Multilang.Language);
+         PlayerPrefs.SetInt(Preferences.LANGUAGE, (int)language);
+      }
    }
 }

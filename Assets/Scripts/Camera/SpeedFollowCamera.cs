@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Warglobe;
 
 /// <summary>
 /// Define a camera emplacement that shows speed and angle of attack of a vehicle.

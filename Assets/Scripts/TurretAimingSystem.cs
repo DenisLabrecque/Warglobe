@@ -4,31 +4,32 @@ using UnityEngine;
 
 public class TurretAimingSystem : MonoBehaviour
 {
-   [SerializeField] float m_AimDistance = 5000f;
+   [SerializeField] float _aimDistance = 500f;
 
-   Camera m_Camera;
+   Camera _camera;
+   Vector2 _mouse;
+   Vector3 _oldPoint;
 
    public Vector3 AimPoint { get; set; }
 
    private void Start()
    {
-      m_Camera = SingleCamera.Camera1;
+      _camera = SingleCamera.Camera1;
    }
 
    void FixedUpdate()
    {
-      Vector3 point = new Vector3();
-      Vector3 mousePos = new Vector2();
-
       // Get the mouse position from Event.
       // Note that the y position from Event is inverted.
-      mousePos.x = Input.mousePosition.x;
-      mousePos.y = Input.mousePosition.y;
+      _mouse.x = Input.mousePosition.x;
+      _mouse.y = Input.mousePosition.y;
+      //Vector3 newPosition = new Vector3(mouse.x, mouse.y)
 
       //point = m_Camera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, m_Camera.farClipPlane));
-      point = m_Camera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, m_AimDistance));
+      Vector3 point = _camera.ScreenToWorldPoint(new Vector3(_mouse.x, _mouse.y, _aimDistance));
+      Vector3 lerped = Vector3.Lerp(_oldPoint, point, 1f);
 
-      //m_IndicatorBall.transform.position = point;
+      _oldPoint = AimPoint;
       AimPoint = point;
    }
 }

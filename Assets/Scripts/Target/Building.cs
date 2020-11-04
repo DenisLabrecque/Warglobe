@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Define an object that acts as a prop.
-/// </summary>
-public class Building : Target {
-
-   void Awake()
+namespace Warglobe
+{
+   /// <summary>
+   /// Define an object that acts as a prop.
+   /// </summary>
+   public class Building : Target
    {
-      base.Awake();
 
-      GetComponent<Rigidbody>().isKinematic = true;
+      void Awake()
+      {
+         base.Awake();
+
+         GetComponent<Rigidbody>().isKinematic = true;
+      }
    }
-	
 }

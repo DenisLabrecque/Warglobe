@@ -1,33 +1,36 @@
 ﻿using UnityEngine;
 
-/// <summary>
-/// Attach to a target that is an objective in the game.
-/// </summary>
-public class ObjectiveKillTarget : Objective
+namespace Warglobe
 {
-   [SerializeField] Target m_Target;
-
-   private void Awake()
+   /// <summary>
+   /// Attach to a target that is an objective in the game.
+   /// </summary>
+   public class ObjectiveKillTarget : Objective
    {
-      // Automatically assign the target component if this was not done manually
-      if (m_Target == null)
-      {
-         Target target = GetComponent<Target>();
-         if (target)
-            m_Target = target;
-      }
-   }
+      [SerializeField] Target m_Target;
 
-   public override bool IsObjectiveAccomplished()
-   {
-      if(m_Target.IsDead)
+      private void Awake()
       {
-         m_Accomplished.Invoke();
-         return true;
+         // Automatically assign the target component if this was not done manually
+         if (m_Target == null)
+         {
+            Target target = GetComponent<Target>();
+            if (target)
+               m_Target = target;
+         }
       }
-      else
+
+      public override bool IsObjectiveAccomplished()
       {
-         return false;
+         if (m_Target.IsDead)
+         {
+            m_Accomplished.Invoke();
+            return true;
+         }
+         else
+         {
+            return false;
+         }
       }
    }
 }

@@ -1,41 +1,44 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// Active sensors cause a detectable signal that can be passively detected.
-/// Game logic should take this into account.
-/// 
-/// Denis Labrecque, October 2020
-/// </summary>
-public abstract class ActiveSensor : Sensor, ISwitchable
+namespace Warglobe
 {
-   #region Member Variables
+   /// <summary>
+   /// Active sensors cause a detectable signal that can be passively detected.
+   /// Game logic should take this into account.
+   /// 
+   /// Denis Labrecque, October 2020
+   /// </summary>
+   public abstract class ActiveSensor : Sensor, ISwitchable
+   {
+      #region Member Variables
 
-   [Header("Switchable")]
-   [SerializeField] string _name = "Radars";
-   [SerializeField] Sprite _hudIcon;
+      [Header("Switchable")]
+      [SerializeField] string _name = "Radars";
+      [SerializeField] Sprite _hudIcon;
 
-   #endregion
+      #endregion
 
-   #region Public Methods
+      #region Public Methods
 
-   public abstract void Switch();
+      public abstract void Switch();
 
-   public abstract void Switch(bool onOff);
+      public abstract void Switch(bool onOff);
 
-   #endregion
+      #endregion
 
-   #region Switchable Interface
+      #region Switchable Interface
 
-   public Sprite HudIcon { get => _hudIcon; }
+      public Sprite HudIcon { get => _hudIcon; }
 
-   public string Name => _name;
+      public string Name => _name;
 
-   public bool IsOnOrSelected => _isOn;
+      public bool IsOnOrSelected => _isOn;
 
-   public string Keystroke => "R";
+      public string Keystroke => "R";
 
-   public Group Group => Group.Accessories;
+      public Group Group => Group.Accessories;
 
-   #endregion
+      #endregion
+   }
 }
