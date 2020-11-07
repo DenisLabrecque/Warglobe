@@ -1,6 +1,9 @@
-﻿public class DumbBomb : Projectile
+﻿namespace Warglobe
 {
-   public override bool LaunchAuthority => true;
+   public class DumbBomb : Projectile
+   {
+      public override bool LaunchAuthority => true;
 
-   public override float HitProbability => throw new System.NotImplementedException();
+      public override float HitProbability => throw new System.NotImplementedException();
+   }
 }

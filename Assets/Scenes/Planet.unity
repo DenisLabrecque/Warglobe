@@ -1881,6 +1881,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _aimDistance: 5000
+  _camera: {fileID: 0}
+  _mouse: {x: 0, y: 0}
+  _oldPoint: {x: 0, y: 0, z: 0}
+  <AimPoint>k__BackingField: {x: 0, y: 0, z: 0}
 --- !u!1 &142629099
 GameObject:
   m_ObjectHideFlags: 0
@@ -9451,6 +9455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c30b2bbe2c1fd104db1c06ea6acdfa07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _aimDistance: 500
 --- !u!1 &718739767
 GameObject:
   m_ObjectHideFlags: 0
@@ -14047,9 +14052,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1125592644}
-  - component: {fileID: 1125592645}
   m_Layer: 0
-  m_Name: TurretAiming
+  m_Name: Turrets
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14073,19 +14077,6 @@ Transform:
   m_Father: {fileID: 710445145}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1125592645
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1125592643}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d19f66845804d24e917f1ddfcc50576, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _aimDistance: 500
 --- !u!1 &1127392511
 GameObject:
   m_ObjectHideFlags: 0
@@ -17635,6 +17626,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Counter: 3
+  m_Hardpoint: {fileID: 0}
+  m_IsFired: 0
 --- !u!4 &1395574506 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1778073105962040883, guid: ba0165e29a0b9f84c92b9e05279266ff,
@@ -19385,6 +19378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c30b2bbe2c1fd104db1c06ea6acdfa07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _aimDistance: 500
 --- !u!1 &1510047054
 GameObject:
   m_ObjectHideFlags: 0
@@ -27302,7 +27296,12 @@ PrefabInstance:
     - target: {fileID: 1778073105962040882, guid: ba0165e29a0b9f84c92b9e05279266ff,
         type: 3}
       propertyPath: aimedThreshold
-      value: 5
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1778073105962040882, guid: ba0165e29a0b9f84c92b9e05279266ff,
+        type: 3}
+      propertyPath: _function
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1778073105962040883, guid: ba0165e29a0b9f84c92b9e05279266ff,
         type: 3}

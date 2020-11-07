@@ -39,6 +39,8 @@ namespace Warglobe
 
       public Group Group => Group.Accessories;
 
+      public Function Function => Function.Radar;
+
       #endregion
    }
 }

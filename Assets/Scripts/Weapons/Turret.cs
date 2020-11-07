@@ -12,6 +12,7 @@ namespace Warglobe
       [Header("Identification")]
       [SerializeField] string _name = "Turret";
       [SerializeField] Sprite _hudIcon;
+      [SerializeField] Function _function = Function.Ciws;
 
       [Header("Rotations")]
 
@@ -363,6 +364,8 @@ namespace Warglobe
       public Group Group => Group.Guns;
 
       public Sprite HudIcon => _hudIcon;
+
+      public Function Function => _function;
 
       #endregion
    }
