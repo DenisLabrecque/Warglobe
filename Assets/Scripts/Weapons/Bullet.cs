@@ -10,7 +10,6 @@ namespace Warglobe
    /// </summary>
    [RequireComponent(typeof(Rigidbody))] // Gravitation and physics
    [RequireComponent(typeof(AudioSource))] // Explosion sound
-   [RequireComponent(typeof(ParticleSystem))] // The shell path
    public class Bullet : MonoBehaviour
    {
       public const float MAX_UNDERWATER_DIST = -20f; // How far under water a bullet can go without exploding
@@ -242,7 +241,7 @@ namespace Warglobe
             //Debug.Log("Explosion! " + m_Audio.clip);
 
             // Stop the shell path particles, stop physics, and don't display the shell
-            gameObject.GetComponent<ParticleSystem>().Stop(true, ParticleSystemStopBehavior.StopEmitting);
+            //gameObject.GetComponent<ParticleSystem>().Stop(true, ParticleSystemStopBehavior.StopEmitting);
             //gameObject.GetComponent<MeshRenderer>().enabled = false;
             gameObject.GetComponent<Rigidbody>().isKinematic = true;
 
