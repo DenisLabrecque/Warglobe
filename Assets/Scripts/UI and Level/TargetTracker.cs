@@ -1,17 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System;
 
-namespace Warglobe
+namespace Warglobe.Hud
 {
    /// <summary>
    /// HUD element that follows a target onscreen. The target symbol varies based on target type and acquiree characteristics. 
    /// It is the vehicle's responsibility to ensure that invisible trackers are assigned new targets as needed.
    /// </summary>
-   public class HUDTracker : MonoBehaviour
+   public class TargetTracker : MonoBehaviour
    {
       #region Sprites
 

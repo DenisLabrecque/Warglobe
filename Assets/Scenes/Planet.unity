@@ -5445,25 +5445,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbb230015ebf04744b55152e2510abec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _countryName: 0
-  _popularName: Target
-  m_Description: A generic target.
-  m_RadarCrossSection: 1
-  _maxHitpoints: 0
-  _weaponSystem: {fileID: 0}
-  _sensorSystem: {fileID: 0}
-  _currentHitpoints: 0
-  _faction: {fileID: 0}
-  _rigidbody: {fileID: 0}
-  _dollarValue: 32000
-  _percentDensity: 0.4
-  _pregameSpeed: 0
-  _cameraEmplacements: []
-  _flotationArea: {fileID: 0}
-  _motor: {fileID: 0}
-  _currentCameraIndx: 0
-  _rudders: []
-  _class: 2
 --- !u!54 &310564103
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9635,9 +9616,11 @@ MonoBehaviour:
   m_TestingText: {fileID: 1536315932}
   _toggleWeaponInfo: {fileID: 182082363}
   _bottomPanel: {fileID: 681828937}
-  _hudTracker: {fileID: 114589641977559752, guid: 2650aeeb84dd83c49a2b5d31f97bf5a4,
+  _targetTracker: {fileID: 114589641977559752, guid: 2650aeeb84dd83c49a2b5d31f97bf5a4,
     type: 3}
   _headingMarker: {fileID: 225781093}
+  _gunTracker: {fileID: 6860736179595887794, guid: e74ad27719a377b43ac0eca9829289e4,
+    type: 3}
 --- !u!1 &740614177
 GameObject:
   m_ObjectHideFlags: 0
@@ -25296,7 +25279,7 @@ GameObject:
   - component: {fileID: 2063596320}
   - component: {fileID: 2063596319}
   m_Layer: 5
-  m_Name: HUD
+  m_Name: Display
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

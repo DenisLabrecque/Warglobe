@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 5d859f4b274446e44abb294eaf94cb76
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - SQUARE_SOLID: {fileID: 21300000, guid: e18b6bb4bb2789640896999193165ecd, type: 3}
+  - SQUARE_DASHED: {fileID: 21300000, guid: e47021c37bab7814285ea69d246a00cc, type: 3}
+  - DIAMOND_SOLID: {fileID: 21300000, guid: 120a9419016482a4b8420331d4ad8045, type: 3}
+  - DIAMOND_DASHED: {instanceID: 0}
+  - CIRCLE_SOLID: {instanceID: 0}
+  - CIRCLE_DASHED: {instanceID: 0}
+  - HEXAGON_SOLID: {instanceID: 0}
+  - HEXAGON_DASHED: {instanceID: 0}
+  - m_TargetName: {instanceID: 0}
+  - m_TargetDistance: {instanceID: 0}
+  - m_TargetingShape: {instanceID: 0}
+  - m_Target: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

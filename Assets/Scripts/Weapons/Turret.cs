@@ -74,6 +74,12 @@ namespace Warglobe
 
       List<GunMuzzle> m_Muzzles = new List<GunMuzzle>();
       private AudioSource m_Audio;
+      private Vector3 _pointingAt;
+
+      /// <summary>
+      /// Projected spot the turret barrels are pointing directly at.
+      /// </summary>
+      public Vector3 PointingAt { get => _pointingAt; }
 
       /// <summary>
       /// True when the turret cannot rotate freely in the horizontal axis.
@@ -212,10 +218,15 @@ namespace Warglobe
          if (Mathf.Abs(elevation) > Mathf.Epsilon)
             barrels.localEulerAngles = Vector3.right * -elevation;
 
+         Vector3 direction = barrels.forward * localTargetPos.magnitude;
+         _pointingAt = transform.position + direction;
+
 #if UNITY_EDITOR
          if (DrawDebugRay)
             Debug.DrawRay(barrels.position, barrels.forward * localTargetPos.magnitude, Color.red);
 #endif
+
+
       }
 
       private void RotateBaseToFaceTarget(Vector3 targetPosition)

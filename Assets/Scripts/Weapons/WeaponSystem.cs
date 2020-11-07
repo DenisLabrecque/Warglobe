@@ -23,6 +23,8 @@ namespace Warglobe
 
       #region Member Variables
 
+      [SerializeField] float _aimDistance = 500f;
+
       SortedSet<Target> _trackingList = new SortedSet<Target>();
       SensorSystem _sensorSystem;
       Laser _laser;
@@ -30,12 +32,20 @@ namespace Warglobe
       int _currentProjectileIndex = 0;
       Dictionary<Type, ProjectileSlot> _weaponSlots = new Dictionary<Type, ProjectileSlot>();
       List<Type> _projectileTypes = new List<Type>();
-      TurretAimingSystem _turretAiming;
 
       #endregion
 
 
       #region Properties
+      
+      /// <summary>
+      /// Where the mouse is pointing from a projection plane.
+      /// </summary>
+      public Vector3 AimPoint {
+         get {
+            return SingleCamera.Camera1.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, _aimDistance));
+         }
+      }
 
       public bool HasTurret {
          get {
@@ -73,6 +83,8 @@ namespace Warglobe
          get { return _sensorSystem; }
       }
 
+      public IEnumerable<Turret> Turrets { get { return _turrets; } }
+
       #endregion
 
 
@@ -83,7 +95,6 @@ namespace Warglobe
          _laser = GetComponentInChildren<Laser>(true);
          _turrets = GetComponentsInChildren<Turret>(true).ToList();
          _sensorSystem = transform.parent.GetComponentInChildren<SensorSystem>(true);
-         _turretAiming = GetComponentInChildren<TurretAimingSystem>(true);
 
          if (_sensorSystem == null)
             Debug.LogWarning("A weapon system requires a sensor system to function properly on " + transform.parent);
@@ -191,7 +202,7 @@ namespace Warglobe
          {
             foreach (Turret turret in _turrets)
             {
-               if (_turretAiming == null)
+               if (UserInput.Player1Vehicle == gameObject) // TODO probably won't work
                {
                   // Automatic cheapo turret aim
                   if (_sensorSystem.TrackingTarget != null)
@@ -200,12 +211,10 @@ namespace Warglobe
                else
                {
                   // By hand turret aim
-                  turret.AimPosition = _turretAiming.AimPoint;
+                  turret.AimPosition = AimPoint;
                }
             }
          }
-
-         // This will not work!
 
          //m_TrackingList.Add(m_SensorSystem.TrackingTarget); // TODO handle nulls
       }

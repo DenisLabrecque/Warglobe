@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
@@ -7,7 +6,7 @@ using TMPro;
 using System.Globalization;
 using System.Text;
 
-namespace Warglobe
+namespace Warglobe.Hud
 {
    /// <summary>
    /// Control what is seen on a vehicle's HUD, referencing all parts of the HUD and modifying values according to the currently selected vehicle.
@@ -17,7 +16,7 @@ namespace Warglobe
 
       #region Member Variables
 
-      static List<HUDTracker> _hudTrackers = new List<HUDTracker>();
+      static List<TargetTracker> _hudTrackers = new List<TargetTracker>();
       static List<Waypoint> _waypoints = new List<Waypoint>();
 
       // HUD Elements
@@ -46,8 +45,9 @@ namespace Warglobe
       [SerializeField] Transform _bottomPanel;
 
       [Header("Tracker")]
-      [SerializeField] HUDTracker _hudTracker;
+      [SerializeField] TargetTracker _targetTracker;
       [SerializeField] Image _headingMarker;
+      [SerializeField] GunTracker _gunTracker;
 
       #endregion
 
@@ -66,9 +66,16 @@ namespace Warglobe
          // Add the tracker to the list of trackers
          foreach (Target target in sceneTargets)
          {
-            HUDTracker tracker = Instantiate(_hudTracker, gameObject.transform);
+            TargetTracker tracker = Instantiate(_targetTracker, gameObject.transform);
             tracker.SetTarget(target);
             _hudTrackers.Add(tracker);
+         }
+
+         // Go through each gun in the scene and make a tracker for each one
+         // Add the gun tracker to the list of trackers
+         foreach(Turret turret in UserInput.Player1Vehicle.WeaponSystem.Turrets) {
+            GunTracker tracker = Instantiate(_gunTracker, gameObject.transform);
+            tracker.SetTurret(turret);
          }
 
          foreach (KeyValuePair<string, List<ISwitchable>> keyValue in UserInput.Player1Vehicle.SwitchablesByName)
@@ -133,7 +140,7 @@ namespace Warglobe
          //m_MessageText.text = builder.ToString();
 
          // Manage every tracker depending on target visibility to sensors
-         foreach (HUDTracker tracker in _hudTrackers)
+         foreach (TargetTracker tracker in _hudTrackers)
          {
             // Only show the player target trackers when his vehicle is actually tracking them
             if (UserInput.Player1Vehicle.SensorSystem.FusedSensorData.Contains(tracker.Target))
