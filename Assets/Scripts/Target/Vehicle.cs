@@ -39,7 +39,7 @@ namespace Warglobe
       protected Motor _motor;
       private int _currentCameraIndx = 0;
       protected List<ISwitchable> _switchables;
-      protected Dictionary<string, List<ISwitchable>> _switchablesByName = new Dictionary<string, List<ISwitchable>>();
+      protected Dictionary<Function, List<ISwitchable>> _switchablesByFunction = new Dictionary<Function, List<ISwitchable>>();
 
       #endregion
 
@@ -156,8 +156,8 @@ namespace Warglobe
       /// <summary>
       /// Gets all switchables.
       /// </summary>
-      public Dictionary<string, List<ISwitchable>> SwitchablesByName {
-         get => _switchablesByName;
+      public Dictionary<Function, List<ISwitchable>> SwitchablesByFunction {
+         get => _switchablesByFunction;
       }
 
       #endregion
@@ -174,12 +174,18 @@ namespace Warglobe
          _switchables = GetComponentsInChildren<ISwitchable>().ToList();
          foreach (ISwitchable switchable in _switchables)
          {
-            // Add the key if it doesn't exist
-            if (_switchablesByName.ContainsKey(switchable.Name) == false)
-               _switchablesByName.Add(switchable.Name, new List<ISwitchable>());
+            if (switchable == null || switchable.Switchable == null)
+               Debug.LogError("Switchable " + switchable.ToString() + " has not been assigned a switchable enum value and is null. Please fix for the HUD to work.");
+            else
+            {
 
-            // Add the element
-            _switchablesByName[switchable.Name].Add(switchable);
+               // Add the key if it doesn't exist
+               if (_switchablesByFunction.ContainsKey(switchable.Switchable.Function) == false)
+                  _switchablesByFunction.Add(switchable.Switchable.Function, new List<ISwitchable>());
+
+               // Add the element
+               _switchablesByFunction[switchable.Switchable.Function].Add(switchable);
+            }
          }
 
          // Initialize hitpoints

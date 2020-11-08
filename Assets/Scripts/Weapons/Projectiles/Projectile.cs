@@ -2,6 +2,7 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using Warglobe.Assets;
 
 namespace Warglobe
 {
@@ -12,9 +13,8 @@ namespace Warglobe
    {
       #region Member Variables
 
-      [Header("Identification")]
-      [SerializeField] string _name = "Missile";
-      [SerializeField] Sprite _hudIcon;
+      [Header("Switchable")]
+      [SerializeField] Switchable _switchable;
 
       [Tooltip("The force directing the missile off a rack. No force is a simple drop.")]
       [SerializeField] Vector3 _impulse = new Vector3(0, 0, 0);
@@ -173,17 +173,9 @@ namespace Warglobe
 
       #region Switchable Interface
 
-      public string Name => _name;
-
       public bool IsOnOrSelected => !IsFired;
 
-      public string Keystroke => "Space";
-
-      public Group Group => Group.Missiles;
-
-      public Sprite HudIcon => _hudIcon;
-
-      public Function Function => Function.Missile;
+      public Switchable Switchable => _switchable;
 
       #endregion
    }

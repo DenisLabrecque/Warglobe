@@ -2,14 +2,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Warglobe
+namespace Warglobe.Hud
 {
    /// <summary>
    /// HUD element for displaying information about a weapon like the keyboard shortcut and whether it's on.
    /// </summary>
    public class SwitchableIcon : MonoBehaviour
    {
-      [SerializeField] public ISwitchable _switchable;
+      [SerializeField] public ISwitchable _element; // The gun, radar, light, etc.
 
       [SerializeField] Image _icon;
       [SerializeField] TextMeshProUGUI _name;
@@ -18,7 +18,7 @@ namespace Warglobe
       // Update is called once per frame
       void Update()
       {
-         if (_switchable != null)
+         if (_element != null)
          {
             // TODO get the type of weapon and match with icon
             SetOnOrSelected();
@@ -33,14 +33,12 @@ namespace Warglobe
       /// </summary>
       public void Initialize(ISwitchable switchable)
       {
-
          gameObject.SetActive(true);
-         Debug.Log("Initialize called for " + switchable.Name + " and active is " + gameObject.activeSelf);
 
-         _switchable = switchable;
-         _name.text = _switchable.Name.ToUpperInvariant();
-         _icon.sprite = SwitchableIcons.IconFromFunction(_switchable.Function);
-         
+         _element = switchable;
+         _name.text = _element.Switchable.GroupName.ToUpperInvariant();
+         _icon.sprite = _element.Switchable.Icon;
+            
          // TODO decide the hud group where things go (using SwitchableHelper.cs)
       }
 
@@ -49,7 +47,7 @@ namespace Warglobe
       /// </summary>
       void SetOnOrSelected()
       {
-         if (_switchable.IsOnOrSelected)
+         if (_element.IsOnOrSelected)
          {
             _icon.color = new Color(_icon.color.r, _icon.color.g, _icon.color.b, 1f);
             _name.color = new Color(_name.color.r, _name.color.g, _name.color.b, 1f);
@@ -63,25 +61,7 @@ namespace Warglobe
 
       void SetKeystroke()
       {
-         _keystroke.text = _switchable.Keystroke;
-      }
-
-      public static Group GroupFromFunction(Function function)
-      {
-         switch(function)
-         {
-            case Function.Cannon:
-            case Function.Ciws:
-               return Group.Guns;
-            case Function.Missile:
-               return Group.Missiles;
-            case Function.Radar:
-            case Function.Sonar:
-            case Function.Light:
-               return Group.Accessories;
-            default:
-               return Group.Accessories;
-         }
+         _keystroke.text = _element.Switchable.Key;
       }
    }
 }

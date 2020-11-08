@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
+using Warglobe.Assets;
 
 namespace Warglobe
 {
@@ -11,13 +11,8 @@ namespace Warglobe
    /// </summary>
    public abstract class ActiveSensor : Sensor, ISwitchable
    {
-      #region Member Variables
-
       [Header("Switchable")]
-      [SerializeField] string _name = "Radars";
-      [SerializeField] Sprite _hudIcon;
-
-      #endregion
+      [SerializeField] protected Switchable _switchable;
 
       #region Public Methods
 
@@ -29,17 +24,9 @@ namespace Warglobe
 
       #region Switchable Interface
 
-      public Sprite HudIcon { get => _hudIcon; }
-
-      public string Name => _name;
-
       public bool IsOnOrSelected => _isOn;
 
-      public string Keystroke => "R";
-
-      public Group Group => Group.Accessories;
-
-      public Function Function => Function.Radar;
+      public Switchable Switchable => _switchable;
 
       #endregion
    }

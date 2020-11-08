@@ -254,8 +254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af57acdca7d528245aa385285f0afe52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Phalanx
-  _hudIcon: {fileID: 21300000, guid: ffe1524e597df344f8bad68c353759a3, type: 3}
+  _switchable: {fileID: 11400000, guid: 07158b19966496c4c8cf9eb6e3c85a37, type: 2}
   turretBase: {fileID: 6817612413532181537}
   barrels: {fileID: 2023044914686316489}
   ElevationSpeed: 30

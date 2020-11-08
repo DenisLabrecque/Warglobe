@@ -4,8 +4,6 @@ using Warglobe;
 
 public class GunTracker : MonoBehaviour
 {
-   [SerializeField] Sprite _ciwsTracker;
-   [SerializeField] Sprite _gunTracker;
    Turret _turret;
    Image _image;
 
@@ -20,16 +18,7 @@ public class GunTracker : MonoBehaviour
       {
          _turret = turret;
          _image = GetComponent<Image>();
-
-         switch(turret.Function)
-         {
-            case Function.Cannon:
-               _image.sprite = _gunTracker;
-               break;
-            case Function.Ciws:
-               _image.sprite = _ciwsTracker;
-               break;
-         }
+         _image.sprite = _turret.Switchable.Tracker;
       }
       else
          Debug.LogError("Turret was assigned as null to the tracker");

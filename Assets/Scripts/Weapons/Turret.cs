@@ -3,16 +3,16 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using UnityEngine;
 using UnityEngine.UI;
+using Warglobe.Assets;
 
 namespace Warglobe
 {
    [RequireComponent(typeof(AudioSource))]
    public class Turret : MonoBehaviour, IFireable, ISwitchable
    {
-      [Header("Identification")]
-      [SerializeField] string _name = "Turret";
-      [SerializeField] Sprite _hudIcon;
-      [SerializeField] Function _function = Function.Ciws;
+      [Header("Switchable")]
+      [SerializeField] Switchable _switchable;
+
 
       [Header("Rotations")]
 
@@ -355,17 +355,9 @@ namespace Warglobe
 
       #region Switchable Interface
 
-      public string Name => _name;
-
       public bool IsOnOrSelected => true;
 
-      public string Keystroke => "M-Mse";
-
-      public Group Group => Group.Guns;
-
-      public Sprite HudIcon => _hudIcon;
-
-      public Function Function => _function;
+      public Switchable Switchable => _switchable;
 
       #endregion
    }

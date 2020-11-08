@@ -1,4 +1,6 @@
-﻿namespace Warglobe
+﻿using Warglobe.Assets;
+
+namespace Warglobe
 {
 
    /// <summary>
@@ -26,25 +28,14 @@
    public interface ISwitchable
    {
       /// <summary>
-      /// Name of the toggle or weapon.
+      /// A reference to the name, icon, and keystroke scriptable object enum value that represents this thing.
       /// </summary>
-      string Name { get; }
-
-      /// <summary>
-      /// Defines which function this switchable accomplishes (its role or type).
-      /// </summary>
-      Function Function { get; }
+      Switchable Switchable { get; }
 
       /// <summary>
       /// Whether the current setting or weapon is in use or ready to be used.
       /// For example, the radar is on, or the weapon is selected to fire.
       /// </summary>
       bool IsOnOrSelected { get; }
-
-      /// <summary>
-      /// The key the user must press to access this switchable.
-      /// For example, "R" for "Radar".
-      /// </summary>
-      string Keystroke { get; }
    }
 }

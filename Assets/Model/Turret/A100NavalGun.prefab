@@ -732,8 +732,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af57acdca7d528245aa385285f0afe52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Turret
-  _hudIcon: {fileID: 0}
+  _switchable: {fileID: 11400000, guid: a346dc05f59c50f45b747d6a6e4507f6, type: 2}
   turretBase: {fileID: 1778073105926550630}
   barrels: {fileID: 1778073106674572720}
   ElevationSpeed: 30
@@ -792,8 +791,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b10879e3d93adcc469fb772093c7b032, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ShellPrefab: {fileID: 4046758099690999853, guid: 85e2423086ec4744db58d0327bbdef54,
-    type: 3}
+  _shellPrefab: {fileID: 0}
 --- !u!1 &1778073106331546374
 GameObject:
   m_ObjectHideFlags: 0

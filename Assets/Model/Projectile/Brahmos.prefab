@@ -600,10 +600,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c1496f3f54816f4eaef2573aa4b9450, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Impulse: {x: 0, y: 0, z: 0}
-  m_DropDelay: 0.2
-  m_ProjectileWeight: 10
-  m_ShortName: 
-  m_Drag: 0.3
-  m_Interpolate: 1
-  m_CollisionDetection: 2
+  _switchable: {fileID: 11400000, guid: b26abc7d62af8df4cbe8dae09362279e, type: 2}
+  _impulse: {x: 0, y: 0, z: 0}
+  _dropDelay: 0.2
+  _weight: 10
+  _shortName: 
+  _drag: 0.3
+  _interpolation: 1
+  _collisionDetection: 2

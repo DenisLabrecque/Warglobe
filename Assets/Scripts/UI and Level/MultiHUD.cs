@@ -78,7 +78,7 @@ namespace Warglobe.Hud
             tracker.SetTurret(turret);
          }
 
-         foreach (KeyValuePair<string, List<ISwitchable>> keyValue in UserInput.Player1Vehicle.SwitchablesByName)
+         foreach (KeyValuePair<Function, List<ISwitchable>> keyValue in UserInput.Player1Vehicle.SwitchablesByFunction)
          {
             SwitchableIcon weaponInfo = Instantiate(_toggleWeaponInfo, _bottomPanel);
             weaponInfo.Initialize(keyValue.Value.FirstOrDefault());
