@@ -2,6 +2,7 @@
 using UnityEngine;
 using System;
 using System.Linq;
+using UnityEngine.Rendering.HighDefinition;
 
 namespace Warglobe
 {
@@ -36,7 +37,7 @@ namespace Warglobe
 
 
       #region Properties
-      
+            
       /// <summary>
       /// Where the mouse is pointing from a projection plane.
       /// </summary>
