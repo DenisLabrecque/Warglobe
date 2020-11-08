@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,14 +39,9 @@ namespace Warglobe
 
          _switchable = switchable;
          _name.text = _switchable.Name.ToUpperInvariant();
-         if (_switchable.HudIcon != null)
-            _icon.sprite = _switchable.HudIcon;
-
-         // Place in the correct spot
-         switch (_switchable.Group)
-         {
-            // TODO decide where it goes
-         }
+         _icon.sprite = SwitchableIcons.IconFromFunction(_switchable.Function);
+         
+         // TODO decide the hud group where things go (using SwitchableHelper.cs)
       }
 
       /// <summary>

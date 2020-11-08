@@ -20,7 +20,6 @@ namespace Warglobe
    /// </summary>
    public class WeaponSystem : MonoBehaviour
    {
-
       #region Member Variables
 
       [SerializeField] float _aimDistance = 500f;

@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Warglobe
+﻿namespace Warglobe
 {
 
    /// <summary>
@@ -33,12 +31,7 @@ namespace Warglobe
       string Name { get; }
 
       /// <summary>
-      /// Icon for this switchable that will display in the HUD.
-      /// </summary>
-      Sprite HudIcon { get; }
-
-      /// <summary>
-      /// Defines which function this switchable accomplishes (its type).
+      /// Defines which function this switchable accomplishes (its role or type).
       /// </summary>
       Function Function { get; }
 
@@ -53,10 +46,5 @@ namespace Warglobe
       /// For example, "R" for "Radar".
       /// </summary>
       string Keystroke { get; }
-
-      /// <summary>
-      /// The HUD area to which this switchable belongs.
-      /// </summary>
-      Group Group { get; }
    }
 }
