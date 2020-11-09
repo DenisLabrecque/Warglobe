@@ -33,6 +33,9 @@ namespace Warglobe
       Dictionary<Type, ProjectileSlot> _weaponSlots = new Dictionary<Type, ProjectileSlot>();
       List<Type> _projectileTypes = new List<Type>();
 
+      bool _cannonSelected = false;
+      bool _ciwsSelected = false;
+
       #endregion
 
 
@@ -202,21 +205,56 @@ namespace Warglobe
          {
             foreach (Turret turret in _turrets)
             {
-               if (UserInput.Player1Vehicle == gameObject) // TODO probably won't work
+               if((turret.Switchable.Function == Function.Cannon && _cannonSelected) ||
+                  (turret.Switchable.Function == Function.Ciws && _ciwsSelected))
                {
-                  // Automatic cheapo turret aim
-                  if (_sensorSystem.TrackingTarget != null)
-                     turret.AimPosition = _sensorSystem.TrackingTarget.transform.position;
+                  turret.IsIdle = false;
+                  turret.AimPosition = AimPoint;
                }
                else
                {
-                  // By hand turret aim
-                  turret.AimPosition = AimPoint;
+                  // automatic tracking
+                  turret.IsIdle = true;
                }
+
+               //if (UserInput.Player1Vehicle == gameObject) // TODO probably won't work
+               //{
+               //   // Automatic cheapo turret aim
+               //   if (_sensorSystem.TrackingTarget != null)
+               //      turret.AimPosition = _sensorSystem.TrackingTarget.transform.position;
+               //}
+               //else
+               //{
+               //   // By hand turret aim
+               //   turret.AimPosition = AimPoint;
+               //}
             }
          }
-
          //m_TrackingList.Add(m_SensorSystem.TrackingTarget); // TODO handle nulls
+      }
+
+      private void Update()
+      {
+         if(Input.GetKeyDown(KeyCode.Alpha1))
+         {
+            if (_cannonSelected)
+               _cannonSelected = false;
+            else
+            {
+               _cannonSelected = true;
+               _ciwsSelected = false;
+            }
+         }
+         else if(Input.GetKeyDown(KeyCode.Alpha2))
+         {
+            if (_ciwsSelected)
+               _ciwsSelected = false;
+            else
+            {
+               _ciwsSelected = true;
+               _cannonSelected = false;
+            }
+         }
       }
 
       #endregion
