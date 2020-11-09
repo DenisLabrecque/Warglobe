@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8b11d489170f9c42a553f356a93a6a8, type: 3}
   m_Name: Cannon
   m_EditorClassIdentifier: 
-  _groupName: Cannon
+  _function: 0
   _key: 1
   _icon: {fileID: 21300000, guid: d91e2fe9d3b01ca4f9e5a4957f0d2b48, type: 3}
+  _tracker: {fileID: 21300000, guid: 1e9187fc9c0d7324a9feddc46a261210, type: 3}

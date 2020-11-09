@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8b11d489170f9c42a553f356a93a6a8, type: 3}
-  m_Name: Radar
+  m_Script: {fileID: 11500000, guid: 214538b71cf238f4a9b3afb085dbdb33, type: 3}
+  m_Name: CIWS
   m_EditorClassIdentifier: 
-  _function: 3
-  _key: 6
-  _icon: {fileID: 21300000, guid: 75b2768c41b65b0438efff3e5c8cb9f7, type: 3}
-  _tracker: {fileID: 0}
+  _clip: {fileID: 8300000, guid: 815215438aa1a674db7bf3ba44ea10ff, type: 3}
+  _mixer: {fileID: 5915574071891789493, guid: 249ba2a7f910255479ea5c8300936677, type: 2}

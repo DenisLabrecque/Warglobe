@@ -7,11 +7,13 @@ using Warglobe.Assets;
 
 namespace Warglobe
 {
-   [RequireComponent(typeof(AudioSource))]
    public class Turret : MonoBehaviour, IFireable, ISwitchable
    {
       [Header("Switchable")]
       [SerializeField] Switchable _switchable;
+
+      [Header("Sound")]
+      [SerializeField] InstantiableSound _sound;
 
 
       [Header("Rotations")]
@@ -57,7 +59,7 @@ namespace Warglobe
 
       [Header("Debug")]
       public bool DrawDebugRay = true;
-      public bool DrawDebugArcs = false;
+      public bool DrawDebugArcs = true;
 
       private float angleToTarget = 0f;
       private float elevation = 0f;
@@ -73,8 +75,7 @@ namespace Warglobe
       [SerializeField] float _reloadTime = 1f;
       private float _reloadTimer = 0f;
 
-      List<GunMuzzle> m_Muzzles = new List<GunMuzzle>();
-      private AudioSource m_Audio;
+      List<GunMuzzle> _muzzles = new List<GunMuzzle>();
       private Vector3 _pointingAt;
 
       /// <summary>
@@ -114,9 +115,7 @@ namespace Warglobe
          if (turretBase == null)
             Debug.LogError(name + ": TurretAim requires an assigned TurretBase!");
 
-         m_Muzzles = GetComponentsInChildren<GunMuzzle>().ToList();
-         m_Audio = GetComponent<AudioSource>();
-         m_Audio.playOnAwake = false;
+         _muzzles = GetComponentsInChildren<GunMuzzle>().ToList();
       }
 
       private void Update()
@@ -335,10 +334,10 @@ namespace Warglobe
          {
             _reloadTimer = 0f;
 
-            foreach (GunMuzzle muzzle in m_Muzzles)
+            foreach (GunMuzzle muzzle in _muzzles)
                muzzle.Fire();
 
-            m_Audio.Play();
+            _sound.Instantiate(gameObject.transform);
 
             return true; // Has fired
          }
