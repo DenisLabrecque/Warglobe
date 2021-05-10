@@ -12,8 +12,8 @@ using UnityEngine;
 public static class Gravity {
 
    public const float GRAVITY_PULL = 1.5f;
-   public static Vector3 GRAVITY_CENTER = new Vector3(0,0,0);
-   public const int GRAVITY_RADIUS = 160000;
+   public static Vector3 GravityCenter = new Vector3(0,0,0);
+   public const int GravityRadius = 160000;
 
    /// <summary>
    /// Call this method at every physics tick using FixedUpdate() for an object that must be gravitated towards earth.
@@ -27,9 +27,9 @@ public static class Gravity {
       {
          float gravityIntensity = Intensity(rigidbody.transform.position, rigidbody.mass);
 
-         rigidbody.AddForce((rigidbody.position - GRAVITY_CENTER) * gravityIntensity * Time.deltaTime);
+         rigidbody.AddForce((rigidbody.position - GravityCenter) * gravityIntensity * Time.deltaTime);
 
-         Debug.DrawRay(rigidbody.position, GRAVITY_CENTER - rigidbody.position);
+         Debug.DrawRay(rigidbody.position, GravityCenter - rigidbody.position);
       }
    }
 
@@ -41,8 +41,8 @@ public static class Gravity {
       // Gravity = mass1 x mass2 / distance ^ 2
       // Here, the effect of gravity is fudged by cutting it off at a distance
       float intensity = Utility.Percent(
-         Vector3.Distance(position, GRAVITY_CENTER),
-         GRAVITY_RADIUS,
+         Vector3.Distance(position, GravityCenter),
+         GravityRadius,
          PercentMode.Clamp0To1);
 
       // Force of gravity must be proportional to mass (so smaller objects fall at the same speed)

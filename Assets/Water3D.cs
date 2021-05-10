@@ -12,7 +12,7 @@ public class Water3D : MonoBehaviour
    // Start is called before the first frame update
    void Start()
    {
-      _mesh = GetComponent<MeshFilter>().mesh;
+      _mesh = GetComponent<MeshFilter>().sharedMesh;
    }
 
    void Update()

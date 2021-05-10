@@ -6,7 +6,6 @@ public class MouseFollowTurret : CameraEmplacement
 {
    #region Unity Methods
 
-   [SerializeField] int m_NoMoveZone = 15;
    [SerializeField] float m_MaxRotationSpeed = 0.8f; // Degrees per second
    [SerializeField] int m_MaxHorizontalArc = 100; // Degrees left or right from center
 

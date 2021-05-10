@@ -11,15 +11,15 @@ using UnityEngine;
 [ExecuteAlways]
 public class FlotationArea : MonoBehaviour
 {
-   [SerializeField][Range(0,1)] float m_Density = 0.4f;
-   private float m_DensityInverse;
-   [SerializeField] public Vector3 m_Dimensions = new Vector3(10f, 4f, 3f);
+   [SerializeField][Range(0,1)] float _density = 0.4f;
+   private float _densityInverse;
+   [SerializeField] public Vector3 _dimensions = new Vector3(10f, 4f, 3f);
 
-   private Rigidbody m_Rigidbody;
-   private List<FlotationPoint> m_Corners;
-   private List<float> m_flotationForces;
-   private float m_TotalVolume;
-   private float m_QuadrantVolume; // One fourth of the total submersible volume
+   private Rigidbody _rigidbody;
+   private List<FlotationPoint> _corners;
+   private List<float> _flotationForces;
+   private float _totalVolume;
+   private float _quadrantVolume; // One fourth of the total submersible volume
    private const float WATER_DRAG = 2f;
 
    /// <summary>
@@ -29,26 +29,18 @@ public class FlotationArea : MonoBehaviour
    public float PercentSubmerged {
       get {
          float totalPercent = 0;
-         foreach(FlotationPoint point in m_Corners)
-         {
+         foreach(FlotationPoint point in _corners)
             totalPercent += point.SubmergedPercent;
-         }
          return totalPercent * 0.25f;
       }
    }
 
-   public float PercentNotSubmerged {
-      get {
-         return 1f - PercentSubmerged;
-      }
-   }
+   public float PercentNotSubmerged => 1f - PercentSubmerged;
 
    internal void Sink()
    {
-      foreach(FlotationPoint corner in m_Corners)
-      {
+      foreach(FlotationPoint corner in _corners)
          corner.Sink(1f);
-      }
    }
 
    /// <summary>
@@ -56,35 +48,29 @@ public class FlotationArea : MonoBehaviour
    /// </summary>
    class FlotationPoint
    {
-      const float SINK_RATE = 0.1f;
-
-      Vector3 m_position;
-      FlotationArea m_flotationArea;
-      float m_ActualFloatFactor = 1f; // A percent of the total flotation force wanted; used for sinking the FlotationArea
-      float? m_force = null;
-      float? m_lastForce = null;
+      Vector3 _position;
+      FlotationArea _flotationArea;
+      float _actualFloatFactor = 1f; // A percent of the total flotation force wanted; used for sinking the FlotationArea
+      float? _force = null;
+      float? _lastForce = null;
 
       /// <summary>
       /// Get the depth of this flotation point.
       /// </summary>
-      public float Depth {
-         get {
-            return Planet.Singleton.AltitudeAboveSea(SubmergedPosition);
-         }
-      }
+      public float Depth => Planet.Singleton.AltitudeAboveSea(SubmergedPosition);
 
       /// <summary>
       /// The quadrant of submerged volume is estimated from the submerged height of its flotation point corner
       /// </summary>
       public float SubmergedVolume {
          get {
-            return m_flotationArea.m_QuadrantVolume * SubmergedPercent;
+            return _flotationArea._quadrantVolume * SubmergedPercent;
          }
       }
 
       public float SubmergedPercent {
          get {
-            return Utility.Percent(Depth, -m_flotationArea.m_Dimensions.y, PercentMode.Clamp0To1);
+            return Utility.Percent(Depth, -_flotationArea._dimensions.y, PercentMode.Clamp0To1);
          }
       }
 
@@ -93,11 +79,11 @@ public class FlotationArea : MonoBehaviour
       /// </summary>
       public Vector3 SubmergedPosition {
          get {
-            Transform transform = m_flotationArea.gameObject.transform;
+            Transform transform = _flotationArea.gameObject.transform;
             return transform.position +
-                  (transform.right * m_position.x) +
-                  (transform.forward * m_position.z) +
-                  (transform.up * m_position.y);
+                  (transform.right * _position.x) +
+                  (transform.forward * _position.z) +
+                  (transform.up * _position.y);
          }
       }
 
@@ -106,15 +92,15 @@ public class FlotationArea : MonoBehaviour
       /// </summary>
       public Vector3 Upwards {
          get {
-            return -(Gravity.GRAVITY_CENTER - SubmergedPosition);
+            return -(Gravity.GravityCenter - SubmergedPosition);
          }
       }
 
       // Constructor
       public FlotationPoint(Vector3 location, FlotationArea flotationArea)
       {
-         m_position = location;
-         m_flotationArea = flotationArea;
+         _position = location;
+         _flotationArea = flotationArea;
       }
 
       /// <summary>
@@ -126,13 +112,13 @@ public class FlotationArea : MonoBehaviour
          if(Depth < 0) // submerged
          {
             // Apply flotation force
-            float flotationForce = SubmergedVolume * m_flotationArea.m_DensityInverse * m_ActualFloatFactor;
-            m_flotationArea.m_Rigidbody.AddForceAtPosition(Upwards * flotationForce, SubmergedPosition);
-            m_flotationArea.m_Rigidbody.drag = WATER_DRAG;
-            m_flotationArea.m_Rigidbody.angularDrag = WATER_DRAG;
+            float flotationForce = SubmergedVolume * _flotationArea._densityInverse * _actualFloatFactor;
+            _flotationArea._rigidbody.AddForceAtPosition(Upwards * flotationForce, SubmergedPosition);
+            _flotationArea._rigidbody.drag = WATER_DRAG;
+            _flotationArea._rigidbody.angularDrag = WATER_DRAG;
 
             // Show debugging
-            float maxForce = m_flotationArea.m_QuadrantVolume * m_flotationArea.m_DensityInverse;
+            float maxForce = _flotationArea._quadrantVolume * _flotationArea._densityInverse;
             float percentForce = Utility.Percent(flotationForce, maxForce, PercentMode.AnyPercent);
             Debug.DrawRay(SubmergedPosition, Upwards * percentForce * 0.01f, Color.blue);
          }
@@ -145,30 +131,30 @@ public class FlotationArea : MonoBehaviour
       public void Sink(float sinkPercent)
       {
          sinkPercent = Mathf.Clamp01(sinkPercent);
-         m_ActualFloatFactor -= sinkPercent;
-         m_ActualFloatFactor = Mathf.Clamp01(m_ActualFloatFactor);
+         _actualFloatFactor -= sinkPercent;
+         _actualFloatFactor = Mathf.Clamp01(_actualFloatFactor);
       }
    }
 
    // Start is called before the first frame update
    void Start()
    {
-      m_Rigidbody = GetComponentInParent<Rigidbody>();
-      m_TotalVolume = m_Dimensions.x * m_Dimensions.y * m_Dimensions.z;
-      m_QuadrantVolume = m_TotalVolume * 0.25f;
-      m_DensityInverse = 1 - m_Density;
+      _rigidbody = GetComponentInParent<Rigidbody>();
+      _totalVolume = _dimensions.x * _dimensions.y * _dimensions.z;
+      _quadrantVolume = _totalVolume * 0.25f;
+      _densityInverse = 1 - _density;
 
       // Add the four flotation points at the corners of the flotation area dimensions
-      m_Corners = new List<FlotationPoint>()
+      _corners = new List<FlotationPoint>()
       {
          // Front left
-         new FlotationPoint(new Vector3(m_Dimensions.x / 2f, -m_Dimensions.y / 2f, -m_Dimensions.z / 2f), this),
+         new FlotationPoint(new Vector3(_dimensions.x / 2f, -_dimensions.y / 2f, -_dimensions.z / 2f), this),
          // Front right
-         new FlotationPoint(new Vector3(m_Dimensions.x / 2f, -m_Dimensions.y / 2f, m_Dimensions.z / 2f), this),
+         new FlotationPoint(new Vector3(_dimensions.x / 2f, -_dimensions.y / 2f, _dimensions.z / 2f), this),
          // Back left
-         new FlotationPoint(new Vector3(-m_Dimensions.x / 2f, -m_Dimensions.y / 2f, m_Dimensions.z / 2f), this),
+         new FlotationPoint(new Vector3(-_dimensions.x / 2f, -_dimensions.y / 2f, _dimensions.z / 2f), this),
          // Back right
-         new FlotationPoint(new Vector3(-m_Dimensions.x / 2f, -m_Dimensions.y / 2f, -m_Dimensions.z / 2f), this)
+         new FlotationPoint(new Vector3(-_dimensions.x / 2f, -_dimensions.y / 2f, -_dimensions.z / 2f), this)
       };
    }
 
@@ -188,7 +174,7 @@ public class FlotationArea : MonoBehaviour
    /// </summary>
    private void Float()
    {
-      foreach (FlotationPoint point in m_Corners)
+      foreach (FlotationPoint point in _corners)
       {
          point.CalculateAndApplyFlotation();
       }
@@ -225,12 +211,12 @@ public class FlotationArea : MonoBehaviour
 
       // Draw a rectangle representing the flotation area
       Gizmos.color = Color.white;
-      Gizmos.DrawWireCube(Vector3.zero, m_Dimensions);
+      Gizmos.DrawWireCube(Vector3.zero, _dimensions);
 
       // Draw rays representing the upwards forces of flotation
-      if (m_Corners != null) // Maybe happens when the script is deactivated
+      if (_corners != null) // Maybe happens when the script is deactivated
       {
-         for (int i = 0; i < m_Corners.Count; i++)
+         for (int i = 0; i < _corners.Count; i++)
          {
             Gizmos.DrawRay(Vector3.zero, Vector3.up);//  .DrawRay(Vector3.zero, transform.position, Color.red);
          }

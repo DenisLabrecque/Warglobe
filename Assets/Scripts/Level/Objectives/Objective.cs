@@ -6,7 +6,7 @@ public abstract class Objective : MonoBehaviour
 {
    [SerializeField] protected List<Objective> m_SubObjectives = new List<Objective>();
    [SerializeField] protected UnityEvent m_Accomplished = new UnityEvent();
-   [SerializeField] public string name = "Testing";
+   [SerializeField] public string _name = "Testing";
 
    private void Start()
    {

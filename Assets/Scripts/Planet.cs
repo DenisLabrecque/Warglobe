@@ -9,19 +9,17 @@ using UnityEngine;
 [ExecuteAlways]
 public class Planet : MonoBehaviour {
 
-   public const int MAX_ATMOSPHERE = 10000;
+   public const int MaxAtmosphere = 10000;
 
    #region Member Variables
 
-   float m_AtmosphereHeight;
+   float _atmosphereHeight;
 
    #endregion
 
    #region Properties
 
-   public static Planet Singleton {
-      get;
-      private set; }
+   public static Planet Singleton { get; private set; }
 
    /// <summary>
    /// Get how distant the planet's sea is from the center
@@ -29,13 +27,9 @@ public class Planet : MonoBehaviour {
    public float SeaRadius { get; private set; }
 
    /// <summary>
-   /// Get where the planet is located
+   /// Get where the planet is located (game object transform)
    /// </summary>
-   public Transform Center {
-      get {
-         return gameObject.transform;
-      }
-   }
+   public Transform Center => gameObject.transform;
 
    #endregion
 
@@ -56,7 +50,7 @@ public class Planet : MonoBehaviour {
    {
       SeaRadius = gameObject.GetComponentInChildren<SphereCollider>().radius * gameObject.transform.lossyScale.x;
 
-      m_AtmosphereHeight = Gravity.GRAVITY_RADIUS - SeaRadius;
+      _atmosphereHeight = Gravity.GravityRadius - SeaRadius;
    }
 
    #endregion
@@ -81,26 +75,19 @@ public class Planet : MonoBehaviour {
       return Vector3.Distance(Center.position, position) - SeaRadius;
    }
 
+   /// <summary>
+   /// Check whether a game object is currently underwater via its altitude above the sea.
+   /// </summary>
    public bool IsInWater(GameObject gameObject)
    {
-      if(AltitudeAboveSea(gameObject) < 0)
-      {
-         return true;
-      }
-      else
-      {
-         return false;
-      }
+      return AltitudeAboveSea(gameObject) < 0;
    }
 
    /// <summary>
    /// Find air density at a game object's altitude
    /// </summary>
    /// <returns>A percent</returns>
-   public float AirDensity(GameObject vehicle)
-   {
-      return (1f - Mathf.Clamp(AltitudeAboveSea(vehicle), 0f, MAX_ATMOSPHERE) / MAX_ATMOSPHERE);
-   }
+   public float AirDensity(GameObject vehicle) => DGL.Math.Utility.Percent(AltitudeAboveSea(vehicle), MaxAtmosphere);
 
    /// <summary>
    /// Find the angle a vehicle is rolled above the planet

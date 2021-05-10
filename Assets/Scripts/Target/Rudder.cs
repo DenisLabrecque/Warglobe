@@ -10,12 +10,10 @@ namespace Warglobe
    public class Rudder : MonoBehaviour
    {
       [SerializeField] Axis _axis = Axis.y;
-      [SerializeField] [Range(-1, 1)] sbyte _flip = 1;
+      [SerializeField] bool _flip = false;
 
       [Tooltip("How much steering force the rudder actually has")]
       [SerializeField] [Range(0, 1)] float _turnEffect = 0.1f;
-
-      [SerializeField] [Range(100, 100000)] float _tiltEffect = 90000;
 
       [Tooltip("Speed the rudder reaches full effect")]
       [SerializeField] [Range(0, 1)] float _shiftSpeed = 0.5f;
@@ -32,7 +30,8 @@ namespace Warglobe
       // Start is called before the first frame update
       void Awake()
       {
-         GetParentItems();
+         _rigidbody = GetComponentInParent<Rigidbody>();
+         _ship = GetComponentInParent<Vehicle>();
       }
 
       private void Update()
@@ -40,14 +39,20 @@ namespace Warglobe
          _actualAoa = Mathf.Lerp(_actualAoa, _percentAoa, _shiftSpeed * Time.deltaTime);
       }
 
-      public void GetParentItems()
+      private Vector3 AxisOf(Axis axis)
       {
-         _rigidbody = GetComponentInParent<Rigidbody>();
-         _ship = GetComponentInParent<Vehicle>();
+         if (axis == Warglobe.Axis.x)
+            return Vector3.right;
+         else if (axis == Warglobe.Axis.y)
+            return Vector3.up;
+         else
+            return Vector3.forward;
       }
 
       private void FixedUpdate()
       {
+         int flip = _flip == true ? -1 : 1;
+
          // Find the total direction the ship is going as compared to the rudder
          Vector3 localVelocity = transform.InverseTransformDirection(_rigidbody.velocity);
          if (_ship.ForwardSpeed > 0) // Forwards
@@ -63,10 +68,8 @@ namespace Warglobe
          float massSquared = _rigidbody.mass * _rigidbody.mass;
 
          // The actual turning; speed is absolute because going backwards flips control direction
-         _rigidbody.AddRelativeTorque(new Vector3(0, 1, 0) * _turnEffect * _actualAoa * massSquared * Math.Abs(percentSpeed) * Time.deltaTime, ForceMode.Force);
-
-         // Tilt effect (only for looks)
-         _rigidbody.AddRelativeTorque(new Vector3(0, 0, 1) * _tiltEffect * _actualAoa * _rigidbody.mass * Math.Abs(percentSpeed) * Time.deltaTime, ForceMode.Force);
+         float torque = _turnEffect * _actualAoa * massSquared * Math.Abs(percentSpeed) * Time.deltaTime;
+         _rigidbody.AddRelativeTorque(AxisOf(_axis) * torque * flip * 10, ForceMode.Force);
       }
    }
 }
