@@ -29,18 +29,18 @@
          }
       }
 
-      /// <summary>
-      /// Average of all values in the history.
-      /// </summary>
-      public T Average
-      {
-         get {
-            dynamic total = 0;
-            foreach (dynamic element in _values)
-               total += element;
-            return total / _values.Length;
-         }
-      }
+      ///// <summary>
+      ///// Average of all values in the history.
+      ///// </summary>
+      //public T Average
+      //{
+      //   get {
+      //      dynamic total = 0;
+      //      foreach (dynamic element in _values)
+      //         total += element;
+      //      return total / _values.Length;
+      //   }
+      //}
 
       /// <summary>
       /// Move all values right, discarding the last value in the list, and effectively duplicating the first.
