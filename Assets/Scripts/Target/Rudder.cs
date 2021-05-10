@@ -9,6 +9,9 @@ namespace Warglobe
    /// </summary>
    public class Rudder : MonoBehaviour
    {
+      [SerializeField] Axis _axis = Axis.y;
+      [SerializeField] [Range(-1, 1)] sbyte _flip = 1;
+
       [Tooltip("How much steering force the rudder actually has")]
       [SerializeField] [Range(0, 1)] float _turnEffect = 0.1f;
 
@@ -48,9 +51,9 @@ namespace Warglobe
          // Find the total direction the ship is going as compared to the rudder
          Vector3 localVelocity = transform.InverseTransformDirection(_rigidbody.velocity);
          if (_ship.ForwardSpeed > 0) // Forwards
-            _angleOfAttack = Vector3.Angle(new Vector3(0, 0, 1), localVelocity);
+            _angleOfAttack = Vector3.Angle(ControlSurface.AxisToVector(_axis), localVelocity);
          else // Backwards
-            _angleOfAttack = Vector3.Angle(new Vector3(0, 0, -1), localVelocity);
+            _angleOfAttack = Vector3.Angle(ControlSurface.AxisToVector(_axis) * -1, localVelocity);
 
          // Vector3.Angle always returns a positive value, so add the sign back in
          _angleOfAttack *= Mathf.Sign(localVelocity.x);

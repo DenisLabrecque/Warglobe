@@ -201,7 +201,7 @@ public abstract class Motor : MonoBehaviour {
                }
                catch(Exception)
                {
-                  Debug.LogError("Null reference exception when rotating engine fans");
+                  Debug.LogWarning("Null reference exception when rotating engine fans");
                }
             }
          }

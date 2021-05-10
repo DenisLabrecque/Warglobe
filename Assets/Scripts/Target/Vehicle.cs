@@ -28,9 +28,6 @@ namespace Warglobe
       [Tooltip("Vehicle cost in dollars (not including components)")]
       [SerializeField] [Range(25000, 308000000)] int _dollarValue = 32000;
 
-      [Tooltip("Density for flotation")]
-      [SerializeField] [Range(0, 1)] float _percentDensity = 0.4f;
-
       [Header("Pre-game settings")]
       [SerializeField] [Range(0, 1500)] int _pregameSpeed = 0;
 
