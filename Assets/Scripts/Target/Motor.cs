@@ -42,7 +42,7 @@ public abstract class Motor : MonoBehaviour {
    [Header("Visible Fan Properties")]
 
    [SerializeField] Vector3 _rotationAxis = Vector3.up;
-   [SerializeField][Range(1, 5000)] float m_RPM = 1000;
+   [SerializeField][Range(1, 5000)] float _rpm = 1000;
 
    [Tooltip("The mesh/meshes that are propellers/fans")]
    [SerializeField] List<GameObject> m_Fans;
@@ -181,13 +181,9 @@ public abstract class Motor : MonoBehaviour {
          {
             // Sound volume
             if(_percentThrust == 0f)
-            {
                _audioSource.volume = 0;
-            }
             else
-            {
                _audioSource.volume = _volume;
-            }
 
             // Sound pitch
             _audioSource.pitch = _percentThrust * _maxPitch;
@@ -197,7 +193,7 @@ public abstract class Motor : MonoBehaviour {
             {
                try
                {
-                  part.transform.Rotate(_rotationAxis, _percentThrust * m_RPM * Time.deltaTime);
+                  part.transform.Rotate(_rotationAxis, _percentThrust * _rpm * Time.deltaTime);
                }
                catch(Exception)
                {

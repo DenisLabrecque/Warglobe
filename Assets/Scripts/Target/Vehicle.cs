@@ -162,7 +162,7 @@ namespace Warglobe
 
       #region Unity Methods
 
-      protected void Awake()
+      new protected void Awake()
       {
          base.Awake();
 

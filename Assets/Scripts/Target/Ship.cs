@@ -29,7 +29,7 @@ namespace Warglobe
       /// <summary>
       /// Detect missing components.
       /// </summary>
-      void Start()
+      new void Start()
       {
          base.Start();
 
@@ -37,7 +37,7 @@ namespace Warglobe
             Debug.LogWarning("A ship is expected to have a rudder!");
       }
 
-      void Update()
+      new void Update()
       {
          base.Update();
 

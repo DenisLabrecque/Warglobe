@@ -20,7 +20,7 @@ public class FlotationArea : MonoBehaviour
    private List<float> _flotationForces;
    private float _totalVolume;
    private float _quadrantVolume; // One fourth of the total submersible volume
-   private const float WATER_DRAG = 2f;
+   private const float WaterDrag = 2f;
 
    /// <summary>
    /// The average of submerged percentages of all flotation points.
@@ -90,11 +90,7 @@ public class FlotationArea : MonoBehaviour
       /// <summary>
       /// Find the direction in which flotation works directly against gravity.
       /// </summary>
-      public Vector3 Upwards {
-         get {
-            return -(Gravity.GravityCenter - SubmergedPosition);
-         }
-      }
+      public Vector3 Upwards => -(Gravity.GravityCenter - SubmergedPosition);
 
       // Constructor
       public FlotationPoint(Vector3 location, FlotationArea flotationArea)
@@ -114,8 +110,8 @@ public class FlotationArea : MonoBehaviour
             // Apply flotation force
             float flotationForce = SubmergedVolume * _flotationArea._densityInverse * _actualFloatFactor;
             _flotationArea._rigidbody.AddForceAtPosition(Upwards * flotationForce, SubmergedPosition);
-            _flotationArea._rigidbody.drag = WATER_DRAG;
-            _flotationArea._rigidbody.angularDrag = WATER_DRAG;
+            _flotationArea._rigidbody.drag = WaterDrag;
+            _flotationArea._rigidbody.angularDrag = WaterDrag;
 
             // Show debugging
             float maxForce = _flotationArea._quadrantVolume * _flotationArea._densityInverse;
@@ -158,12 +154,6 @@ public class FlotationArea : MonoBehaviour
       };
    }
 
-   // Update is called once per frame
-   void Update()
-   {
-
-   }
-
    private void FixedUpdate()
    {
       Float();
@@ -179,27 +169,6 @@ public class FlotationArea : MonoBehaviour
          point.CalculateAndApplyFlotation();
       }
    }
-
-   private void OnDrawGizmos()
-   {
-      Gizmos.color = Color.yellow;
-
-      //for (int i = 0; i < this.m_Corners.Count; i++)
-      //{
-      //   Vector3 position = SubmergedPosition(i);
-      //   Vector3 upwards = Gravity.GRAVITY_CENTER - position;
-
-      //   if (i == 0)
-      //   {
-      //      float depth = Planet.Singleton.AltitudeAboveSea(position);
-      //      Debug.Log("Depth: " + depth);
-      //   }
-
-      //   Gizmos.DrawSphere(position, 1.5f);
-      //   Debug.DrawRay(position, upwards * -1);
-      //}
-   }
-
 
    /// <summary>
    /// Draw gizmos when this object is selected.
@@ -218,7 +187,7 @@ public class FlotationArea : MonoBehaviour
       {
          for (int i = 0; i < _corners.Count; i++)
          {
-            Gizmos.DrawRay(Vector3.zero, Vector3.up);//  .DrawRay(Vector3.zero, transform.position, Color.red);
+            Gizmos.DrawRay(Vector3.zero, Vector3.up); // .DrawRay(Vector3.zero, transform.position, Color.red);
          }
       }
 

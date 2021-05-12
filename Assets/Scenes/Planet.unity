@@ -806,7 +806,7 @@ MonoBehaviour:
   _acceleration: 0.5
   _percentThrottle: 0
   _rotationAxis: {x: 0, y: 1, z: 0}
-  m_RPM: 3000
+  _rpm: 1000
   m_Fans:
   - {fileID: 407567870}
   - {fileID: 1537581350}
@@ -1868,7 +1868,7 @@ MonoBehaviour:
   _acceleration: 0.5
   _percentThrottle: 0
   _rotationAxis: {x: 0, y: 1, z: 0}
-  m_RPM: 1000
+  _rpm: 1000
   m_Fans: []
   _maxPitch: 2.2
 --- !u!82 &191909693
@@ -3017,7 +3017,7 @@ MonoBehaviour:
   _acceleration: 0.5
   _percentThrottle: 0
   _rotationAxis: {x: 0, y: 1, z: 0}
-  m_RPM: 1000
+  _rpm: 1000
   m_Fans: []
   _maxPitch: 2.2
 --- !u!82 &257132061
@@ -4216,16 +4216,16 @@ MonoBehaviour:
   _isEnabled: 1
   _powerDurationMinutes: 25
   _thrustDirection: {x: 0, y: 0, z: 1}
-  _thrustToWeight: 0.5
+  _thrustToWeight: 0.1
   _backwardsPercentPower: 0.5
   _acceleration: 0.5
   _percentThrottle: 0
   _rotationAxis: {x: 0, y: 1, z: 0}
-  m_RPM: 876
+  _rpm: 1000
   m_Fans:
   - {fileID: 7204747712393549686}
   - {fileID: 7204747712393549685}
-  _maxPitch: 2.2
+  _maxPitch: 1.5
   _backwardsEfficiency: 0.4
 --- !u!82 &328616559
 AudioSource:
@@ -4236,17 +4236,18 @@ AudioSource:
   m_GameObject: {fileID: 328616556}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3137304109384306111, guid: 249ba2a7f910255479ea5c8300936677,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: b8a88a8d411b3924f9f2144fc7988eda, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
+  m_Volume: 0.4
+  m_Pitch: 0.76
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 0
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
@@ -8304,7 +8305,7 @@ MonoBehaviour:
   _acceleration: 0.5
   _percentThrottle: 0
   _rotationAxis: {x: 0, y: 1, z: 0}
-  m_RPM: 1000
+  _rpm: 1000
   m_Fans: []
   _maxPitch: 2.2
 --- !u!82 &874963307
@@ -10545,6 +10546,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2023044916142771217, guid: 15ecccf1a32b3c84aa63fa7167af53e2,
+        type: 3}
+      propertyPath: RightLimit
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 2023044916142771217, guid: 15ecccf1a32b3c84aa63fa7167af53e2,
+        type: 3}
+      propertyPath: MaxDepression
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2023044916142771231, guid: 15ecccf1a32b3c84aa63fa7167af53e2,
         type: 3}
@@ -20894,6 +20905,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2023044916142771217, guid: 15ecccf1a32b3c84aa63fa7167af53e2,
+        type: 3}
+      propertyPath: LeftLimit
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 2023044916142771217, guid: 15ecccf1a32b3c84aa63fa7167af53e2,
+        type: 3}
+      propertyPath: RightLimit
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 2023044916142771217, guid: 15ecccf1a32b3c84aa63fa7167af53e2,
+        type: 3}
+      propertyPath: MaxDepression
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2023044916142771231, guid: 15ecccf1a32b3c84aa63fa7167af53e2,
         type: 3}

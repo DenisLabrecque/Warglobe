@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UIScreens;
-using BeardedManStudios.Forge.Networking;
-using BeardedManStudios.Forge.Networking.Generated;
-using BeardedManStudios.Forge.Networking.Unity;
+using System.Data.SqlClient;
+using System;
 
 namespace Warglobe
 {
@@ -40,6 +38,29 @@ namespace Warglobe
       private void Start()
       {
          EnableTargets(false);
+
+         SqlConnection connection = new SqlConnection("Server=localhost\\SQLEXPRESS; Database=warglobe; Integrated Security=True;");
+         try
+         {
+            Debug.Log("Connecting...");
+            connection.Open();
+            Debug.Log("Connected successfully");
+         }
+         catch(Exception e)
+         {
+            throw e;
+         }
+
+         using (SqlCommand command = new SqlCommand("SELECT * from Players", connection))
+         {
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+               Debug.Log((int)reader[0] + " " + (string)reader[1]);
+               //Console.WriteLine((int)reader[0] + " " + (string)reader[1]);
+            reader.Close();
+         }
+
+         connection.Close();
       }
 
       /// <summary>
