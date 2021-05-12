@@ -28,12 +28,9 @@ namespace Warglobe
       [Tooltip("A vehicle's marketing name; should be capitalized appropriately. This is the name most people call a vehicle (eg. Raptor, Hornet, Mustang)")]
       [SerializeField] string _popularName = "Target";
 
-      [Tooltip("A general description of the target")]
-      [SerializeField] [TextArea] string m_Description = "A generic target.";
-
       [Tooltip("Radar return")]
       [Range(0f, 1.0f)]
-      [SerializeField] float m_RadarCrossSection = 1f;
+      [SerializeField] float _radarCrossSection = 1f;
 
       [Tooltip("Hitpoints")]
       [SerializeField] [Range(0f, 50000f)] protected float _maxHitpoints;
@@ -49,32 +46,17 @@ namespace Warglobe
 
       #region Properties
 
-      public Rigidbody Rigidbody {
-         get {
-            return _rigidbody;
-         }
-      }
+      public Rigidbody Rigidbody => _rigidbody;
 
       /// <summary>
-      /// Whether a target has a weapons controller or not.
+      /// Whether a target has a weapons system or not.
       /// </summary>
-      public bool IsMilitary {
-         get {
-            if (_weaponSystem == null)
-               return false;
-            else
-               return true;
-         }
-      }
+      public bool IsMilitary => _weaponSystem != null;
 
       /// <summary>
       /// The total hitpoints the target has.
       /// </summary>
-      public float MaxHitpoints {
-         get {
-            return _maxHitpoints;
-         }
-      }
+      public float MaxHitpoints => _maxHitpoints;
 
       /// <summary>
       /// The hitpoints that the target currently has.
@@ -93,93 +75,47 @@ namespace Warglobe
       /// <summary>
       /// Current hitpoints over the maximum hitpoints, from 0 to 1.
       /// </summary>
-      public float HitpointPercent {
-         get {
-            return Utility.Percent(_currentHitpoints, _maxHitpoints, PercentMode.Clamp0To1);
-         }
-      }
+      public float HitpointPercent => Utility.Percent(_currentHitpoints, _maxHitpoints, PercentMode.Clamp0To1);
 
       /// <summary>
       /// Whether the target has no hitpoints.
       /// </summary>
-      public bool IsDead {
-         get {
-            if (_currentHitpoints <= 0)
-               return true;
-            else
-               return false;
-         }
-      }
+      public bool IsDead => _currentHitpoints <= 0;
 
       /// <summary>
       /// Whether the target has enough hitpoints to be alive.
       /// </summary>
-      public bool IsAlive {
-         get {
-            if (_currentHitpoints > 0)
-               return true;
-            else
-               return false;
-         }
-      }
+      public bool IsAlive => _currentHitpoints > 0;
 
       /// <summary>
       /// Get the weapons. Can return null if this target does not have a weapon system.
       /// </summary>
-      public WeaponSystem WeaponSystem { get { return _weaponSystem; } }
+      public WeaponSystem WeaponSystem => _weaponSystem;
 
       /// <summary>
       /// Get the sensors. Can return null if there are no sensors.
       /// </summary>
-      public SensorSystem SensorSystem { get { return _sensorSystem; } }
+      public SensorSystem SensorSystem => _sensorSystem;
 
       /// <summary>
       /// A smaller RCS shortens the percent normal range an aircraft can be detected using radar.
       /// </summary>
-      public float RadarCrossSection {
-         get {
-            return m_RadarCrossSection;
-         }
-      }
+      public float RadarCrossSection => _radarCrossSection;
 
       /// <summary>
       /// Target's country
       /// </summary>
-      public Faction Country {
-         get {
-            return _faction;
-         }
-      }
+      public Faction Faction => _faction;
 
       /// <summary>
       /// Target's country name
       /// </summary>
-      public Faction.CountryName CountryName {
-         get {
-            return _countryName;
-         }
-      }
+      public Faction.CountryName CountryName => _countryName;
 
       /// <summary>
       /// Target's popular name
       /// </summary>
-      public string PopularName {
-         get {
-            return _popularName;
-         }
-      }
-
-      /// <summary>
-      /// The objective here is to kill the target.
-      /// </summary>
-      public bool IsAccomplished {
-         get {
-            if (IsDead)
-               return true;
-            else
-               return false;
-         }
-      }
+      public string PopularName => _popularName;
 
       #endregion
 
@@ -283,7 +219,7 @@ namespace Warglobe
       /// <returns>Friend, foe, or neutral identification</returns>
       public Faction.Identification Relationship(Target target)
       {
-         return _faction.Relationship(target.Country);
+         return _faction.Relationship(target.Faction);
       }
 
       /// <summary>
@@ -307,15 +243,16 @@ namespace Warglobe
       /// <summary>
       /// The game object that all distances will be compared to.
       /// </summary>
-      Target m_Seeker = null;
+      Target _seeker = null;
 
       /// <summary>
       /// Constructor of a sorted set of targets that are compared to a specific base target's distance for tracking.
+      /// TODO looks incomplete
       /// </summary>
       /// <param name="seeker">The target that all distances will be compared to.</param>
       public BySeekerDistance(Target seeker)
       {
-         m_Seeker = seeker;
+         _seeker = seeker;
       }
 
       /// <summary>
@@ -327,8 +264,8 @@ namespace Warglobe
       /// <returns>A distance from the seeking target.</returns>
       public int Compare(Target x, Target y)
       {
-         int distanceX = m_Seeker.CompareTo(x);
-         int distanceY = m_Seeker.CompareTo(y);
+         int distanceX = _seeker.CompareTo(x);
+         int distanceY = _seeker.CompareTo(y);
          return distanceX - distanceY;
       }
    }

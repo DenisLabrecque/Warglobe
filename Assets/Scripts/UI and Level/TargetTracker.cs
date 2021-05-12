@@ -176,7 +176,7 @@ namespace Warglobe.Hud
       protected void ApplyRelationshipColour()
       {
          // Find the correct colour according to target relationships by country
-         switch (UserInput.Player1Vehicle.Country.Relationship(m_Target.Country))
+         switch (UserInput.Player1Vehicle.Faction.Relationship(m_Target.Faction))
          {
             case Faction.Identification.Neutral:
                ApplyTargetingColour(NEUTRAL);

@@ -16,7 +16,7 @@ namespace Warglobe
       private void Start()
       {
          m_Target = GetComponentInParent<Target>();
-         m_Country = m_Target.Country;
+         m_Country = m_Target.Faction;
          m_DecalProjector = GetComponent<DecalProjector>();
 
          if (Application.isPlaying)

@@ -32,6 +32,7 @@ namespace Warglobe.Hud
 
       [Header("Energy")]
       [SerializeField] TextMeshProUGUI _energy;
+      [SerializeField] TextMeshProUGUI _energyPercent;
       [SerializeField] Slider _energySlider;
 
       [Header("Health")]
@@ -78,7 +79,7 @@ namespace Warglobe.Hud
             tracker.SetTurret(turret);
          }
 
-         foreach (KeyValuePair<Function, List<ISwitchable>> keyValue in UserInput.Player1Vehicle.SwitchablesByFunction)
+         foreach (var keyValue in UserInput.Player1Vehicle.SwitchablesByFunction)
          {
             SwitchableIcon weaponInfo = Instantiate(_toggleWeaponInfo, _bottomPanel);
             weaponInfo.Initialize(keyValue.Value.FirstOrDefault());
@@ -178,7 +179,8 @@ namespace Warglobe.Hud
          _throttleSlider.value = Mathf.Abs(currentVehicle.Motor.PercentThrottle);
 
          // Energy
-         _energy.text = currentVehicle.BatteryAmperage.ToString();
+         _energy.text = (currentVehicle.Motor.BatteryMinutesLeft + 1).ToString();
+         _energyPercent.text = (currentVehicle.PercentBattery * 100f).ToString("N0", CultureInfo.InvariantCulture) + "%";
          _energySlider.value = currentVehicle.PercentBattery;
 
          // Health
