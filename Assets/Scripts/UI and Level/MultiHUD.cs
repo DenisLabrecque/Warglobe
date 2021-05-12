@@ -43,7 +43,11 @@ namespace Warglobe.Hud
       [Header("Testing")]
       [SerializeField] TextMeshProUGUI m_TestingText;
       [SerializeField] SwitchableIcon _toggleWeaponInfo;
+
+      [Header("Panels")]
       [SerializeField] Transform _bottomPanel;
+      [SerializeField] Transform _leftPanel;
+      [SerializeField] Transform _rightPanel;
 
       [Header("Tracker")]
       [SerializeField] TargetTracker _targetTracker;
@@ -105,6 +109,28 @@ namespace Warglobe.Hud
       void FixedUpdate()
       {
          TrackTargets();
+      }
+
+      #endregion
+
+
+      #region Public Methods
+
+      /// <summary>
+      /// Disable the side and bottom panels so the HUD doesn't overlay anything.
+      /// </summary>
+      public void DisablePanels()
+      {
+         _leftPanel.gameObject.SetActive(false);
+         _rightPanel.gameObject.SetActive(false);
+         _bottomPanel.gameObject.SetActive(false);
+      }
+
+      public void EnablePanels()
+      {
+         _leftPanel.gameObject.SetActive(true);
+         _rightPanel.gameObject.SetActive(true);
+         _bottomPanel.gameObject.SetActive(true);
       }
 
       #endregion

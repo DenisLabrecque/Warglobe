@@ -33,7 +33,7 @@ namespace Warglobe
       [SerializeField] float _radarCrossSection = 1f;
 
       [Tooltip("Hitpoints")]
-      [SerializeField] [Range(0f, 50000f)] protected float _maxHitpoints;
+      [SerializeField] [Range(1, 50000)] protected uint _maxHitpoints = 20000;
 
       protected WeaponSystem _weaponSystem;
       protected SensorSystem _sensorSystem;
