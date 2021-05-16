@@ -15,7 +15,7 @@ namespace Warglobe
 
       #region Unity Methods
 
-      void Awake()
+      new void Awake()
       {
          base.Awake();
 
@@ -60,6 +60,7 @@ namespace Warglobe
          base.Fire();
 
          // Start the rocket
+         _motor.IsEnabled = true;
          _motor.StartMotor(_rigidbody); // Verify that the motor was not checked as started
 
          return true;

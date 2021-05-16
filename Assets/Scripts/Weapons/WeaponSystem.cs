@@ -35,6 +35,7 @@ namespace Warglobe
 
       bool _cannonSelected = false;
       bool _ciwsSelected = false;
+      bool _missilesSelected = false;
 
       #endregion
 
@@ -44,17 +45,9 @@ namespace Warglobe
       /// <summary>
       /// Where the mouse is pointing from a projection plane.
       /// </summary>
-      public Vector3 AimPoint {
-         get {
-            return SingleCamera.Camera1.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, _aimDistance));
-         }
-      }
+      public Vector3 AimPoint => SingleCamera.Camera1.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, _aimDistance));
 
-      public bool HasTurret {
-         get {
-            return _turrets.Any();
-         }
-      }
+      public bool HasTurret => _turrets.Any();
 
       /// <summary>
       /// Return the currently selected projectile.
@@ -129,7 +122,8 @@ namespace Warglobe
       /// </summary>
       public void FireProjectile()
       {
-         _weaponSlots[_projectileTypes[_currentProjectileIndex]].Fire();
+         //_weaponSlots[_projectileTypes[_currentProjectileIndex]].Fire();
+         CurrentProjectile.Fire();
       }
 
       /// <summary>
@@ -231,6 +225,18 @@ namespace Warglobe
             }
          }
          //m_TrackingList.Add(m_SensorSystem.TrackingTarget); // TODO handle nulls
+         
+         if(_projectileTypes.Count > 0)
+         {
+            if (CurrentProjectile.Switchable.Function == Function.Missile && _missilesSelected)
+            {
+               CurrentProjectile.IsNextToFire = true;
+            }
+            else
+            {
+               CurrentProjectile.IsNextToFire = false;
+            }
+         }
       }
 
       private void Update()
@@ -254,6 +260,10 @@ namespace Warglobe
                _ciwsSelected = true;
                _cannonSelected = false;
             }
+         }
+         else if(Input.GetKeyDown(KeyCode.Alpha3))
+         {
+            _missilesSelected = !_missilesSelected;
          }
       }
 

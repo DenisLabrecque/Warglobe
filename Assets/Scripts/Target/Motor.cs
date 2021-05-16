@@ -224,6 +224,7 @@ public abstract class Motor : MonoBehaviour {
    {
       if(_currentEnergy >= 0)
       {
+         Debug.Log("Motor start!!!");
          _isEnabled = true;
          _rigidbody = rigidbody;
       }

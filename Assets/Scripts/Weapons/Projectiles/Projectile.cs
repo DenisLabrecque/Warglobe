@@ -7,7 +7,7 @@ using Warglobe.Assets;
 namespace Warglobe
 {
    /// <summary>
-   /// Defines the projectile type from which all missiles (air-to-air, air-to-ground, ground-to-air, ICBM) derive from.
+   /// Defines the projectile type from which all missiles (air-to-air, air-to-ground, ground-to-air, ICBM, bomb) derive from.
    /// </summary>
    public abstract class Projectile : MonoBehaviour, IFireable, ISwitchable
    {
@@ -41,30 +41,27 @@ namespace Warglobe
       /// <summary>
       /// Get the projectile's short name.
       /// </summary>
-      public string Abbreviation {
-         get { return _shortName; }
-      }
+      public string Abbreviation => _shortName;
 
       /// <summary>
       /// The approximate projectile weight.
       /// </summary>
-      public ProjectileWeight Weight {
-         get { return _weight; }
-      }
+      public ProjectileWeight Weight => _weight;
 
       /// <summary>
       /// Whether the projectile has been launched yet.
       /// </summary>
-      public bool IsFired {
-         get { return (_firedTime == -1f) ? false : true; }
-      }
+      public bool IsFired => (_firedTime == -1f) ? false : true;
 
       /// <summary>
       /// Whether the projectile is ready for explosion.
       /// </summary>
-      public bool IsArmed {
-         get { return _isArmed; }
-      }
+      public bool IsArmed => _isArmed;
+
+      /// <summary>
+      /// Whether this specific projectile is locked and loaded and ready to go as a missile.
+      /// </summary>
+      public bool IsNextToFire { get; set; } = false;
 
       #endregion
 
@@ -141,7 +138,7 @@ namespace Warglobe
          _rigidbody.AddForce(angularVelocity, ForceMode.VelocityChange);
 
          // Apply the initial impulse force
-         _rigidbody.AddForce(_impulse, ForceMode.VelocityChange);
+         _rigidbody.AddRelativeForce(_impulse, ForceMode.VelocityChange);
 
          // Register the firing time (null if not fired)
          _firedTime = Time.time;
@@ -173,7 +170,7 @@ namespace Warglobe
 
       #region Switchable Interface
 
-      public bool IsOnOrSelected => !IsFired;
+      public bool IsOnOrSelected => IsNextToFire;
 
       public Switchable Switchable => _switchable;
 

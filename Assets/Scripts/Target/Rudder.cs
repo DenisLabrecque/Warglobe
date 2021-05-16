@@ -13,7 +13,7 @@ namespace Warglobe
       [SerializeField] bool _flip = false;
 
       [Tooltip("How much steering force the rudder actually has")]
-      [SerializeField] [Range(0, 1)] float _turnEffect = 0.1f;
+      [SerializeField] [Range(0, 100)] float _turnEffect = 10f;
 
       [Tooltip("Speed the rudder reaches full effect")]
       [SerializeField] [Range(0, 1)] float _shiftSpeed = 0.5f;
@@ -69,7 +69,7 @@ namespace Warglobe
 
          // The actual turning; speed is absolute because going backwards flips control direction
          float torque = _turnEffect * _actualAoa * massSquared * Math.Abs(percentSpeed) * Time.deltaTime;
-         _rigidbody.AddRelativeTorque(AxisOf(_axis) * torque * flip * 10, ForceMode.Force);
+         _rigidbody.AddRelativeTorque(AxisOf(_axis) * torque * flip, ForceMode.Force);
       }
    }
 }

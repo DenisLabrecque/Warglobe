@@ -85,6 +85,8 @@ namespace Warglobe
          // Fire weapons
          if (UserInput.Gun)
             WeaponSystem.FireTurrets();
+         else if (UserInput.Fire)
+            WeaponSystem.FireProjectile();
       }
 
       public override string ToString()

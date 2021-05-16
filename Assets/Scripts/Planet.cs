@@ -87,7 +87,7 @@ public class Planet : MonoBehaviour {
    /// Find air density at a game object's altitude
    /// </summary>
    /// <returns>A percent</returns>
-   public float AirDensity(GameObject vehicle) => DGL.Math.Utility.Percent(AltitudeAboveSea(vehicle), MaxAtmosphere);
+   public float AirDensity(GameObject vehicle) => DGL.Math.Utility.Percent(AltitudeAboveSea(vehicle), MaxAtmosphere, DGL.Math.PercentMode.Clamp0To1);
 
    /// <summary>
    /// Find the angle a vehicle is rolled above the planet

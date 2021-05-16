@@ -353,7 +353,7 @@ namespace Warglobe
 
       #region Switchable Interface
 
-      public bool IsOnOrSelected => true;
+      public bool IsOnOrSelected => !IsIdle;
 
       public Switchable Switchable => _switchable;
 

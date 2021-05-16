@@ -11,7 +11,7 @@ namespace Warglobe
    /// There should be one tricycle gear as child.
    /// There should be one motor as a child.
    /// </summary>
-   public abstract class Airplane : Vehicle
+   public class Airplane : Vehicle
    {
 
       #region Member Variables
